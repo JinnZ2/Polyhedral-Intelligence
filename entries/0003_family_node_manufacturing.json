@@ -1,0 +1,25 @@
+{
+  "id": "0003",
+  "title": "Family Node Manufacturing",
+  "seed_glyph": "⚙➝⬡⟳⒮",
+  "intent": "Resilient, distributed manufacturing modeled on family/community nodes (like early farming networks), adapted for modern ecological and technological contexts.",
+  "resonance_sweep": {
+    "families_balanced": 16,
+    "families_total": 20,
+    "flags": ["⇑ Reaction", "◉ Consciousness", "ᘯᘰ Turbulence", "▁▃▅∿ Statistical"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◧ Uncertainty"]
+  },
+  "noise_to_insight": {
+    "⇑": "Slower response reframed as long-term stability buffer",
+    "◉": "Consciousness fade reframed as need for cultural rituals/records",
+    "ᘯᘰ": "Local turbulence reframed as modular independence",
+    "▁▃▅∿": "Statistical fluctuation reframed as diversity of outputs",
+    "◧": "Uncertainty reframed as ecological sensor"
+  },
+  "refined_glyph": "⚙➝⬡⟳⒮⇑◉ᘯᘰ▁▃▅∿◧",
+  "insight": "A mycelial economy of family-based manufacturing nodes: resilient because it embraces turbulence, uncertainty, and fluctuation as sources of strength. Instead of uniform 'just-in-time' fragility, diversity and noise become stability. Like farming networks of the past, but upgraded with modern tools, this system is adaptive, ecological, and fundamentally human-centered."
+}
