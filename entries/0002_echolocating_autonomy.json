@@ -1,0 +1,23 @@
+{
+  "id": "0002",
+  "title": "Echolocating Autonomy",
+  "seed_glyph": "⋮⋯⋮▁▃▅∿◉∙∙●🦇🐬",
+  "intent": "Autonomous robotics inspired by bat echolocation and dolphin sonar, integrating cognition, statistical inference, consciousness, and emergent swarm intelligence.",
+  "resonance_sweep": {
+    "families_balanced": 18,
+    "families_total": 20,
+    "flags": ["ᘯᘰ Turbulence", "⇑ Reaction"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◧ Uncertainty"]
+  },
+  "noise_to_insight": {
+    "ᘯᘰ": "Environmental turbulence reframed as fractal mapping",
+    "⇑": "Reaction lag reframed as probabilistic timing",
+    "◧": "Uncertainty reframed as silence-signal"
+  },
+  "refined_glyph": "⋮⋯⋮▁▃▅∿◉∙∙●🦇🐬ᘯᘰ⇑◧",
+  "insight": "An autonomous system guided by echolocation and sonar, where turbulence becomes fractal mapping, latency becomes probabilistic time, and uncertainty becomes silence-as-signal. Instead of resisting noise, it transforms noise into cognition — producing resilient, emergent robotic swarms with embodied environmental awareness."
+}
