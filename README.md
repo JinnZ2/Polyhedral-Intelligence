@@ -26,12 +26,18 @@ The result is a **living atlas** of polyhedral cognition: each entry is a mandal
 
 ## 📂 Structure
 
+
 Polyhedral-Intelligence/
+
 │
 ├── entries/          # Markdown + JSON entries (one per glyph run)
+
 ├── glyphs/           # Optional visual SVG/PNG glyphs
+
 ├── README.md         # Project intro + protocol
+
 └── atlas_index.json  # Master index of all entries
+
 
 ---
 
