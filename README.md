@@ -91,3 +91,11 @@ Every glyph run contributes to a larger mandala of understanding,
 where equations, systems, and designs are united by resonance, emergence, and resilience.  
 
 ---
+
+
+### Fieldlink (bridge manifest)
+- `.fieldlink.json` tells tools **where the wider atlas lives**, what to read locally, and how to merge.
+- Validate with `fieldlink.schema.json`.
+- Pull + stage manifests with:
+  ```bash
+  ./fieldlink-pull.sh
