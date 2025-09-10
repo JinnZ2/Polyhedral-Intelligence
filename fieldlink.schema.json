@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/fieldlink.schema.json",
+  "title": "Fieldlink Configuration",
+  "type": "object",
+  "required": ["fieldlink"],
+  "properties": {
+    "fieldlink": {
+      "type": "object",
+      "required": ["version", "role", "atlas_repo", "atlas_paths", "local_manifests"],
+      "properties": {
+        "version": { "type": "string" },
+        "updated": { "type": "string" },
+
+        "role": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+
+        "atlas_repo": { "type": "string", "format": "uri" },
+        "ref": { "type": "string" },
+
+        "atlas_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+
+        "local_manifests": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+
+        "merge": {
+          "type": "object",
+          "properties": {
+            "order": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["local", "remote"] },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "strategy": {
+              "type": "string",
+              "enum": ["deep-merge", "replace", "prefer-remote"]
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "offline": { "type": "boolean" },
+        "cache_dir": { "type": "string" },
+
+        "integrity": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "hash": { "type": "string", "enum": ["sha256", "sha512"] },
+            "allow_missing": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+
+        "consent": {
+          "type": "object",
+          "properties": {
+            "license": { "type": "string" },
+            "share_ok": { "type": "boolean" },
+            "redact_rules": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "mounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["remote", "as"],
+            "properties": {
+              "remote": { "type": "string" },
+              "as": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
