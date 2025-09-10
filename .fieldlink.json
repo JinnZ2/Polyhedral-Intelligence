@@ -1,16 +1,47 @@
 {
   "fieldlink": {
+    "version": "1.0",
+    "updated": "2025-09-11T00:00:00Z",
+
+    "role": ["sensors", "protocols", "shapes", "hub"],
+
     "atlas_repo": "https://github.com/JinnZ2/BioGrid2.0",
+    "ref": "main",
     "atlas_paths": [
       "planned/glyphs/atlas.json",
       "registry/atlas.glyphs.json"
     ],
+
     "local_manifests": [
       "glyphs/**",
       "protocols/**",
       "sensors/**",
       "atlas/shapes.json"
     ],
-    "role": "sensors|protocols|shapes|hub"
+
+    "merge": {
+      "order": ["local", "remote"],          // precedence left→right
+      "strategy": "deep-merge"               // or: "replace", "prefer-remote"
+    },
+
+    "offline": false,
+    "cache_dir": ".fieldcache",
+
+    "integrity": {
+      "enabled": false,
+      "hash": "sha256",
+      "allow_missing": true
+    },
+
+    "consent": {
+      "license": "CC-BY-4.0",
+      "share_ok": true,
+      "redact_rules": ["**/private/**", "*.secrets.json"]
+    },
+
+    "mounts": [
+      { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
+      { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
+    ]
   }
 }
