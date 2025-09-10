@@ -1,0 +1,104 @@
+{
+  "session_id": "fld-2025-09-11-0000Z",
+  "timestamp": "2025-09-11T00:00:00Z",
+  "tool": "fieldlink-pull.sh",
+  "host": {
+    "repo": "JinnZ2/Polyhedral-Intelligence",
+    "cwd": "/repo/Polyhedral-Intelligence",
+    "user": "swarmuser"
+  },
+  "config": {
+    "file": ".fieldlink.json",
+    "hash": "sha256:a0a3a5e7f1…(example)…3c9b",
+    "fieldlink": {
+      "version": "1.0",
+      "updated": "2025-09-11T00:00:00Z",
+      "role": ["sensors", "protocols", "shapes", "hub"],
+      "atlas_repo": "https://github.com/JinnZ2/BioGrid2.0",
+      "ref": "main",
+      "atlas_paths": [
+        "planned/glyphs/atlas.json",
+        "registry/atlas.glyphs.json"
+      ],
+      "local_manifests": [
+        "glyphs/**",
+        "protocols/**",
+        "sensors/**",
+        "atlas/shapes.json"
+      ],
+      "merge": {
+        "order": ["local", "remote"],
+        "strategy": "deep-merge"
+      },
+      "offline": false,
+      "cache_dir": ".fieldcache",
+      "integrity": { "enabled": false, "hash": "sha256", "allow_missing": true },
+      "consent": { "license": "CC-BY-4.0", "share_ok": true, "redact_rules": ["**/private/**", "*.secrets.json"] },
+      "mounts": [
+        { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
+        { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "name": "validate",
+      "result": "skipped",
+      "details": "ajv not present; schema validation skipped"
+    },
+    {
+      "name": "collect_local",
+      "result": "ok",
+      "files_found": [
+        "glyphs/cultural_contrast.json",
+        "glyphs/seasonal_intelligence.json",
+        "glyphs/cognition_cycle.json",
+        "protocols/ai_human_audit_protocol.md",
+        "protocols/change_tracking_v1.0.md",
+        "atlas/shapes.json"
+      ]
+    },
+    {
+      "name": "fetch_remote",
+      "result": "ok",
+      "repo": "https://github.com/JinnZ2/BioGrid2.0",
+      "ref": "main",
+      "fetched_paths": [
+        "planned/glyphs/atlas.json",
+        "registry/atlas.glyphs.json"
+      ],
+      "mounted_as": [
+        "atlas/remote/planned.json",
+        "atlas/remote/registry.json"
+      ]
+    },
+    {
+      "name": "merge_stage",
+      "result": "ok",
+      "order": ["local", "remote"],
+      "strategy": "precedence-staging",
+      "stage_dir": ".fieldcache/merge_stage",
+      "outputs": [
+        ".fieldcache/merge_stage/cultural_contrast.json",
+        ".fieldcache/merge_stage/seasonal_intelligence.json",
+        ".fieldcache/merge_stage/cognition_cycle.json",
+        ".fieldcache/merge_stage/ai_human_audit_protocol.md",
+        ".fieldcache/merge_stage/change_tracking_v1.0.md",
+        ".fieldcache/merge_stage/shapes.json",
+        ".fieldcache/merge_stage/atlas.json",
+        ".fieldcache/merge_stage/atlas.glyphs.json"
+      ],
+      "notes": "When basenames collide, local takes precedence per merge.order."
+    }
+  ],
+  "integrity": {
+    "enabled": false,
+    "status": "skipped"
+  },
+  "consent": {
+    "license": "CC-BY-4.0",
+    "share_ok": true,
+    "redactions_applied": []
+  },
+  "summary": "Fieldlink pull completed. Local and remote manifests staged under .fieldcache/merge_stage. Ready for downstream tools to read a unified atlas."
+}
