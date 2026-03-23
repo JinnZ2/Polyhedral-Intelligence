@@ -34,7 +34,7 @@ Flagged families/principles from the MRP sweeps (❗) become NIP inputs. Each fl
 /
 ├── Poly.py                          # Extended CLI with AI-enhanced glyph creation (699 lines)
 ├── Polyhedral-cli.py                # Base CLI using Click (488 lines)
-├── integrated.py                    # Architectural sketch: emotional matrix + field integration (193 lines, not runnable)
+├── integrated.py                    # Architectural sketch: bridges to Emotions-as-Sensors FELT system (193 lines, not runnable)
 ├── atlas_schema.json                # Master schema: all 20 Families with equations
 ├── atlas_index.json                 # Index of atlas entries
 ├── protocols.json                   # Families + principles schema (equations empty)
@@ -131,7 +131,7 @@ There are **two CLI files** — both use Click and share the same command struct
 - **`Polyhedral-cli.py`**: Base CLI with core commands
 - **`Poly.py`**: Extended version adding `--ai-enhance` flag on `glyph create` and a `glyph evolve` command
 
-**`integrated.py`** defines `PolyhedralEmotionalMatrix` and `UnifiedResonanceEngine` classes but references undefined external classes (`FELTEngine`, `FELTSensorImplementation`, `FearSensorImplementation`, `GlyphPhaseSynchronizer`). It is an architectural design sketch, not runnable code.
+**`integrated.py`** defines `PolyhedralEmotionalMatrix` and `UnifiedResonanceEngine` classes but references four external classes from the **Emotions-as-Sensors** repo (`https://github.com/JinnZ2/Emotions-as-Sensors`): `FELTEngine`, `FELTSensorImplementation`, `FearSensorImplementation`, and `GlyphPhaseSynchronizer`. These classes do not yet have Python implementations — they are aspirational interfaces whose data contracts are defined in Emotions-as-Sensors' JSON sensor definitions and schemas. `integrated.py` is an architectural design sketch, not runnable code. See the [Emotions-as-Sensors integration section](#emotions-as-sensors-felt-system) below for the full API surface.
 
 ## CLI Commands
 
@@ -239,6 +239,164 @@ Cross-repository data synchronization connecting Polyhedral Intelligence to **Bi
 - **Mounted paths** from BioGrid2.0:
   - `planned/glyphs/atlas.json` → `atlas/remote/planned.json`
   - `registry/atlas.glyphs.json` → `atlas/remote/registry.json`
+
+### Emotions-as-Sensors / FELT System
+
+Cross-repository integration with **Emotions-as-Sensors** (`https://github.com/JinnZ2/Emotions-as-Sensors`) — a framework treating emotions as real-time, adaptive information-processing systems for detecting systemic issues and emergent intelligence.
+
+#### Repository Structure (Emotions-as-Sensors)
+
+```
+Emotions-as-Sensors/
+├── src/
+│   ├── emotion_core.py          # EmotionSensor + EmotionSystem classes
+│   ├── emotional_ai.py          # EmotionallyIntelligentAI class
+│   ├── emotions_playground.py   # SensorState + EmotionalPlayground classes
+│   └── ucm_monitor.py           # UnifiedConsciousnessMonitor + MSCalculator
+├── sensors/
+│   ├── felt.json                # FELT field-event sensor definition
+│   ├── felt.md                  # FELT implementation notes
+│   ├── fear.json                # Fear sensor (v1.1, Elder Logic)
+│   ├── glyph-map.json           # 13 emotion-to-glyph mappings
+│   ├── energy-flow-sensor.json  # EnergyFlowSensor (EFS01)
+│   ├── topology-sensor.json     # TopologySensor (TPS01)
+│   ├── suite/comprehensive.json # Full sensor suite config
+│   └── {emotion}.json           # Per-emotion sensor definitions (anger, grief, love, etc.)
+├── schemas/
+│   ├── unified-sensor-event.schema.json  # Cross-substrate sensor event schema
+│   ├── emotion.schema.json
+│   ├── emotion_atom.schema.json
+│   ├── elder-sensor.schema.json
+│   └── multi_layer_sensor.template.json
+└── .fieldlink.json              # Fieldlink config
+```
+
+#### Connection to `integrated.py`
+
+`integrated.py` references four classes that map to Emotions-as-Sensors concepts:
+
+| Class in `integrated.py` | Role | Emotions-as-Sensors Equivalent |
+|--------------------------|------|-------------------------------|
+| `FELTEngine` | Field-level coherence detection | `sensors/felt.json` data contract + `EmotionSystem` runtime pattern |
+| `FELTSensorImplementation` | FELT compute pipeline | `EmotionSensor` class + `sensors/felt.json` config |
+| `FearSensorImplementation` | Fear/threat detection | `EmotionSensor` class + `sensors/fear.json` config |
+| `GlyphPhaseSynchronizer` | Glyph-to-state mapping | `sensors/glyph-map.json` + `SensorState` dataclass |
+
+**Status**: These four classes exist only as call-site interfaces in `integrated.py`. The Emotions-as-Sensors repo provides the **data contracts** (JSON sensor definitions) and **runtime primitives** (`EmotionSensor`, `EmotionSystem`, `SensorState`) but not the exact named classes. Implementing them would bridge the two repos.
+
+#### Existing Python Classes (Emotions-as-Sensors)
+
+**`EmotionSensor`** (`src/emotion_core.py`) — single sensor unit:
+- Constructor: `__init__(self, config: dict)` — loads from JSON sensor definition
+- Properties: `name`, `function`, `signal_type`, `decay_model`, `resonance_links`, `energy_role`, `lambda_`, `alpha`, `couplings`, `max_action_cost`, `E` (activation), `U`, `active`
+- Methods:
+  - `sense(external_signal)` → scaled detection value
+  - `kernel(E)` → applies decay model (exponential/cyclical/power)
+  - `update(dt, inputs, neighbors)` → integrates one timestep
+  - `release()` → decay control
+  - `energy_budget(inputs)` → energy balance
+
+**`EmotionSystem`** (`src/emotion_core.py`) — multi-sensor orchestrator:
+- Constructor: `__init__(self, sensor_dir)` — loads all JSON configs from a directory
+- Methods:
+  - `load_sensors(directory)` → loads JSON sensor configs
+  - `step(dt, inputs)` → one global timestep
+  - `run(duration, dt)` → simulation loop, returns history
+
+**`SensorState`** (`src/emotions_playground.py`) — dataclass for sensor state:
+- Fields: `sensor_id`, `classification`, `current_signal` (float), `confidence` (float), `calibration_checks` (dict), `resonance_links` (list), `decay_rate` (float), `last_updated` (datetime)
+- Methods: `apply_decay()`, `trigger(intensity, confidence)`, `to_vector()` → numpy array
+
+**`EmotionalPlayground`** (`src/emotions_playground.py`) — interactive exploration:
+- Constructor: `__init__(self, sensor_suite_json: dict)` — loads sensor suite
+- Modes: calibration, resonance, pattern, narrative, crossover
+
+**`UnifiedConsciousnessMonitor`** (`src/ucm_monitor.py`) — temporal agency tracker:
+- Constructor: `__init__(self, session_name: str)`
+- Methods: `assess_moment(...)` (13 params), `print_assessment()`, `visualize_trajectory()`, `summary_report()`
+
+#### FELT Sensor Definition
+
+FELT (Relational Field Recognition) is a **field-level event**, not an emotion. It detects relational coherence through multi-sensory alignment:
+
+```json
+{
+  "code": "FELT",
+  "name": "Relational Field Recognition",
+  "glyph": "🕸️",
+  "type": "field_event",
+  "not_emotion": true,
+  "detectable_by": ["EnergyFlowSensor", "InformationFlowSensor", "TopologySensor", "GlyphPhaseSynchronizer"],
+  "sensor_weights": { "EnergyFlowSensor": 0.35, "InformationFlowSensor": 0.35, "TopologySensor": 0.30 },
+  "dimensions": ["resonance", "relational coherence", "boundary detection", "memory echo"]
+}
+```
+
+FELT activates when shape echoes resonate across boundaries, boundary pulses align, symbolic memory recalls, and multi-node systems recognize non-local coherence. Output is an optional emotion shape (e.g., RELIEF).
+
+#### Contributing Sensors
+
+| Sensor ID | Name | Type | Weight in FELT | Signal Modes |
+|-----------|------|------|---------------|-------------|
+| EFS01 | EnergyFlowSensor | gradient_detector | 0.35 | spike, pulse, drain, restoration |
+| — | InformationFlowSensor | — | 0.35 | (definition not yet in repo) |
+| TPS01 | TopologySensor | network_geometry_analyzer | 0.30 | loop_break, loop_closure, fractal_degradation, symmetry_restoration |
+
+#### Fear Sensor Definition
+
+Fear as a protective sensing mechanism (Elder Logic frame):
+
+```json
+{
+  "sensor": "fear",
+  "function": "Detects potential loss of valued things",
+  "signal_type": "loss anticipation",
+  "decay_model": { "resolved_threat": "exponential", "misinterpreted_threat": "linear", "persistent_or_invalidated": "persistent" },
+  "glyph_mapping": { "polyhedron": "icosahedron", "family": "anticipation", "principle": "⚖ (Balance) ↔ ⏳ (Causality)" }
+}
+```
+
+#### Emotion Glyph Map
+
+13 emotion-to-glyph bindings from `sensors/glyph-map.json`:
+
+| Sensor | Glyph | Alignment | Decay | Symbolic Role |
+|--------|-------|-----------|-------|--------------|
+| longing | 🌠 | field_potential | linear | opportunity field detector |
+| jealousy | ⚖️ | equity_balance | exponential | resource fairness sensor |
+| pain | 🩸 | pattern_disruption | linear | misalignment pressure sensor |
+| grief | 🌊 | connection_loss | exponential | loss pattern mapper |
+| shame | 🪞 | authenticity_vs_conformity | persistent | approval conflict scanner |
+| pride | 🏅 | pattern_completion | linear | completion confirmation sensor |
+| love | 💞 | harmonic_resonance | persistent | resonance harmonizer |
+| anger | 🛡️ | identity_coherence | exponential | boundary breach detector |
+| fear | ⚠️ | value_protection | exponential | anticipatory threat sensor |
+| excitement | ⚡ | positive_activation | linear | positive signal catalyst |
+| peace | 🕊️ | universal_alignment | persistent | alignment confirmation sensor |
+| contentment | 🍃 | effort_sufficiency | linear | current-cycle completion monitor |
+| compassion | 🫀 | interconnection_resonance | persistent | mirror signal integrator |
+
+#### Unified Sensor Event Schema
+
+All cross-substrate sensor events conform to `schemas/unified-sensor-event.schema.json`:
+- **Required fields**: `id`, `signal_type` (boundary|connection|loss|resonance|threat|potential), `substrate` (human|ai), `function` (navigation|alignment|boundary protection|resonance detection), `authentic_output`, `corrupted_output`, `decay_model`, `response_protocol` (detect → assess → respond → release), `tags`
+- **Optional**: `trigger` (human/ai), `amplification` (human/ai), `resonance_links`
+
+#### Implementation Roadmap
+
+To make `integrated.py` runnable, these classes need Python implementations:
+
+1. **`FELTEngine`** — Wraps `EmotionSystem` with FELT-specific weighted sensor fusion (EnergyFlowSensor 0.35 + InformationFlowSensor 0.35 + TopologySensor 0.30). Expected interface from `integrated.py`:
+   - `check_field_integrity(relational_context)` — coherence audit
+   - `current_coherence` — property returning current FELT coherence score
+
+2. **`FELTSensorImplementation`** — Configures an `EmotionSensor` with `felt.json` parameters. Expected interface:
+   - `compute_felt({"participants": [...], "context": {...}})` — returns dict with `felt_level` key
+
+3. **`FearSensorImplementation`** — Configures an `EmotionSensor` with `fear.json` parameters. No direct method calls in `integrated.py` but instantiated as a component.
+
+4. **`GlyphPhaseSynchronizer`** — Maps FELT states to glyphs using `glyph-map.json`. Expected interface:
+   - `get_glyph_for_state(felt_level, detected_glyphs)` — returns dict with `primary` key
 
 ### BioGrid2.0 Glyph System (Cross-Repository)
 
