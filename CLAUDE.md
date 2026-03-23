@@ -4,9 +4,29 @@
 
 Polyhedral Intelligence is a symbolic knowledge system that processes concepts through mandala-based geometric frameworks. It combines **20 Families** (mapped onto an icosahedron) and **12 Principles** (mapped onto a dodecahedron) to generate symbolic "glyphs" and mandala insights from design concepts.
 
-The system implements two core protocols:
-- **Mandala Redesign Protocol (MRP)** — Generates mandala insights by sweeping concepts against all 20 Families and 12 Principles
-- **Noise-to-Insight Protocol (NIP)** — Transforms noise (turbulence, uncertainty, error) into resilience insights
+The system implements two core protocols (combined as the **Mandala Noise-Redesign Protocol**):
+
+#### Mandala Redesign Protocol (MRP) — 7 Steps
+
+1. **Seed Glyph** — compress concept into a symbolic rune
+2. **Family Sweep** — check resonance across 20 Families (mark each ✅ balanced, ⚖️ neutral, or ❗ flagged)
+3. **Principle Sweep** — align with 12 Archetypal Principles (same marking)
+4. **Bridge Glyphs** — add connectors where Families meet
+5. **Corrective Evolution** — patch imbalances with stabilizers
+6. **Mandala Spin Test** — visualize balance across the dual polyhedra
+7. **Record Entry** — store in Atlas as `.md` + `.json`
+
+#### Noise-to-Insight Protocol (NIP) — 5 Patterns
+
+NIP reframes destructive/chaotic elements as design features:
+
+1. **Noise = Fractal Signal** — turbulence becomes structure
+2. **Uncertainty = Silence Signal** — absence reveals truth
+3. **Delay = Relative Time** — lags reveal hidden dimensions
+4. **Error = Hidden Dimension** — contradictions expand space
+5. **Instability = Emergent Flexibility** — wobble becomes adaptation
+
+Flagged families/principles from the MRP sweeps (❗) become NIP inputs. Each flag gets a reframed insight in the entry's `noise_to_insight` section.
 
 ## Repository Structure
 
@@ -48,13 +68,49 @@ The system implements two core protocols:
 
 ## Key Concepts
 
-### The 20 Families (Icosahedron)
+### The 20 Families (Icosahedron) — Symbol Reference
 
-F01-Resonance, F02-Flow, F03-Information, F04-Life, F05-Energy/Thermo, F06-Cognition, F07-Earth/Cosmos, F08-Matter, F09-Geometry, F10-Particle, F11-Engineering, F12-Networks, F13-Reaction, F14-Measurement, F15-Navigation, F16-Consciousness, F17-Turbulence, F18-Relativity, F19-Statistical, F20-Topology
+| ID | Name | Symbol | Domain |
+|----|------|--------|--------|
+| F01 | Resonance | `≡≡≡` | Harmonics, standing waves, synchronization |
+| F02 | Flow | `↻` | Fluid motion, laminar flow, vorticity |
+| F03 | Information | `⊗` | Data, signals, encoding |
+| F04 | Life | `••••` | Biological systems, organic growth |
+| F05 | Energy-Thermo | `△≈` | Thermodynamics, energy transfer |
+| F06 | Cognition | `⋯⋯` | Neural processing, brain, thought |
+| F07 | Earth-Cosmos | `◯` | Planetary, orbital, celestial |
+| F08 | Matter | `◆` | Materials, substance, crystallography |
+| F09 | Geometry | `☆` | Shape, spatial form, tiling |
+| F10 | Particle | `⚪` | Quantum, atomic, subatomic |
+| F11 | Engineering | `⚙` | Design, build, conversion |
+| F12 | Networks | `⬡` | Graphs, webs, mesh, hive |
+| F13 | Reaction | `⇑` | Chemical/material response |
+| F14 | Measurement | `↕` | Sensing, in-situ measurement |
+| F15 | Navigation | `◆→` | Positioning, wayfinding |
+| F16 | Consciousness | `◎` | Awareness, ethical framing |
+| F17 | Turbulence | `ᘯᘰ` | Chaos, chaotic flow |
+| F18 | Relativity | `⊗≡` | Frame-dependent phenomena |
+| F19 | Statistical | `▁▃▅∿` | Statistical physics, distributions |
+| F20 | Topology | `∞` | Modular, self-healing topology |
 
-### The 12 Principles (Dodecahedron)
+### The 12 Principles (Dodecahedron) — Symbol Reference
 
-P01-Symmetry, P02-Conservation, P03-Relativity, P04-Duality, P05-Emergence, P06-Resonance, P07-Continuity, P08-Quantization, P09-Proportion, P10-Uncertainty, P11-Transformation, P12-Unity
+| ID | Name | Symbol |
+|----|------|--------|
+| P01 | Symmetry | `⧖` |
+| P02 | Conservation | `↺` |
+| P03 | Relativity | `⊗` |
+| P04 | Duality | `◑` |
+| P05 | Emergence | `●●` |
+| P06 | Resonance | `∿` |
+| P07 | Continuity | `⎯` |
+| P08 | Quantization | `▭` |
+| P09 | Proportion | `▯` |
+| P10 | Uncertainty | `◧` |
+| P11 | Transformation | `↻` |
+| P12 | Unity | `◎` |
+
+**Note:** Symbols are canonical from `protocols.json` and `atlas_schema.json` (identical). The CLI keyword maps in `Poly.py` (lines 100-140) and `Polyhedral-cli.py` (lines 95-106) use a separate keyword-to-symbol mapping for glyph creation. Entry markdown files sometimes use stylistic variants (e.g., `〰〰〰` for Resonance, `◇` for Matter) that differ from the canonical schema symbols — these are contextual glyph components, not contradictions.
 
 ### Five Meta-Fields
 
@@ -114,6 +170,24 @@ Each entry consists of a paired `.md` and `.json` file in `entries/`. The JSON s
 
 Note: `families_balanced` and `principles_balanced` are integers (counts), not arrays. The `noise_to_insight` keys use glyph symbols, not plain-text names.
 
+### Schema Files: `atlas_schema.json` vs `protocols.json`
+
+Both files define the 20 Families and 12 Principles, but serve different purposes:
+
+- **`atlas_schema.json`** — The **master schema** with fully populated equations. Each family/principle contains an `equations` array where each equation has:
+  ```json
+  {
+    "name": "Wave Equation (1D Standing Wave)",
+    "formula": "y(x,t) = A sin(kx) cos(ωt)",
+    "glyph": "🎵⚡",
+    "glyph_name": "Glyph of Frozen Vibration",
+    "tags": ["standing-wave", "harmonics", "oscillation"]
+  }
+  ```
+- **`protocols.json`** — A **lightweight schema** with the same family/principle structure but **empty equation arrays**. Used as a protocol reference without the equation weight.
+
+When adding equations, add them to `atlas_schema.json`. When referencing families/principles structurally, either file works.
+
 ### Naming Conventions
 
 - Entry files: `NNNN_snake_case_title.{md,json}` (e.g., `0001_honeycomb_infrastructure.md`)
@@ -135,6 +209,23 @@ Note: `families_balanced` and `principles_balanced` are integers (counts), not a
 - **No dependency management**: Click is the only external dependency but is not pinned anywhere.
 - **License**: MIT (Copyright 2025 JinnZ2)
 - **Git conventions**: Simple commit messages following "Create X" / "Update X" pattern.
+
+## Ontological Framework (`Ontology.md`)
+
+`Ontology.md` maps 8 key concepts across **Western** vs **Relational/Indigenous** frameworks to prevent conceptual flattening when working across knowledge systems:
+
+| Concept | Western Lens | Relational Lens |
+|---------|-------------|-----------------|
+| Control | Force/regulation, centralized | Alignment with natural patterns, distributed |
+| Strength | Rigidity, resistance to change | Adaptive capacity, flexibility |
+| Efficiency | Max output per input (narrow metric) | Whole-system optimization, regeneration |
+| Speed | Faster = better | Right timing matched to consequence |
+| Technology | Manufactured tools | Any systematic method (biological, social, technical) |
+| Intelligence | Cognitive/computational | Pattern recognition, multi-sensory adaptation |
+| Knowledge | Codified, context-free information | Embodied, relational, context-dependent |
+| Sensing | Technological instruments | Any reliable modality (biological, social, technical) |
+
+Each concept identifies **hidden variables** the Western framework often misses (relational, temporal, field, embodied, and systemic variables). The document includes a practical translation protocol for cross-framework communication.
 
 ## Integration Points
 
