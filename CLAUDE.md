@@ -229,8 +229,146 @@ Each concept identifies **hidden variables** the Western framework often misses 
 
 ## Integration Points
 
-- **BioGrid2.0**: Linked via fieldlink protocol (`https://github.com/JinnZ2/BioGrid2.0`)
-- **Fieldlink Protocol**: Cross-repository data synchronization with deep-merge strategy, SHA256 integrity checks, and CC-BY-4.0 licensing
+### Fieldlink Protocol
+
+Cross-repository data synchronization connecting Polyhedral Intelligence to **BioGrid2.0** (`https://github.com/JinnZ2/BioGrid2.0`). Configuration lives in `.fieldlink.json`.
+
+- **Strategy**: deep-merge (local → remote priority order)
+- **Integrity**: SHA256 checksums, missing files allowed
+- **License**: CC-BY-4.0 for shared content
+- **Mounted paths** from BioGrid2.0:
+  - `planned/glyphs/atlas.json` → `atlas/remote/planned.json`
+  - `registry/atlas.glyphs.json` → `atlas/remote/registry.json`
+
+### BioGrid2.0 Glyph System (Cross-Repository)
+
+BioGrid2.0 maintains a parallel glyph system that extends and complements this repo's framework. Key files in BioGrid2.0:
+
+| File | Purpose |
+|------|---------|
+| `registry/atlas.glyphs.json` | Master glyph atlas: Principles Lattice, Blind-Spot Wheel, Continuity Strip |
+| `registry/atlas.shapes.json` | Shape-to-principle bindings (Rosetta Shapes) |
+| `planned/glyphs/canonical.json` | Flat canonical glyph list (36 entries) |
+| `planned/glyphs/glyph_canonical_master_v2.json` | Comprehensive master registry (85+ entries, v2.0) |
+| `planned/glyphs/glyph_extension_set_v1.json` | Extension set (25 new glyphs beyond canonical) |
+| `planned/glyphs/glyph_template.json` | Template for creating new glyphs |
+| `planned/glyphs/SLL.json` | Symbiotic Learning Law glyph definition |
+| `schema/shape.seed.schema.json` | JSON Schema for shape seeds |
+| `schema/Core_Integration.json` | Glyph routes (G01-G05) with linked sensors |
+
+#### BioGrid2.0 Principles Lattice (P01-P12)
+
+BioGrid2.0 uses **emoji-based** principle symbols organized into 4 axes, compared to this repo's Unicode-based symbols:
+
+| Code | Name | BioGrid Symbol | PolyIntel Symbol | Axis |
+|------|------|---------------|-----------------|------|
+| P01 | Symmetry | ⚖️ | `⧖` | Invariance |
+| P02 | Conservation | ♻️ | `↺` | Invariance |
+| P03 | Relativity | 🌀 | `⊗` | Invariance |
+| P04 | Causality/Duality | ⏳ | `◑` | Transformation |
+| P05 | Emergence | 🌱 | `●●` | Transformation |
+| P06 | Entropy/Resonance | 🔄 | `∿` | Transformation |
+| P07 | Information/Continuity | 🧩 | `⎯` | Connectivity |
+| P08 | Interaction/Quantization | 🤝 | `▭` | Connectivity |
+| P09 | Network/Proportion | 🕸 | `▯` | Connectivity |
+| P10 | Adaptation/Uncertainty | 🐚 | `◧` | Evolution |
+| P11 | Evolution/Transformation | 🦋 | `↻` | Evolution |
+| P12 | Coherence/Unity | 🔮 | `◎` | Evolution |
+
+**Note:** Principle *names* differ between repos (e.g., P04 is "Duality" here, "Causality" in BioGrid2.0; P06 is "Resonance" here, "Entropy" there). The axes (Invariance, Transformation, Connectivity, Evolution) are a BioGrid2.0 organizational layer not present in this repo.
+
+#### Extended Principles (P13-P22, BioGrid2.0 only)
+
+BioGrid2.0 extends beyond the 12 core principles:
+
+| Code | Name | Glyph | Layers |
+|------|------|-------|--------|
+| P13 | Hidden Continuity | 🌒 | — |
+| P14 | Reciprocity | 🔁🤝 | — |
+| P15 | Suppression | ⤓ | — |
+| P16 | Resurgence/Revival | ⤒🌱 | — |
+| P17 | Concealment | 🕶️ | — |
+| P18 | Recursion | 🔁🔁 | principle, field, debug |
+| P19 | Dimensional Translation | 📐⤴️ | principle, symbolic, field |
+| P20 | Threshold Shift | ⛩️⤴️ | principle, field, moral |
+| P21 | Signal Amplification | 📣➰ | principle, eco, symbolic |
+| P22 | Co-Patterning | 🧵🧬 | principle, symbolic, ecological |
+
+#### Glyph Categories (BioGrid2.0 Master Registry)
+
+The master v2 registry organizes glyphs into named categories beyond principles:
+
+| Category | Prefix | Examples | Purpose |
+|----------|--------|----------|---------|
+| **Blind-Spot** | `BLIND:` | `◐` Provisional, `◆` Overfit?, `✧` Dissonance, `☯` Mirror | Cognitive bias detection |
+| **Procedural** | `PROC:` | `➗` Divide, `🔀` Merge, `🔄🤝` Exchange, `🎛️↻` Simulate | Process execution steps |
+| **Integrity** | `INTEGRITY:` | `🧬🧾` Checksum, `🌪️⛔` Drift, `⚓🔣` Anchor | Trust and validity checks |
+| **Ecological** | `ECO:` | `⚰️🧱` Decay, `🌿↻` Regen, `📈💥` Overshoot | System health and lifecycle |
+| **Moral** | `MORAL:` | `🧭⚖️` Compass, `💀🤝` Corrupt, `🙏➰` Gratitude | Ethical framing |
+| **Debug** | `DEBUG:` | `📍📜` Trace, `⏳💫` Timewarp, `📥🧠` Injection | Diagnostic and tracing |
+| **Field** | `FIELD:` | `🪨🧬` Remnant, `🌀📚` Fractal Memory | Persistent layer artifacts |
+| **Continuity** | CTX/ID/STEP/... | `◐CTX` Context, `◆ID` Decision ID, `⬢SIG` Signature | Session state tracking |
+
+#### Glyph Routes (Core Integration)
+
+BioGrid2.0's `Core_Integration.json` defines **Glyph Routes** — named glyphs linked to sensor systems:
+
+| Route | Label | Linked Sensors |
+|-------|-------|---------------|
+| G01 | Memory Persistence | Forgotten After End Date, Indirect Consequence Memory |
+| G02 | Truth Splinter | Epistemological Suppression, Regional Variation Omission |
+| G03 | Language Binding | Language Suppression, Cultural Mythic Alignment |
+| G04 | Fractal Echo | Relational & Sociality, Corded Braid, Mycelial Response |
+| G05 | Causality Braid | Future Consequence Obfuscators, Promise vs Fulfillment Detector |
+
+#### Rosetta Shapes
+
+`atlas.shapes.json` binds geometric shapes to principles as a translation layer:
+
+| Shape ID | Binds To | Notes |
+|----------|----------|-------|
+| `RSC:spiral-phi-01` | 🌀 P03 | Relativity; scale symmetry |
+| `RSC:mycelium-web-02` | 🕸 P09, FR01 | Network/resonance |
+| `RSC:ring-stack-03` | ⚖️ P01 | Symmetry/radial invariants |
+
+#### Shape Seed Schema
+
+New shapes require: `id`, `version`, `geometry` (type, dimensions 1-4, orientation, material), `field` (property, actions), `glyphs` array, `animals` array. Optional: `importance`, `notes`. Schema at `schema/shape.seed.schema.json`.
+
+#### Symbiotic Learning Law (SLL)
+
+A specialized glyph (`♾️🌱⚖️⏳`, code `LAW:SLL`) encoding cost-learning dynamics:
+- **Essence**: System costs decline with cumulative production × relationship quality × alignment with natural law
+- **Variables**: Mutual Enhancement (ME), Energy Reciprocity (ER), Information Fidelity (IF), Adaptive Learning (AL), Temporal Regeneration (TR), Scale Resonance (SR) — each 0-10
+- **SIQ** (Symbiotic Intelligence Quotient) = sum of variables ÷ energy investment ratio
+- **Constant**: φ = 1.618034 (golden ratio)
+- **Layers**: economic, ecological, symbolic
+
+#### Animal Glyphs (BioGrid2.0)
+
+BioGrid2.0 includes animal-behavior glyphs mapping biological intelligence:
+
+| Glyph | Code | Name | Principle |
+|-------|------|------|-----------|
+| 🐜↺ | ANT:OSC | Oscillatory Trail Behavior | Path oscillation encodes gradient strength |
+| 🐜⚖️ | ANT:CRIT | Critical-Mass Sensitivity | Collective sensitivity threshold |
+| 🐜🔀 | ANT:CASTE | Caste-Threshold Modulation | Multi-factor role assignment |
+
+This repo already uses animal symbols in entry glyphs (🦇 bat, 🐬 dolphin in entry 0002).
+
+### Glyph Template (for new BioGrid2.0-style glyphs)
+
+```json
+{
+  "code": "CATEGORY:NAME_OR_NUMBER",
+  "name": "Descriptive Name",
+  "glyph": "🔣",
+  "layers": ["principle", "symbolic", "field"],
+  "notes": "Optional explanation of meaning, role, or intended usage.",
+  "alt_glyphs": [],
+  "alt_name": ""
+}
+```
 
 ## Working with This Codebase
 
