@@ -268,8 +268,16 @@ Emotions-as-Sensors/
 │   ├── emotion_atom.schema.json
 │   ├── elder-sensor.schema.json
 │   └── multi_layer_sensor.template.json
+├── Symbolic-Swarm-Index/        # Swarm intelligence sub-project
+│   └── *.py                     # SwarmNode, SwarmOrchestrator, DesireField, DesireReading, DesireMemory
+├── culture/
+│   └── culture_guard.py         # Cultural health metrics evaluation
+├── tools/
+│   └── validate.py              # Schema validation utility
 └── .fieldlink.json              # Fieldlink config
 ```
+
+**Note:** The `Symbolic-Swarm-Index/` subdirectory contains swarm intelligence classes (`SwarmNode`, `SwarmOrchestrator`, `DesireField`, `DesireReading`, `DesireMemory`) that could be relevant for future integration but are not currently referenced by `integrated.py`.
 
 #### Connection to `integrated.py`
 
