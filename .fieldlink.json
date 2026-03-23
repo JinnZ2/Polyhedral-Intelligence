@@ -1,9 +1,9 @@
 {
   "fieldlink": {
     "version": "1.0",
-    "updated": "2025-09-11T00:00:00Z",
+    "updated": "2026-03-23T00:00:00Z",
 
-    "role": ["sensors", "protocols", "shapes", "hub"],
+    "role": ["equations", "glyphs", "entries", "hub"],
 
     "atlas_repo": "https://github.com/JinnZ2/BioGrid2.0",
     "ref": "main",
@@ -13,22 +13,19 @@
     ],
 
     "local_manifests": [
-      "glyphs/**",
-      "protocols/**",
-      "sensors/**",
-      "atlas/shapes.json"
+      "glyphs/**"
     ],
 
     "merge": {
-      "order": ["local", "remote"],          // precedence left→right
-      "strategy": "deep-merge"               // or: "replace", "prefer-remote"
+      "order": ["local", "remote"],
+      "strategy": "deep-merge"
     },
 
     "offline": false,
     "cache_dir": ".fieldcache",
 
     "integrity": {
-      "enabled": false,
+      "enabled": true,
       "hash": "sha256",
       "allow_missing": true
     },
