@@ -95,7 +95,7 @@ where equations, systems, and designs are united by resonance, emergence, and re
 
 ### Fieldlink (bridge manifest)
 - `.fieldlink.json` tells tools **where the wider atlas lives**, what to read locally, and how to merge.
-- Validate with `fieldlink.schema.json`.
+- Validate with `fieldlink_schema.json`.
 - Pull + stage manifests with:
   ```bash
   ./fieldlink-pull.sh

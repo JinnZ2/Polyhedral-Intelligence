@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/schemas/fieldlink.schema.json",
+  "$id": "https://example.org/schemas/fieldlink_schema.json",
   "title": "Fieldlink Configuration",
   "type": "object",
   "required": ["fieldlink"],

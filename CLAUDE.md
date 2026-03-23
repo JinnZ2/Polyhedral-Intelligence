@@ -17,10 +17,10 @@ The system implements two core protocols:
 ├── integrated.py                    # Architectural sketch: emotional matrix + field integration (193 lines, not runnable)
 ├── atlas_schema.json                # Master schema: all 20 Families with equations
 ├── atlas_index.json                 # Index of atlas entries
-├── protocol.json / protocols.json   # Families + principles schema (identical duplicates, equations empty)
+├── protocols.json                   # Families + principles schema (equations empty)
 ├── five_field_schema_map.json       # Maps 20 Families to 5 meta-fields
 ├── .fieldlink.json                  # Cross-repository linking config
-├── fieldlink.schema.json            # JSON Schema for fieldlink validation
+├── fieldlink_schema.json            # JSON Schema for fieldlink validation
 ├── README.md                        # Project introduction
 ├── Ontology.md                      # Framework mappings (Western vs Relational)
 ├── Polyhedral-Intelligence-Schema.md # Detailed family/principle/equation reference
