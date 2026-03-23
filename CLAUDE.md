@@ -12,12 +12,12 @@ The system implements two core protocols:
 
 ```
 /
-├── Poly.py                          # Main symbolic intelligence engine (699 lines)
-├── Polyhedral-cli.py                # CLI interface using Click (488 lines)
-├── integrated.py                    # Emotional matrix and field integration (193 lines)
+├── Poly.py                          # Extended CLI with AI-enhanced glyph creation (699 lines)
+├── Polyhedral-cli.py                # Base CLI using Click (488 lines)
+├── integrated.py                    # Architectural sketch: emotional matrix + field integration (193 lines, not runnable)
 ├── atlas_schema.json                # Master schema: all 20 Families with equations
 ├── atlas_index.json                 # Index of atlas entries
-├── protocol.json / protocols.json   # Protocol definitions (MRP, NIP)
+├── protocol.json / protocols.json   # Families + principles schema (identical duplicates, equations empty)
 ├── five_field_schema_map.json       # Maps 20 Families to 5 meta-fields
 ├── .fieldlink.json                  # Cross-repository linking config
 ├── fieldlink.schema.json            # JSON Schema for fieldlink validation
@@ -62,20 +62,31 @@ The 20 Families map to 5 higher-order fields:
 - **Chemical** (F01-F04): baseline stability
 - **Emotional** (F05-F08): sensitivity/harmonization
 - **Cognitive** (F09-F11): synchronization
-- **Dream** (F12-F17): emergence/synthesis
+- **Dream** (F12-F17): emergence, attractor maintenance, and synthesis
 - **Symbolic** (F18-F20): encoding/projection
 
 ### Glyphs
 
 Unicode-based symbolic tokens (e.g., `◇⚙➝〰〰〰⬡`) that encode design concepts. Each symbol maps to a Family or concept domain.
 
+## CLI Tools
+
+There are **two CLI files** — both use Click and share the same command structure:
+- **`Polyhedral-cli.py`**: Base CLI with core commands
+- **`Poly.py`**: Extended version adding `--ai-enhance` flag on `glyph create` and a `glyph evolve` command
+
+**`integrated.py`** defines `PolyhedralEmotionalMatrix` and `UnifiedResonanceEngine` classes but references undefined external classes (`FELTEngine`, `FELTSensorImplementation`, `FearSensorImplementation`, `GlyphPhaseSynchronizer`). It is an architectural design sketch, not runnable code.
+
 ## CLI Commands
 
 ```bash
 poly glyph create "concept"           # Create a glyph from a concept
+poly glyph create "concept" --ai-enhance  # (Poly.py only) AI-enhanced creation
+poly glyph decode "◇⚙➝〰〰〰⬡"       # Decode glyph into families/principles
+poly glyph evolve --from "◇⚙" --to "◇⚙➝〰〰〰⬡ᘯᘰ⇑◧"  # (Poly.py only)
 poly scan --families --principles      # Scan against framework
 poly solve --glyph "◇⚙➝〰〰〰⬡" --output honeycomb/
-poly mandala generate --entry honeycomb --visualize
+poly mandala create --entry NAME --glyph "◇⚙➝〰〰〰⬡" --intent "description"
 poly fieldlink sync --remote <url>     # Sync with remote atlas
 poly init                              # Initialize workspace
 poly quickref                          # Show quick reference
@@ -93,13 +104,15 @@ Each entry consists of a paired `.md` and `.json` file in `entries/`. The JSON s
   "title": "Entry Title",
   "seed_glyph": "◇⚙➝〰〰〰⬡",
   "intent": "...",
-  "resonance_sweep": { "families_balanced": [], "families_total": 0, "flags": [] },
-  "principle_sweep": { "principles_balanced": [], "principles_total": 0, "flags": [] },
-  "noise_to_insight": { "turbulence": "...", "uncertainty": "..." },
+  "resonance_sweep": { "families_balanced": 17, "families_total": 20, "flags": ["ᘯᘰ Turbulence", "⇑ Reaction"] },
+  "principle_sweep": { "principles_balanced": 11, "principles_total": 12, "flags": ["◧ Uncertainty"] },
+  "noise_to_insight": { "ᘯᘰ": "reframed insight...", "⇑": "reframed insight..." },
   "refined_glyph": "...",
   "insight": "..."
 }
 ```
+
+Note: `families_balanced` and `principles_balanced` are integers (counts), not arrays. The `noise_to_insight` keys use glyph symbols, not plain-text names.
 
 ### Naming Conventions
 
@@ -132,6 +145,6 @@ Each entry consists of a paired `.md` and `.json` file in `entries/`. The JSON s
 
 1. **Adding a new entry**: Create both `entries/NNNN_title.md` and `entries/NNNN_title.json` following existing entry patterns. Update `atlas_index.json`.
 2. **Adding a new Family/Principle equation**: Create the corresponding `equations/FNN_Name.md` or `equations/PNN_Name.md` file and update `equations/equations_index.md`.
-3. **Modifying the CLI**: Edit `Polyhedral-cli.py` for command changes or `Poly.py` for core engine logic.
+3. **Modifying the CLI**: `Polyhedral-cli.py` is the base CLI; `Poly.py` is the extended version. Changes to shared commands should be mirrored in both files. AI-enhanced features live only in `Poly.py`.
 4. **Updating the glyph registry**: Edit `glyphs/Glyphs.md` when new glyphs are introduced.
 5. **Schema changes**: Update `atlas_schema.json` for structural changes to the Family/Principle framework.
