@@ -2,5 +2,9 @@
 Mandala-Computing/
 Regenerative-intelligence-core/
 
+# Python
+__pycache__/
+*.pyc
+
 # Fieldlink cache
 .fieldcache/
