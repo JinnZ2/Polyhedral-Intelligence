@@ -1,0 +1,6 @@
+# Nested repos (separate git repositories, not submodules)
+Mandala-Computing/
+Regenerative-intelligence-core/
+
+# Fieldlink cache
+.fieldcache/
