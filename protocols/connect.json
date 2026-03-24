@@ -1,0 +1,132 @@
+{
+  "schema": "polyhedral-intelligence/protocol@1.0",
+  "description": "Fieldlink integration protocol. Defines how Polyhedral-Intelligence connects to the ecosystem: what it exports, what it consumes, and the handshake format.",
+
+  "identity": {
+    "repo": "Polyhedral-Intelligence",
+    "owner": "JinnZ2",
+    "role": "symbolic-knowledge-hub",
+    "capabilities": [
+      "family-sweep",
+      "principle-sweep",
+      "glyph-creation",
+      "glyph-decoding",
+      "mandala-redesign-protocol",
+      "noise-to-insight-protocol",
+      "atlas-entry-generation"
+    ]
+  },
+
+  "exports": {
+    "description": "Data and interfaces Polyhedral-Intelligence provides to other repos.",
+    "endpoints": [
+      {
+        "path": "atlas_schema.json",
+        "type": "schema",
+        "description": "Master schema: 20 Families (icosahedron) with full equations, 12 Principles (dodecahedron), metadata. The richest structured data source in the ecosystem."
+      },
+      {
+        "path": "protocols.json",
+        "type": "schema",
+        "description": "Lightweight family/principle reference without equation weight."
+      },
+      {
+        "path": "five_field_schema_map.json",
+        "type": "mapping",
+        "description": "Maps 20 Families to 5 meta-fields: Chemical (F01-F04), Emotional (F05-F08), Cognitive (F09-F11), Dream (F12-F17), Symbolic (F18-F20)."
+      },
+      {
+        "path": "atlas_index.json",
+        "type": "index",
+        "description": "Index of all atlas entries with IDs and titles."
+      },
+      {
+        "path": "entries/**/*.json",
+        "type": "data",
+        "description": "Atlas entries — seed glyphs, family/principle sweeps, noise-to-insight reframes, refined glyphs."
+      },
+      {
+        "path": "equations/equations_index.md",
+        "type": "index",
+        "description": "Master catalog of all family and principle equation files."
+      }
+    ]
+  },
+
+  "imports": {
+    "description": "Data Polyhedral-Intelligence can consume from ecosystem repos.",
+    "sources": [
+      {
+        "repo": "Rosetta-Shape-Core",
+        "paths": [
+          "shapes/icosahedron.json",
+          "shapes/dodecahedron.json",
+          "bridges/rosetta-bridges.json",
+          "ontology/_id_registry.json",
+          "data/seed-catalog.json"
+        ],
+        "entity_ids": ["SHAPE.ICOSA", "SHAPE.DODECA", "CONST.PHI"],
+        "use": "Shape-to-meaning translation for the two core polyhedra. Bridge mappings linking families/principles to sensors, defenses, and protocols.",
+        "status": "active"
+      },
+      {
+        "repo": "Mandala-Computing",
+        "paths": [
+          "atlas/shapes.json",
+          "atlas/glyphs/mandala.json",
+          "sensors/multi_layer.json"
+        ],
+        "entity_ids": ["SHAPE.OCTA", "CONST.PHI", "PROTO.MANDALA_COMPUTE"],
+        "use": "Octahedral computation model — 8 states, fractal ring schema, energy relaxation. Bridges mandala protocol steps to computational ground states.",
+        "status": "active"
+      },
+      {
+        "repo": "Regenerative-intelligence-core",
+        "paths": [
+          "protocols/seed_schema.py",
+          "protocols/rosetta_bridge.py"
+        ],
+        "use": "Agent lifecycle logic — seed compression, amplitude vectors (6 channels: structure, flow, connection, autonomy, transcendence, grounding), elder archive pattern.",
+        "status": "active"
+      },
+      {
+        "repo": "Emotions-as-Sensors",
+        "paths": [
+          "sensors/felt.json",
+          "sensors/fear.json",
+          "sensors/glyph-map.json"
+        ],
+        "use": "FELT field-event detection, emotion-glyph bindings for integrated.py bridge classes.",
+        "status": "active"
+      },
+      {
+        "repo": "BioGrid2.0",
+        "paths": [
+          "planned/glyphs/atlas.json",
+          "registry/atlas.glyphs.json"
+        ],
+        "use": "Extended glyph registry (85+ entries), animal glyphs, recovered glyphs, Principles Lattice with emoji symbols.",
+        "status": "active"
+      }
+    ]
+  },
+
+  "handshake": {
+    "description": "Protocol for establishing a fieldlink connection.",
+    "steps": [
+      "1. Consumer reads protocols/connect.json to discover exports.",
+      "2. Consumer fetches the exported JSON files listed in exports.endpoints.",
+      "3. Consumer validates schema version compatibility.",
+      "4. Consumer maps imported data to its internal representation.",
+      "5. Both repos record the link in their .fieldlink.json metadata."
+    ],
+    "schema_versioning": "semver — major bump = breaking change, minor = additive, patch = fix",
+    "discovery": "Repos can be discovered via PROJECTS.md or .fieldlink.json sources list."
+  },
+
+  "compatibility": {
+    "min_fieldlink_version": "1.0",
+    "formats": ["json", "markdown"],
+    "encoding": "utf-8"
+  }
+}
