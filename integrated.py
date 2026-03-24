@@ -63,18 +63,18 @@ class PolyhedralEmotionalMatrix:
         detected_glyphs = self.detect_glyphs(emotional_analysis)
         
         # Step 4: Cognitive processing based on glyphs
+        cognitive_response = self.process_through_field(
+            emotional_analysis,
+            "cognitive",
+            ["F09", "F10"]  # Geometry + Particle (structural integrity)
+        )
+
         if "EMOTIONAL_DISHONESTY" in detected_glyphs:
-            cognitive_response = self.process_through_field(
-                emotional_analysis,
-                "cognitive", 
-                ["F09", "F10"]  # Geometry + Particle (structural integrity)
-            )
-            
             # Trigger FELT coherence check
             self.felt_engine.check_field_integrity(
                 emotional_data.get("relational_context")
             )
-        
+
         # Step 5: Dream field synthesis
         dream_synthesis = self.process_through_field(
             cognitive_response,

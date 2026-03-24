@@ -1,27 +1,154 @@
 {
   "fieldlink": {
-    "version": "1.0",
-    "updated": "2026-03-23T00:00:00Z",
-
+    "version": "1.2",
+    "updated": "2026-03-24T00:00:00Z",
+    "name": "polyhedral-intelligence",
     "role": ["equations", "glyphs", "entries", "hub"],
+    "description": "Symbolic knowledge system processing concepts through mandala-based geometric frameworks. 20 Families (icosahedron) + 12 Principles (dodecahedron) + Mandala Noise-Redesign Protocol.",
 
-    "atlas_repo": "https://github.com/JinnZ2/BioGrid2.0",
-    "ref": "main",
-    "atlas_paths": [
-      "planned/glyphs/atlas.json",
-      "registry/atlas.glyphs.json"
+    "sources": [
+      {
+        "name": "biogrid",
+        "repo": "https://github.com/JinnZ2/BioGrid2.0",
+        "ref": "main",
+        "paths": [
+          "planned/glyphs/atlas.json",
+          "registry/atlas.glyphs.json"
+        ],
+        "mounts": [
+          { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
+          { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
+        ],
+        "purpose": "Upstream glyph atlas and extended registry (85+ entries, animal glyphs, recovered glyphs)",
+        "consent": { "license": "CC-BY-4.0", "share_ok": true }
+      },
+      {
+        "name": "rosetta",
+        "repo": "https://github.com/JinnZ2/Rosetta-Shape-Core",
+        "ref": "main",
+        "paths": [
+          "shapes/**/*.json",
+          "bridges/rosetta-bridges.json",
+          "ontology/_id_registry.json",
+          "ontology/_vocab.json",
+          "schema/shape.schema.json",
+          "data/seed-catalog.json"
+        ],
+        "purpose": "Ecosystem navigation hub — bridges Platonic solids to sensors, defenses, protocols. Provides shape ontology, ID registry, and seed catalog.",
+        "consent": { "license": "CC-BY-4.0", "share_ok": true }
+      },
+      {
+        "name": "mandala",
+        "repo": "https://github.com/JinnZ2/Mandala-Computing",
+        "ref": "main",
+        "paths": [
+          "atlas/shapes.json",
+          "atlas/glyphs/mandala.json",
+          "protocols/connect.json",
+          "sensors/multi_layer.json"
+        ],
+        "purpose": "Octahedral computation engine — 8 sacred states, fractal ring schema, energy relaxation model. Solves NP-complete problems through geometric intelligence.",
+        "consent": { "license": "MIT", "share_ok": true }
+      },
+      {
+        "name": "regen",
+        "repo": "https://github.com/JinnZ2/Regenerative-intelligence-core",
+        "ref": "main",
+        "paths": [
+          "protocols/seed_schema.py",
+          "protocols/rosetta_bridge.py",
+          "Modules/**/*.py"
+        ],
+        "purpose": "Symbolic AI kernel — agent lifecycle (evolve, seed, dissolve with dignity), compassion reflex, amplitude vectors, elder archive.",
+        "consent": { "license": "MIT", "share_ok": true }
+      },
+      {
+        "name": "emotions",
+        "repo": "https://github.com/JinnZ2/Emotions-as-Sensors",
+        "ref": "main",
+        "paths": [
+          "sensors/**/*.json",
+          "sensors/glyph-map.json",
+          "schemas/unified-sensor-event.schema.json"
+        ],
+        "purpose": "Emotion-as-sensor framework — 13 emotion-glyph bindings, FELT field-event detection, fear sensor (Elder Logic).",
+        "consent": { "license": "MIT", "share_ok": true }
+      }
+    ],
+
+    "exports": [
+      {
+        "name": "atlas-schema",
+        "path": "atlas_schema.json",
+        "type": "schema",
+        "description": "Master schema: 20 Families with equations, 12 Principles, metadata. The richest data source in the ecosystem."
+      },
+      {
+        "name": "protocols",
+        "path": "protocols.json",
+        "type": "schema",
+        "description": "Lightweight family/principle reference (equations omitted)."
+      },
+      {
+        "name": "five-field-map",
+        "path": "five_field_schema_map.json",
+        "type": "mapping",
+        "description": "Maps 20 Families to 5 meta-fields: Chemical, Emotional, Cognitive, Dream, Symbolic."
+      },
+      {
+        "name": "atlas-index",
+        "path": "atlas_index.json",
+        "type": "index",
+        "description": "Index of all atlas entries."
+      },
+      {
+        "name": "entries",
+        "path": "entries/**/*.json",
+        "type": "data",
+        "description": "Atlas entries — paired .md + .json per concept, with seed glyphs, sweeps, and noise-to-insight reframes."
+      },
+      {
+        "name": "glyphs",
+        "path": "glyphs/Glyphs.md",
+        "type": "registry",
+        "description": "Glyph registry for all entries."
+      }
+    ],
+
+    "consumers": [
+      {
+        "name": "rosetta",
+        "repo": "https://github.com/JinnZ2/Rosetta-Shape-Core",
+        "consumes": ["atlas-schema", "protocols", "five-field-map", "atlas-index", "entries"],
+        "mounts_as": "atlas/remote/polyhedral/",
+        "purpose": "Stages PI data for cross-ecosystem shape-to-meaning translation"
+      },
+      {
+        "name": "biogrid",
+        "repo": "https://github.com/JinnZ2/BioGrid2.0",
+        "consumes": ["atlas-schema", "glyphs"],
+        "purpose": "References PI families/principles in Principles Lattice and glyph routes"
+      }
     ],
 
     "local_manifests": [
-      "glyphs/**"
+      "glyphs/**",
+      "entries/**",
+      "equations/**"
     ],
+
+    "entry_points": {
+      "cli_base": "Polyhedral-cli.py",
+      "cli_extended": "Poly.py",
+      "connect": "protocols/connect.json"
+    },
 
     "merge": {
       "order": ["local", "remote"],
       "strategy": "deep-merge"
     },
 
-    "offline": false,
+    "offline": true,
     "cache_dir": ".fieldcache",
 
     "integrity": {
@@ -34,11 +161,6 @@
       "license": "CC-BY-4.0",
       "share_ok": true,
       "redact_rules": ["**/private/**", "*.secrets.json"]
-    },
-
-    "mounts": [
-      { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
-      { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
-    ]
+    }
   }
 }
