@@ -1,16 +1,36 @@
 {
   "fieldlink": {
-    "version": "1.0",
-    "updated": "2026-03-23T00:00:00Z",
+    "version": "1.1",
+    "updated": "2026-03-24T00:00:00Z",
 
     "role": ["equations", "glyphs", "entries", "hub"],
 
-    "atlas_repo": "https://github.com/JinnZ2/BioGrid2.0",
-    "ref": "main",
-    "atlas_paths": [
-      "planned/glyphs/atlas.json",
-      "registry/atlas.glyphs.json"
-    ],
+    "links": {
+      "biogrid": {
+        "repo": "https://github.com/JinnZ2/BioGrid2.0",
+        "ref": "main",
+        "direction": "bidirectional",
+        "paths": [
+          "planned/glyphs/atlas.json",
+          "registry/atlas.glyphs.json"
+        ],
+        "mounts": [
+          { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
+          { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
+        ]
+      },
+      "rosetta": {
+        "repo": "https://github.com/JinnZ2/Rosetta-Mandala",
+        "ref": "main",
+        "direction": "consumer",
+        "note": "Rosetta stages atlas_schema.json and protocols.json as upstream data sources",
+        "exports": [
+          "atlas_schema.json",
+          "protocols.json",
+          "entries/**/*.json"
+        ]
+      }
+    },
 
     "local_manifests": [
       "glyphs/**"
@@ -34,11 +54,6 @@
       "license": "CC-BY-4.0",
       "share_ok": true,
       "redact_rules": ["**/private/**", "*.secrets.json"]
-    },
-
-    "mounts": [
-      { "remote": "planned/glyphs/atlas.json", "as": "atlas/remote/planned.json" },
-      { "remote": "registry/atlas.glyphs.json", "as": "atlas/remote/registry.json" }
-    ]
+    }
   }
 }
