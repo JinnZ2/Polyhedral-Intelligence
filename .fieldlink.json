@@ -34,6 +34,18 @@
           "schema/shape.schema.json",
           "data/seed-catalog.json"
         ],
+        "mounts": [
+          { "remote": "shapes/tetrahedron.json", "as": "atlas/remote/rosetta/shapes/tetrahedron.json" },
+          { "remote": "shapes/cube.json", "as": "atlas/remote/rosetta/shapes/cube.json" },
+          { "remote": "shapes/octahedron.json", "as": "atlas/remote/rosetta/shapes/octahedron.json" },
+          { "remote": "shapes/dodecahedron.json", "as": "atlas/remote/rosetta/shapes/dodecahedron.json" },
+          { "remote": "shapes/icosahedron.json", "as": "atlas/remote/rosetta/shapes/icosahedron.json" },
+          { "remote": "bridges/rosetta-bridges.json", "as": "atlas/remote/rosetta/bridges.json" },
+          { "remote": "ontology/_id_registry.json", "as": "atlas/remote/rosetta/id_registry.json" },
+          { "remote": "ontology/_vocab.json", "as": "atlas/remote/rosetta/vocab.json" },
+          { "remote": "schema/shape.schema.json", "as": "atlas/remote/rosetta/shape.schema.json" },
+          { "remote": "data/seed-catalog.json", "as": "atlas/remote/rosetta/seed-catalog.json" }
+        ],
         "purpose": "Ecosystem navigation hub — bridges Platonic solids to sensors, defenses, protocols. Provides shape ontology, ID registry, and seed catalog.",
         "consent": { "license": "CC-BY-4.0", "share_ok": true }
       },
