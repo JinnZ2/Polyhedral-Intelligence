@@ -1,0 +1,24 @@
+{
+  "id": "0008",
+  "title": "Fractal Governance",
+  "seed_glyph": "☆∙∙●⬡◉↺",
+  "intent": "Self-similar governance structures at community, city, and nation scales, inspired by fractal geometry and emergence, where local decisions propagate through networked, conscious, conservation-driven systems.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["⇑ Reaction", "ᘯᘰ Turbulence", "⊗≡ Relativity"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["↻ Transformation"]
+  },
+  "noise_to_insight": {
+    "⇑": "Bureaucratic delay reframed as deliberation buffer — slowness ensures decisions carry collective weight",
+    "ᘯᘰ": "Political crisis reframed as stress test — instability reveals weakest fractal layers",
+    "⊗≡": "Cultural incompatibility reframed as diversity engine — local variation enriches the whole",
+    "↻": "Reform inertia reframed as stability anchor — resistance protects against reckless disruption"
+  },
+  "refined_glyph": "☆∙∙●⬡◉↺⇑ᘯᘰ⊗≡↻",
+  "insight": "Governance as a fractal garden: the same patterns of deliberation, accountability, and care repeated from household to nation. Political turbulence becomes a diagnostic, bureaucratic slowness becomes collective wisdom, cultural difference becomes structural richness, and resistance to change becomes the root system that holds the whole steady while the branches sway."
+}

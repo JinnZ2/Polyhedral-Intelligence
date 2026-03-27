@@ -1,0 +1,24 @@
+{
+  "id": "0009",
+  "title": "Symbiotic Materials",
+  "seed_glyph": "◇⒮⚙➝∙∙●〰〰〰",
+  "intent": "Living building materials that grow, repair, and adapt — merging biology with material science through resonance-driven self-organization and emergent structural behavior.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["△≈ Energy-Thermo", "⇑ Reaction", "∞ Topology"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◎ Unity"]
+  },
+  "noise_to_insight": {
+    "△≈": "Metabolic cost reframed as environmental coupling — material's energy needs make it a real-time climate sensor",
+    "⇑": "Slow healing reframed as deep repair — biological processes rebuild stronger than the original",
+    "∞": "Topological instability during growth reframed as adaptive morphology — material reshapes to meet demand",
+    "◎": "Bio-structural integration gap reframed as productive symbiosis — living and inert layers collaborate"
+  },
+  "refined_glyph": "◇⒮⚙➝∙∙●〰〰〰△≈⇑∞◎",
+  "insight": "Materials that breathe, heal, and remember — where metabolic cost becomes environmental awareness, slow repair becomes deep strength, and the challenge of unifying life with structure becomes productive symbiosis. These are not passive substances shaped by tools but active partners in construction, growing walls that learn from wind and roots that reinforce foundations from within."
+}

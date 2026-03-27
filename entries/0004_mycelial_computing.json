@@ -1,0 +1,24 @@
+{
+  "id": "0004",
+  "title": "Mycelial Computing",
+  "seed_glyph": "⬡∞⊗••⒮⋮⋯⋮",
+  "intent": "Distributed computation inspired by fungal mycelium networks, where information processing emerges through chemical signaling, network topology, and adaptive self-organization.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["⇑ Reaction", "ᘯᘰ Turbulence", "⚙ Engineering"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◎ Unity"]
+  },
+  "noise_to_insight": {
+    "⇑": "Chemical slowness reframed as temporal filtering — noise rejected through delay",
+    "ᘯᘰ": "Network fragmentation reframed as pruning — damage reveals optimal pathways",
+    "⚙": "Bio-digital interface gap reframed as translation layer and design grammar",
+    "◎": "Incomplete integration reframed as productive boundary between bio and digital layers"
+  },
+  "refined_glyph": "⬡∞⊗••⒮⋮⋯⋮⇑ᘯᘰ⚙◎",
+  "insight": "A living computer grown from fungal logic, where slowness is filtering, fragmentation is pruning, and the gap between biology and silicon becomes a generative boundary. The mycelium does not process information — it becomes information, threading chemical memory through soil, rewriting its own topology with every cycle of growth and decay."
+}

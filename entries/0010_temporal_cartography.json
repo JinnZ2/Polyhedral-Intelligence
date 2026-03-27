@@ -1,0 +1,24 @@
+{
+  "id": "0010",
+  "title": "Temporal Cartography",
+  "seed_glyph": "✦◠●▁▃▅∿⊗••☆",
+  "intent": "Mapping time as a navigable dimension, using statistical patterns and relativity to chart temporal landscapes — a system for wayfinding through cause, consequence, and cyclical recurrence.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["◎ Consciousness", "ᘯᘰ Turbulence", "∞ Topology"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["⎯ Continuity"]
+  },
+  "noise_to_insight": {
+    "◎": "Subjective time distortion reframed as experiential cartography — personal perception becomes a valid map layer",
+    "ᘯᘰ": "Chaotic temporal dynamics reframed as fractal coastline — the unmappable edge rich with detail at every zoom level",
+    "∞": "Temporal loops and branches reframed as terrain features — mountains and rivers of the temporal landscape",
+    "⎯": "Temporal discontinuities reframed as portals — phase transitions mark borders between temporal territories"
+  },
+  "refined_glyph": "✦◠●▁▃▅∿⊗••☆◎ᘯᘰ∞⎯",
+  "insight": "A cartography of time itself: where chaotic dynamics become fractal coastlines, subjective perception becomes a valid map layer, temporal loops become terrain features, and discontinuities become border crossings. This is navigation not through space but through consequence — charting the rivers of causality, the mountains of phase transition, and the deep ocean of statistical possibility that lies between every moment and its successor."
+}
