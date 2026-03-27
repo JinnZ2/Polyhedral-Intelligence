@@ -17,6 +17,48 @@
       "title": "Family Node Manufacturing",
       "glyph": "⚙➝⬡⟳⒮⇑◉ᘯᘰ▁▃▅∿◧",
       "tags": ["manufacturing", "resilience", "distributed-economy", "family-nodes", "ecology"]
+    },
+    {
+      "id": "0004",
+      "title": "Mycelial Computing",
+      "glyph": "⬡∞⊗••⒮⋮⋯⋮⇑ᘯᘰ⚙◎",
+      "tags": ["networks", "topology", "information", "life", "cognition", "fungal", "distributed-computation"]
+    },
+    {
+      "id": "0005",
+      "title": "Tidal Energy Harvest",
+      "glyph": "〰〰〰△≋↺⊙⚙➝◆→ᘯᘰ⊗≡⊗",
+      "tags": ["resonance", "energy", "flow", "earth-cosmos", "engineering", "tidal", "lunar-cycles"]
+    },
+    {
+      "id": "0006",
+      "title": "Quantum Navigation",
+      "glyph": "☯✦⊗••◠●▁▃▅∿△≈∞◧",
+      "tags": ["particle", "navigation", "information", "relativity", "statistical", "quantum", "entanglement"]
+    },
+    {
+      "id": "0007",
+      "title": "Emotional Architecture",
+      "glyph": "◉⋮⋯⋮∿|⒮⚙➝ᘯᘰ▁▃▅∿∞◧",
+      "tags": ["consciousness", "cognition", "measurement", "life", "engineering", "adaptive-spaces", "emotion-sensors"]
+    },
+    {
+      "id": "0008",
+      "title": "Fractal Governance",
+      "glyph": "☆∙∙●⬡◉↺⇑ᘯᘰ⊗≡↻",
+      "tags": ["geometry", "emergence", "networks", "consciousness", "self-similarity", "governance", "fractal"]
+    },
+    {
+      "id": "0009",
+      "title": "Symbiotic Materials",
+      "glyph": "◇⒮⚙➝∙∙●〰〰〰△≈⇑∞◎",
+      "tags": ["matter", "life", "engineering", "emergence", "resonance", "living-materials", "self-repair"]
+    },
+    {
+      "id": "0010",
+      "title": "Temporal Cartography",
+      "glyph": "✦◠●▁▃▅∿⊗••☆◎ᘯᘰ∞⎯",
+      "tags": ["navigation", "relativity", "statistical", "information", "geometry", "time-mapping", "temporal"]
     }
   ]
 }

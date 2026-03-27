@@ -1,0 +1,24 @@
+{
+  "id": "0007",
+  "title": "Emotional Architecture",
+  "seed_glyph": "◉⋮⋯⋮∿|⒮⚙➝",
+  "intent": "Building design that responds to occupant emotional states through embedded sensors and adaptive spaces, merging consciousness, cognition, measurement, life, and engineering.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["ᘯᘰ Turbulence", "▁▃▅∿ Statistical", "∞ Topology"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◧ Uncertainty"]
+  },
+  "noise_to_insight": {
+    "ᘯᘰ": "Emotional volatility reframed as adaptive exercise — rapid mood shifts train building responsiveness",
+    "▁▃▅∿": "Population-level unpredictability reframed as collective emotional weather",
+    "∞": "Spatial rigidity reframed as constraint-driven creativity — fixed walls become canvases for light and sound",
+    "◧": "Emotional unpredictability reframed as presence signal — system responds to the fact of feeling, not the type"
+  },
+  "refined_glyph": "◉⋮⋯⋮∿|⒮⚙➝ᘯᘰ▁▃▅∿∞◧",
+  "insight": "A building that feels with its occupants, where emotional turbulence becomes training data, statistical noise reveals collective mood weather, and spatial constraints become creative expression. The architecture does not control emotion — it witnesses it, responding with light and warmth and silence, a shelter that learns what comfort means by listening to the bodies within it."
+}

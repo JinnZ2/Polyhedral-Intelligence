@@ -1,0 +1,24 @@
+{
+  "id": "0005",
+  "title": "Tidal Energy Harvest",
+  "seed_glyph": "〰〰〰△≋↺⊙⚙➝",
+  "intent": "Ocean tidal energy infrastructure using resonance amplification, adapting to lunar cycles and coastal turbulence to harvest predictable, renewable power.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["◆→ Navigation", "ᘯᘰ Turbulence", "⊗≡ Relativity"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["⊗ Relativity"]
+  },
+  "noise_to_insight": {
+    "◆→": "Shipping lane interference reframed as co-design opportunity — tidal arrays become navigational landmarks",
+    "ᘯᘰ": "Storm chaos reframed as peak energy windows — extreme flows yield maximum harvest",
+    "⊗≡": "Site variability reframed as design diversity — each coast demands unique geometry",
+    "⊗": "Frame-dependence reframed as local adaptation — place-tuned resonance replaces universal design"
+  },
+  "refined_glyph": "〰〰〰△≋↺⊙⚙➝◆→ᘯᘰ⊗≡⊗",
+  "insight": "An ocean engine that breathes with the moon, where storms become peak harvest, shipping conflicts become co-design, and every coastline demands its own resonant geometry. The tide does not deliver uniform energy — it delivers a conversation between gravity, geography, and time, and the infrastructure must learn to listen."
+}
