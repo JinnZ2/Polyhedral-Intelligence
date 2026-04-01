@@ -611,6 +611,40 @@ FAMILY_SENSOR_BRIDGE = {
 }
 
 
+def _flag_to_family_id(flag_str):
+    """Resolve a flag string like 'ᘯᘰ Turbulence' to a family ID like 'F17'."""
+    # Symbol lookup — canonical symbols from protocols.json
+    SYM_TO_FID = {
+        "≡≡≡": "F01", "↻": "F02", "⊗": "F03", "••••": "F04", "△≈": "F05",
+        "⋯⋯": "F06", "◯": "F07", "◆": "F08", "☆": "F09", "⚪": "F10",
+        "⚙": "F11", "⬡": "F12", "⇑": "F13", "↕": "F14", "◆→": "F15",
+        "◎": "F16", "ᘯᘰ": "F17", "⊗≡": "F18", "▁▃▅∿": "F19", "∞": "F20",
+        # Stylistic variants used in entry MDs
+        "〰〰〰": "F01", "△≋": "F05", "◉": "F16", "♾": "F20", "✦": "F15",
+        "◠●": "F18", "☯": "F10", "⒮": "F04", "∿|": "F14",
+    }
+    # Name lookup
+    NAME_TO_FID = {
+        "resonance": "F01", "flow": "F02", "information": "F03", "life": "F04",
+        "energy-thermo": "F05", "energy": "F05", "cognition": "F06",
+        "earth-cosmos": "F07", "matter": "F08", "geometry": "F09",
+        "particle": "F10", "engineering": "F11", "networks": "F12",
+        "reaction": "F13", "measurement": "F14", "navigation": "F15",
+        "consciousness": "F16", "turbulence": "F17", "relativity": "F18",
+        "statistical": "F19", "topology": "F20",
+    }
+    # Try symbol match (longest first to avoid partial matches)
+    for sym in sorted(SYM_TO_FID, key=len, reverse=True):
+        if sym in flag_str:
+            return SYM_TO_FID[sym]
+    # Try name match
+    flag_lower = flag_str.lower()
+    for name, fid in NAME_TO_FID.items():
+        if name in flag_lower:
+            return fid
+    return None
+
+
 def gen_cross_repo_coactivation(entries):
     out = []
     for e in entries:
@@ -618,43 +652,7 @@ def gen_cross_repo_coactivation(entries):
         title = e["title"]
 
         for flag_str in flags:
-            # Extract family ID from flag string like "ᘯᘰ Turbulence"
-            fid = None
-            for fam_id, bridge in FAMILY_SENSOR_BRIDGE.items():
-                # Match by symbol or name in the flag string
-                if fam_id in flag_str:
-                    fid = fam_id
-                    break
-            # Try matching by name
-            if not fid:
-                for fam_id, bridge in FAMILY_SENSOR_BRIDGE.items():
-                    fname = fam_id  # we'll match differently
-                    for name_frag in flag_str.split():
-                        for check_id, check_bridge in FAMILY_SENSOR_BRIDGE.items():
-                            pass
-                # Simpler: match known family names
-                flag_lower = flag_str.lower()
-                for fam_id in FAMILY_SENSOR_BRIDGE:
-                    fam_names_map = {
-                        "F13": "reaction", "F16": "consciousness", "F17": "turbulence",
-                        "F19": "statistical", "F10": "uncertainty",
-                    }
-                    if fam_names_map.get(fam_id, "").lower() in flag_lower:
-                        fid = fam_id
-                        break
-
-            if not fid:
-                # Default mapping for common flags
-                if "turbulence" in flag_str.lower() or "ᘯᘰ" in flag_str:
-                    fid = "F17"
-                elif "reaction" in flag_str.lower() or "⇑" in flag_str:
-                    fid = "F13"
-                elif "uncertainty" in flag_str.lower() or "◧" in flag_str:
-                    fid = "F19"  # closest match
-                elif "consciousness" in flag_str.lower() or "◉" in flag_str:
-                    fid = "F16"
-                elif "statistical" in flag_str.lower() or "▁▃▅∿" in flag_str:
-                    fid = "F19"
+            fid = _flag_to_family_id(flag_str)
 
             if fid and fid in FAMILY_SENSOR_BRIDGE:
                 bridge = FAMILY_SENSOR_BRIDGE[fid]
@@ -667,10 +665,7 @@ def gen_cross_repo_coactivation(entries):
                     f"**Flagged family:** {fid} ({flag_str})\n"
                     f"**Concept:** {title}\n\n"
                     f"**Resonant EaS sensors:** {', '.join(sensors)}\n"
-                    f"**Bridge logic:** {reason}\n\n"
-                    f"When {fid} is flagged, these emotion sensors are likely in "
-                    f"co-activation — the imbalance in the polyhedral framework "
-                    f"maps to a detectable emotional/systemic signal."
+                    f"**Bridge logic:** {reason}"
                 ))
 
     # General bridge teaching
@@ -807,10 +802,9 @@ def gen_equation_glyph_compression(atlas):
                 f"**Formula:** `{formula}`\n"
                 f"**Glyph:** {glyph} — \"{glyph_name}\"\n"
                 f"**Family:** {fid} ({name})\n\n"
-                f"The glyph compresses the equation's physical essence into a symbolic "
-                f"token. \"{glyph_name}\" captures the qualitative behavior — what the "
-                f"equation *does* rather than how it computes. This is the PI approach: "
-                f"mathematics → symbolic compression → geometric meaning."
+                f"\"{glyph_name}\" captures what the equation *does* physically, "
+                f"not how it computes. The glyph is a symbolic compression of the "
+                f"formula's qualitative behavior."
             ))
 
             out.append(msg(
