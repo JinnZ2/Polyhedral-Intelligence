@@ -20,7 +20,9 @@
       "equations/P12_Unity.md"
     ],
     "id_namespace": "PRIN:",
-    "id_status": "PROPOSED",
+    "id_status": "CONFIRMED",
+    "id_confirmed_by": "Kavik (JinnZ2)",
+    "id_confirmed_at": "2026-05-04",
     "validation_rule": "external bindings (e.g. equation.principles[]) must resolve to an id in this file or be rejected at index-build time",
     "license": "CC0-1.0",
     "axes": {

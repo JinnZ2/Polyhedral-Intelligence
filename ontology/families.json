@@ -29,7 +29,9 @@
       "five_field_schema_map.json"
     ],
     "id_namespace": "FAM:",
-    "id_status": "PROPOSED",
+    "id_status": "CONFIRMED",
+    "id_confirmed_by": "Kavik (JinnZ2)",
+    "id_confirmed_at": "2026-05-04",
     "validation_rule": "external bindings (e.g. equation.families[]) must resolve to an id in this file or be rejected at index-build time",
     "license": "CC0-1.0",
     "notes": "Block-0 extraction. Symbols are the canonical schema symbols from atlas_schema.json (not the emoji-prefixed variants used as section glyphs in the equations/F*.md files). Field equation_ids[] and neighbors_on_icosahedron[] are populated by Block C.1 after equation_index.json lands."

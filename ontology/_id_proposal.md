@@ -1,6 +1,6 @@
 # Polyhedral-Intelligence — ID Proposal (Block 0)
 
-**Status:** PROPOSED — awaiting Kavik confirmation.
+**Status:** CONFIRMED by Kavik (JinnZ2) on 2026-05-04.
 **Generated:** 2026-05-04
 **Branch:** `claude/physics-ontology-framework-n1x4H`
 
@@ -63,12 +63,12 @@ These IDs are the canonical form used in equation bindings (`equation.families[]
 5. **Meta-field assignments** for families taken verbatim from `five_field_schema_map.json`.
 6. **Axis assignments** for principles taken from the BioGrid2.0 Principles Lattice mapping documented in `CLAUDE.md` (Invariance: P01–P03, Transformation: P04–P06, Connectivity: P07–P09, Evolution: P10–P12).
 
-## Questions for Kavik
+## Questions for Kavik — RESOLVED
 
-- [ ] Confirm ID namespace prefixes `FAM:` / `PRIN:` (alternative considered: `F:`/`P:` to mirror legacy IDs).
-- [ ] Confirm `ENERGY_THERMO` and `EARTH_COSMOS` snake-case forms (alternatives: `ENERGY-THERMO`, `THERMO`, `EARTH`, `COSMOS`).
-- [ ] Confirm meta-field axis names (`Chemical | Emotional | Cognitive | Dream | Symbolic`) and principle axis names (`Invariance | Transformation | Connectivity | Evolution`) — these flow into all downstream consumers.
-- [ ] Confirm that namespace separation is sufficient for the `Resonance` / `Relativity` / `Transformation` name collisions, or whether one side should be renamed.
+- [x] Confirm ID namespace prefixes `FAM:` / `PRIN:`.
+- [x] Confirm `ENERGY_THERMO` and `EARTH_COSMOS` snake-case forms.
+- [x] Confirm meta-field axis names (`Chemical | Emotional | Cognitive | Dream | Symbolic`) and principle axis names (`Invariance | Transformation | Connectivity | Evolution`).
+- [x] Confirm namespace separation is sufficient for the `Resonance` / `Relativity` / `Transformation` name collisions.
 
 ## Validation rule (effective on confirmation)
 
@@ -76,4 +76,4 @@ Once these IDs are confirmed (or amended) and committed, the equation index buil
 
 ## Next step
 
-Reply with `confirm`, or with line edits (e.g. `FAM:ENERGY_THERMO → FAM:THERMO`). On `confirm`, Block A (equation extraction) is unblocked.
+Block A (equation extraction) is unblocked as of 2026-05-04.
