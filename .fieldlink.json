@@ -85,6 +85,39 @@
         ],
         "purpose": "Emotion-as-sensor framework — 13 emotion-glyph bindings, FELT field-event detection, fear sensor (Elder Logic).",
         "consent": { "license": "MIT", "share_ok": true }
+      },
+      {
+        "name": "seed-physics",
+        "repo": "https://github.com/JinnZ2/Seed-physics",
+        "ref": "main",
+        "paths": [
+          "**/*.json",
+          "**/*.py"
+        ],
+        "purpose": "Seed-level physical constraint definitions feeding equation extraction (Block A pass 2).",
+        "consent": { "license": "CC0", "share_ok": true }
+      },
+      {
+        "name": "earth-systems-physics",
+        "repo": "https://github.com/JinnZ2/earth-systems-physics",
+        "ref": "main",
+        "paths": [
+          "**/*.json",
+          "**/*.py"
+        ],
+        "purpose": "Earth-system equations and dynamical models feeding F07 Earth-Cosmos and F02 Flow.",
+        "consent": { "license": "CC0", "share_ok": true }
+      },
+      {
+        "name": "constraint-recovery-framework",
+        "repo": "https://github.com/JinnZ2/thermodynamic-accountability-framework",
+        "ref": "main",
+        "paths": [
+          "metrology/**/*.py",
+          "metrology/**/*.json"
+        ],
+        "purpose": "PhysicalConstraint type + recovery protocols consumed by polyhedral_bridge.py. Lives under /metrology/ in the parent repo.",
+        "consent": { "license": "CC0", "share_ok": true }
       }
     ],
 
