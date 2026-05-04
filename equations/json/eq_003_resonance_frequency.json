@@ -1,0 +1,34 @@
+{
+  "id": "EQ:003",
+  "canonical_name": "Resonance Frequency",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "ω₀ = √(k/m)",
+  "hash": "sha256:7c680de63d4ae7654497a6842577e8dbede1445c30009c177c7028935e0f0d48",
+  "variables": [],
+  "families": [
+    "FAM:RESONANCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "eigenfrequency",
+    "harmonic",
+    "oscillator"
+  ],
+  "aliases": [],
+  "glyph": "∿○",
+  "glyph_name": "Glyph of Natural Voice",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F01 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Resonance Frequency"
+    }
+  ]
+}

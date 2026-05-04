@@ -1,0 +1,44 @@
+{
+  "id": "EQ:095",
+  "canonical_name": "Position-Momentum Duality",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Δx Δp ≥ ℏ/2",
+  "hash": "sha256:d412b3c3bdd2b2ed34d0aecc08ab44697f4c508956dba9b8ca3e9effa28130d2",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:DUALITY",
+    "PRIN:UNCERTAINTY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quantum",
+    "uncertainty",
+    "complementarity",
+    "fundamental"
+  ],
+  "aliases": [
+    "Heisenberg Uncertainty Principle"
+  ],
+  "glyph": "◆◑→",
+  "glyph_name": "Glyph of Uncertainty Pair",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P04 Duality",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Position-Momentum Duality"
+    },
+    {
+      "file": "atlas_schema.json",
+      "path": "P10 Uncertainty",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Heisenberg Uncertainty Principle"
+    }
+  ]
+}

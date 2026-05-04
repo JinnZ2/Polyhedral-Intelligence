@@ -1,0 +1,34 @@
+{
+  "id": "EQ:105",
+  "canonical_name": "Continuity Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂ρ/∂t + ∇·(ρv) = 0",
+  "hash": "sha256:e4f62fb24a0779925f44863062daacd0f469105ba500e7666314a75660c72c58",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONTINUITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "conservation",
+    "flow",
+    "continuity"
+  ],
+  "aliases": [],
+  "glyph": "⎯∇⎯",
+  "glyph_name": "Glyph of Unbroken Flow",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P07 Continuity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Continuity Equation"
+    }
+  ]
+}

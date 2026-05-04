@@ -1,0 +1,34 @@
+{
+  "id": "EQ:108",
+  "canonical_name": "Gauge Continuity",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂_μ A^μ = 0 (Lorenz gauge)",
+  "hash": "sha256:66ecb67d4800acbf7135e8c59f64ee6e1393083c8c2eb7bb1de94aba4f1facbe",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONTINUITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "gauge-theory",
+    "continuity",
+    "field"
+  ],
+  "aliases": [],
+  "glyph": "⎯∇=0",
+  "glyph_name": "Glyph of Field Smoothness",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P07 Continuity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Gauge Continuity"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:102",
+  "canonical_name": "Q Factor",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Q = ω₀/Δω = stored energy/dissipated energy",
+  "hash": "sha256:1647cffebc02a9b781e18d3e038bfdd91e250a2f16d660fcf4074edf1f2fe5c7",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RESONANCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quality-factor",
+    "resonance",
+    "damping"
+  ],
+  "aliases": [],
+  "glyph": "∿⚡",
+  "glyph_name": "Glyph of Resonance Sharpness",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P06 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Q Factor"
+    }
+  ]
+}

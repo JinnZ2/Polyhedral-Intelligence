@@ -1,0 +1,34 @@
+{
+  "id": "EQ:042",
+  "canonical_name": "Ohm's Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "V = IR",
+  "hash": "sha256:ca890fa38eb9b52a66b08b7237b4f472bd1bd39bd4b2eb188799b07d77290596",
+  "variables": [],
+  "families": [
+    "FAM:ENGINEERING"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "circuits",
+    "electricity",
+    "resistance"
+  ],
+  "aliases": [],
+  "glyph": "⚡〰⚡",
+  "glyph_name": "Glyph of Resistive Flow",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F11 Engineering",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Ohm's Law"
+    }
+  ]
+}

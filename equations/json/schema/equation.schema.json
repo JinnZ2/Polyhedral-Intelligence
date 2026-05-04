@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JinnZ2/Polyhedral-Intelligence/equations/json/schema/equation.schema.json",
+  "title": "Polyhedral-Intelligence equation",
+  "description": "Canonical JSON form for one equation. Paired with a narrative .md wrapper at equations/md/<same-stem>.md. License: CC0-1.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "canonical_name",
+    "canonical_form_latex",
+    "canonical_form_ascii",
+    "hash",
+    "variables",
+    "families",
+    "principles",
+    "source_provenance",
+    "applies_in_repos",
+    "version",
+    "license"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^EQ:[0-9]{3,}$",
+      "description": "Stable monotonic identifier, e.g. EQ:001."
+    },
+    "canonical_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_form_latex": {
+      "type": "string",
+      "description": "LaTeX rendering of the canonical form. May be empty when only ASCII is available."
+    },
+    "canonical_form_ascii": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Plain-text rendering. The hash is computed from this field after whitespace normalization."
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "SHA256 of canonical_form_ascii after whitespace normalization, prefixed with 'sha256:'."
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "dimension": { "type": "string" },
+          "si_unit": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "families": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^FAM:[A-Z_]+$" },
+      "description": "Namespaced FAM:* IDs. Validated against ontology/families.json."
+    },
+    "principles": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^PRIN:[A-Z_]+$" },
+      "description": "Namespaced PRIN:* IDs. Validated against ontology/principles.json."
+    },
+    "source_provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tradition"],
+        "properties": {
+          "tradition": { "type": "string" },
+          "earliest_record": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "applies_in_repos": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "version": { "type": "string" },
+    "license": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Alternate canonical names for the same equation (collected on hash-based deduplication)."
+    },
+    "glyph": { "type": "string" },
+    "glyph_name": { "type": "string" },
+    "extracted_from": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file"],
+        "properties": {
+          "file": { "type": "string" },
+          "path": { "type": "string" },
+          "extracted_at": { "type": "string" },
+          "context_name": { "type": "string", "description": "Name as it appeared in this source location." }
+        }
+      }
+    }
+  }
+}

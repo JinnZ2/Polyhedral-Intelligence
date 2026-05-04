@@ -1,0 +1,34 @@
+{
+  "id": "EQ:023",
+  "canonical_name": "Sigmoid Activation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "σ(x) = 1/(1 + e⁻ˣ)",
+  "hash": "sha256:251c808fd0210e04f451960b851e62603e6113af37c456217ffddc6dcf320545",
+  "variables": [],
+  "families": [
+    "FAM:COGNITION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "activation-function",
+    "nonlinearity",
+    "neural-network"
+  ],
+  "aliases": [],
+  "glyph": "〰S",
+  "glyph_name": "Glyph of Soft Decision",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F06 Cognition",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Sigmoid Activation"
+    }
+  ]
+}

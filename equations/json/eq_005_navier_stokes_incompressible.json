@@ -1,0 +1,34 @@
+{
+  "id": "EQ:005",
+  "canonical_name": "Navier-Stokes (Incompressible)",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂u/∂t + (u·∇)u = -∇p/ρ + ν∇²u + f; ∇·u = 0",
+  "hash": "sha256:cf4da06673bcbddb265b98fab3c56ae001d52c212dfe1496d6715f435b687d75",
+  "variables": [],
+  "families": [
+    "FAM:FLOW"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "fluid-dynamics",
+    "momentum",
+    "conservation"
+  ],
+  "aliases": [],
+  "glyph": "〰⇄∇",
+  "glyph_name": "Glyph of Liquid Order",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F02 Flow",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Navier-Stokes (Incompressible)"
+    }
+  ]
+}

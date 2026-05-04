@@ -1,0 +1,34 @@
+{
+  "id": "EQ:025",
+  "canonical_name": "Kepler's Third Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "T² = (4π²/GM)a³",
+  "hash": "sha256:c705423ed34b6d0048a7a964c6f4968e19dfaeb4a755dd6835c83f9321aed32d",
+  "variables": [],
+  "families": [
+    "FAM:EARTH_COSMOS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "orbital-mechanics",
+    "period",
+    "kepler"
+  ],
+  "aliases": [],
+  "glyph": "🪐⟲³",
+  "glyph_name": "Glyph of Orbital Harmony",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F07 Earth-Cosmos",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kepler's Third Law"
+    }
+  ]
+}

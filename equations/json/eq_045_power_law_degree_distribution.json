@@ -1,0 +1,34 @@
+{
+  "id": "EQ:045",
+  "canonical_name": "Power Law Degree Distribution",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "P(k) ∝ k^(-γ)",
+  "hash": "sha256:c9195540e4ce62cf159813923241c9f2f98021abfa3dda7106a22b8ffb95212a",
+  "variables": [],
+  "families": [
+    "FAM:NETWORKS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "network",
+    "scale-free",
+    "hubs"
+  ],
+  "aliases": [],
+  "glyph": "⬡⬡⬡↘",
+  "glyph_name": "Glyph of Scale-Free Network",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F12 Networks",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Power Law Degree Distribution"
+    }
+  ]
+}

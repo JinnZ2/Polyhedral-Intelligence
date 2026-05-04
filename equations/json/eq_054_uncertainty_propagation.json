@@ -1,0 +1,34 @@
+{
+  "id": "EQ:054",
+  "canonical_name": "Uncertainty Propagation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "δf = √[Σᵢ(∂f/∂xᵢ)²(δxᵢ)²]",
+  "hash": "sha256:a2adf49ab16c3e702991bea2933f0d1381a46e9f57ab7d3e0a5bc4d21c05d242",
+  "variables": [],
+  "families": [
+    "FAM:MEASUREMENT"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "error",
+    "propagation",
+    "uncertainty"
+  ],
+  "aliases": [],
+  "glyph": "◧↗",
+  "glyph_name": "Glyph of Error Flow",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F14 Measurement",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Uncertainty Propagation"
+    }
+  ]
+}

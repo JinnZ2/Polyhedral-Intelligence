@@ -1,0 +1,34 @@
+{
+  "id": "EQ:016",
+  "canonical_name": "Hill Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "θ = [L]ⁿ/(K_d + [L]ⁿ)",
+  "hash": "sha256:8cb4478eb7ebc0239c617e679b6940d296153ab2c9e724ad521f9ab2b90ab06b",
+  "variables": [],
+  "families": [
+    "FAM:LIFE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "cooperativity",
+    "allosteric",
+    "binding"
+  ],
+  "aliases": [],
+  "glyph": "⚗️ⁿ",
+  "glyph_name": "Glyph of Cooperative Binding",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F04 Life",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Hill Equation"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:020",
+  "canonical_name": "Carnot Efficiency",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "η = 1 - T_c/T_h",
+  "hash": "sha256:38e02b6c41ebe128563d09b79e0030019a3da53995cffb2da41d06d119b48c9b",
+  "variables": [],
+  "families": [
+    "FAM:ENERGY_THERMO"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "thermodynamics",
+    "efficiency",
+    "heat-engine"
+  ],
+  "aliases": [],
+  "glyph": "⚙️🔥❄️",
+  "glyph_name": "Glyph of Maximum Work",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F05 Energy-Thermo",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Carnot Efficiency"
+    }
+  ]
+}

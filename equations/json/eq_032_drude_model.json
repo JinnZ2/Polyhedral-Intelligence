@@ -1,0 +1,34 @@
+{
+  "id": "EQ:032",
+  "canonical_name": "Drude Model",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "σ = ne²τ/m",
+  "hash": "sha256:5d64f6b23560019033513aebff9cf74335b0c7b76828152a6a028786cd2f82a6",
+  "variables": [],
+  "families": [
+    "FAM:MATTER"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "conductivity",
+    "electrons",
+    "classical"
+  ],
+  "aliases": [],
+  "glyph": "⚡〰",
+  "glyph_name": "Glyph of Electron Flow",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F08 Matter",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Drude Model"
+    }
+  ]
+}

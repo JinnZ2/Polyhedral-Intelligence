@@ -1,0 +1,34 @@
+{
+  "id": "EQ:068",
+  "canonical_name": "Navier-Stokes Chaos Regimes",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂u/∂t + (u·∇)u = -∇p + ν∇²u + f",
+  "hash": "sha256:82fc4f1f9b3fac3700240437c3f3723ebb76204c61e57cc9cf64df2f3dfa594c",
+  "variables": [],
+  "families": [
+    "FAM:TURBULENCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "turbulence",
+    "chaos",
+    "fluid-dynamics"
+  ],
+  "aliases": [],
+  "glyph": "〰ᘯᘰ",
+  "glyph_name": "Glyph of Flow Unbound",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F17 Turbulence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Navier-Stokes Chaos Regimes"
+    }
+  ]
+}

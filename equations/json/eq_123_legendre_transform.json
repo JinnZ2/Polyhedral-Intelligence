@@ -1,0 +1,34 @@
+{
+  "id": "EQ:123",
+  "canonical_name": "Legendre Transform",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "G(p) = f(x) - px where p = df/dx",
+  "hash": "sha256:51f37e5a2ee2c9325af8648d77c5a04ea0f6a8f1aed7137ad5632763fdb082c6",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:TRANSFORMATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "legendre",
+    "transform",
+    "thermodynamics"
+  ],
+  "aliases": [],
+  "glyph": "↻∇↔",
+  "glyph_name": "Glyph of Variable Exchange",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P11 Transformation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Legendre Transform"
+    }
+  ]
+}

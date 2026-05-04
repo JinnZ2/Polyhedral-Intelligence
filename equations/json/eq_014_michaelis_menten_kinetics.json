@@ -1,0 +1,34 @@
+{
+  "id": "EQ:014",
+  "canonical_name": "Michaelis-Menten Kinetics",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "v = (V_max[S])/(K_m + [S])",
+  "hash": "sha256:e8aa0b96738a89de3a91b9e49f649caa3e7723fd1cb7aa14c7f374037ffdc9c6",
+  "variables": [],
+  "families": [
+    "FAM:LIFE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "biochemistry",
+    "catalysis",
+    "saturation"
+  ],
+  "aliases": [],
+  "glyph": "⚗️🔑",
+  "glyph_name": "Glyph of Enzyme Gateway",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F04 Life",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Michaelis-Menten Kinetics"
+    }
+  ]
+}

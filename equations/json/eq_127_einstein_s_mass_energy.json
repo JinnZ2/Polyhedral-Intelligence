@@ -1,0 +1,34 @@
+{
+  "id": "EQ:127",
+  "canonical_name": "Einstein's Mass-Energy",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E = mc²",
+  "hash": "sha256:39eb2187d78ae9198442cd0d427e3aac693a06e862b7b66a48086daf6ff4eb46",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "relativity",
+    "unification",
+    "fundamental"
+  ],
+  "aliases": [],
+  "glyph": "◎=⚡",
+  "glyph_name": "Glyph of Ultimate Unity",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P12 Unity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Einstein's Mass-Energy"
+    }
+  ]
+}

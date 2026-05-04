@@ -1,0 +1,34 @@
+{
+  "id": "EQ:044",
+  "canonical_name": "PID Controller",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "u(t) = K_p e(t) + K_i∫e(τ)dτ + K_d(de/dt)",
+  "hash": "sha256:128c2468702fa7321f4d4afb5d7847c7243b05f6fcec04c4d50ae4a7f943064f",
+  "variables": [],
+  "families": [
+    "FAM:ENGINEERING"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "control",
+    "feedback",
+    "pid"
+  ],
+  "aliases": [],
+  "glyph": "↻⚖️",
+  "glyph_name": "Glyph of Feedback Mastery",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F11 Engineering",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "PID Controller"
+    }
+  ]
+}

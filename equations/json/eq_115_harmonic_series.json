@@ -1,0 +1,34 @@
+{
+  "id": "EQ:115",
+  "canonical_name": "Harmonic Series",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "f_n = nf₁ (n = 1, 2, 3…)",
+  "hash": "sha256:09d22cfd2baedd8803eb193e3d2a950e039f555599d72d0b62f3ef9177ee4b8c",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:PROPORTION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "harmonics",
+    "proportion",
+    "frequency"
+  ],
+  "aliases": [],
+  "glyph": "▯ₙ∿",
+  "glyph_name": "Glyph of Musical Ratios",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P09 Proportion",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Harmonic Series"
+    }
+  ]
+}

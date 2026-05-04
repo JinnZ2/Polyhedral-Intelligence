@@ -1,0 +1,34 @@
+{
+  "id": "EQ:021",
+  "canonical_name": "Hopfield Network Energy",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E = -½ΣᵢΣⱼ wᵢⱼsᵢsⱼ + Σᵢ θᵢsᵢ",
+  "hash": "sha256:2854fd98cc84c9490d660b571ad636a8f7a171f0b42d6788a62b5c4628c29975",
+  "variables": [],
+  "families": [
+    "FAM:COGNITION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "neural-network",
+    "attractor",
+    "energy-landscape"
+  ],
+  "aliases": [],
+  "glyph": "🧠⚡⬇️",
+  "glyph_name": "Glyph of Memory Wells",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F06 Cognition",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Hopfield Network Energy"
+    }
+  ]
+}

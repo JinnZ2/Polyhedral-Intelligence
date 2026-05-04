@@ -1,0 +1,34 @@
+{
+  "id": "EQ:030",
+  "canonical_name": "BCS Gap Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Δ = λ∫₀^(ω_D) tanh(√(ξ² + Δ²)/(2k_BT))/√(ξ² + Δ²) dξ",
+  "hash": "sha256:a18b955fd5b118a6f49d2a4e8213535b505c073b12259d840f37e6931b1b3b87",
+  "variables": [],
+  "families": [
+    "FAM:MATTER"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "superconductivity",
+    "cooper-pairs",
+    "gap"
+  ],
+  "aliases": [],
+  "glyph": "⚡⚡❄️",
+  "glyph_name": "Glyph of Superconducting Pairing",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F08 Matter",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "BCS Gap Equation"
+    }
+  ]
+}

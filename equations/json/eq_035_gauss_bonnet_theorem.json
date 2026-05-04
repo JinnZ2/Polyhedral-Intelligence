@@ -1,0 +1,34 @@
+{
+  "id": "EQ:035",
+  "canonical_name": "Gauss-Bonnet Theorem",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∫∫_M K dA + ∫_∂M κ_g ds = 2πχ(M)",
+  "hash": "sha256:d970ae2a82ac16c34a658d090b7afbc820297bbb990de3776bf0d181a69d2bb8",
+  "variables": [],
+  "families": [
+    "FAM:GEOMETRY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "topology",
+    "curvature",
+    "euler-characteristic"
+  ],
+  "aliases": [],
+  "glyph": "∮⚫",
+  "glyph_name": "Glyph of Topological Constraint",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F09 Geometry",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Gauss-Bonnet Theorem"
+    }
+  ]
+}

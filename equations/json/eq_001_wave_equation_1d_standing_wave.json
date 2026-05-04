@@ -1,0 +1,34 @@
+{
+  "id": "EQ:001",
+  "canonical_name": "Wave Equation (1D Standing Wave)",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "y(x,t) = A sin(kx) cos(ωt)",
+  "hash": "sha256:b16fdb22b218efd065154a91c2c11afd74c0d96171445cbdc3d752e24bacbea9",
+  "variables": [],
+  "families": [
+    "FAM:RESONANCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "standing-wave",
+    "harmonics",
+    "oscillation"
+  ],
+  "aliases": [],
+  "glyph": "🎵⚡",
+  "glyph_name": "Glyph of Frozen Vibration",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F01 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Wave Equation (1D Standing Wave)"
+    }
+  ]
+}

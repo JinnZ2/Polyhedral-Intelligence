@@ -1,0 +1,34 @@
+{
+  "id": "EQ:071",
+  "canonical_name": "Lorentz Transformation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "t' = γ(t - vx/c²); x' = γ(x - vt)",
+  "hash": "sha256:9a3222ea6922450163052bfd74f169b396cad6c4471a234c9ff21b351107e450",
+  "variables": [],
+  "families": [
+    "FAM:RELATIVITY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "special-relativity",
+    "transformation",
+    "boost"
+  ],
+  "aliases": [],
+  "glyph": "↔️⚡",
+  "glyph_name": "Glyph of Frame Shift",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F18 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Lorentz Transformation"
+    }
+  ]
+}

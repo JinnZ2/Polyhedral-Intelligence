@@ -1,0 +1,34 @@
+{
+  "id": "EQ:079",
+  "canonical_name": "Jones Polynomial",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "t^(-1)V(L₊) - tV(L₋) = (t^(1/2) - t^(-1/2))V(L₀)",
+  "hash": "sha256:8a1d107a80bed8bbdafd64a3041b78c1db54578995edfedbf4b80e36ed87777a",
+  "variables": [],
+  "families": [
+    "FAM:TOPOLOGY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "knot-theory",
+    "polynomial",
+    "invariant"
+  ],
+  "aliases": [],
+  "glyph": "∞⟲",
+  "glyph_name": "Glyph of Knot Invariant",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F20 Topology",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Jones Polynomial"
+    }
+  ]
+}

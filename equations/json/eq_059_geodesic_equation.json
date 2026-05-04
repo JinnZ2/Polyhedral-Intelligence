@@ -1,0 +1,34 @@
+{
+  "id": "EQ:059",
+  "canonical_name": "Geodesic Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "d²x^μ/ds² + Γ^μ_αβ(dx^α/ds)(dx^β/ds) = 0",
+  "hash": "sha256:7de3032ef17dcb62b6a7d8e92e58bc6ff5d82ccfae922f507cd453a55d567c82",
+  "variables": [],
+  "families": [
+    "FAM:NAVIGATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "differential-geometry",
+    "geodesic",
+    "path"
+  ],
+  "aliases": [],
+  "glyph": "⌒∇",
+  "glyph_name": "Glyph of Curved Journey",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F15 Navigation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Geodesic Equation"
+    }
+  ]
+}

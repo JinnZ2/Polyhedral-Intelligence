@@ -1,0 +1,34 @@
+{
+  "id": "EQ:065",
+  "canonical_name": "Lorenz Attractor",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "x' = σ(y - x); y' = x(ρ - z) - y; z' = xy - βz",
+  "hash": "sha256:ebd632c0dd51fa8eae2f8173377b44ea0a12f015e46ed12b2e7689e490ae4087",
+  "variables": [],
+  "families": [
+    "FAM:TURBULENCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "chaos",
+    "attractor",
+    "sensitive-dependence"
+  ],
+  "aliases": [],
+  "glyph": "⟳∞◬",
+  "glyph_name": "Glyph of Butterfly Worlds",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F17 Turbulence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Lorenz Attractor"
+    }
+  ]
+}

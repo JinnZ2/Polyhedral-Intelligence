@@ -1,0 +1,34 @@
+{
+  "id": "EQ:015",
+  "canonical_name": "Logistic Growth",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dN/dt = rN(1 - N/K)",
+  "hash": "sha256:13bbf7151f70257e14f69acb26215097b8dc93c1eee309ba2cae8c7091b56911",
+  "variables": [],
+  "families": [
+    "FAM:LIFE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "population",
+    "carrying-capacity",
+    "s-curve"
+  ],
+  "aliases": [],
+  "glyph": "📈⊂",
+  "glyph_name": "Glyph of Bounded Bloom",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F04 Life",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Logistic Growth"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:056",
+  "canonical_name": "Buckingham Pi Theorem",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "n - k independent dimensionless groups",
+  "hash": "sha256:15c12db3e0169015e494769e85afd231aeafd06376eac808f79bd4bfcb481ba6",
+  "variables": [],
+  "families": [
+    "FAM:MEASUREMENT"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "dimensional-analysis",
+    "similarity",
+    "scaling"
+  ],
+  "aliases": [],
+  "glyph": "π▭",
+  "glyph_name": "Glyph of Dimensional Reduction",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F14 Measurement",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Buckingham Pi Theorem"
+    }
+  ]
+}

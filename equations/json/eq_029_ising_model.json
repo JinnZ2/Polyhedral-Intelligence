@@ -1,0 +1,34 @@
+{
+  "id": "EQ:029",
+  "canonical_name": "Ising Model",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "H = -J Σ_⟨i,j⟩ sᵢsⱼ - h Σᵢ sᵢ",
+  "hash": "sha256:110c8a74509df70a030a29304529db01202c58aef04e7acca3d829d01269344a",
+  "variables": [],
+  "families": [
+    "FAM:MATTER"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "phase-transition",
+    "spin",
+    "magnetism"
+  ],
+  "aliases": [],
+  "glyph": "⬆️⬇️⬆️⬇️",
+  "glyph_name": "Glyph of Magnetic Alignment",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F08 Matter",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Ising Model"
+    }
+  ]
+}

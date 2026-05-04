@@ -1,0 +1,34 @@
+{
+  "id": "EQ:111",
+  "canonical_name": "Charge Quantization",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Q = ne (n ∈ ℤ)",
+  "hash": "sha256:a8e5ab74917f9f535c1b40d8d27c689d48b1bf1179ce6dfec92e4b7f312ca47d",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:QUANTIZATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "charge",
+    "quantization",
+    "discrete"
+  ],
+  "aliases": [],
+  "glyph": "▭⚡ₙ",
+  "glyph_name": "Glyph of Charge Units",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P08 Quantization",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Charge Quantization"
+    }
+  ]
+}

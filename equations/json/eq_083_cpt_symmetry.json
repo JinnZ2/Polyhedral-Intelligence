@@ -1,0 +1,34 @@
+{
+  "id": "EQ:083",
+  "canonical_name": "CPT Symmetry",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "CPT transformation leaves physics invariant",
+  "hash": "sha256:f16804752df093c92eee31f1c90d0ed34926c6e35dcae10fbdbfd146f7ff6d5c",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:SYMMETRY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "particle-physics",
+    "symmetry",
+    "invariance"
+  ],
+  "aliases": [],
+  "glyph": "⧖⟲⧖",
+  "glyph_name": "Glyph of Fundamental Invariance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P01 Symmetry",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "CPT Symmetry"
+    }
+  ]
+}

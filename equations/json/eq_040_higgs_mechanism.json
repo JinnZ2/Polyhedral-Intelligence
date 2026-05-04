@@ -1,0 +1,34 @@
+{
+  "id": "EQ:040",
+  "canonical_name": "Higgs Mechanism",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "V(φ) = -μ²|φ|² + λ|φ|⁴",
+  "hash": "sha256:3b7543fae1065460dad0c199161a7b8c2641685cf61d01db6dc354627ae9178d",
+  "variables": [],
+  "families": [
+    "FAM:PARTICLE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "symmetry-breaking",
+    "mass",
+    "higgs"
+  ],
+  "aliases": [],
+  "glyph": "⚪⬇️⚡",
+  "glyph_name": "Glyph of Mass Generation",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F10 Particle",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Higgs Mechanism"
+    }
+  ]
+}

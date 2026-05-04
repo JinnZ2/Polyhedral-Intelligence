@@ -1,0 +1,34 @@
+{
+  "id": "EQ:122",
+  "canonical_name": "Phase Transition",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂G/∂T = -S; ∂²G/∂T² discontinuous",
+  "hash": "sha256:02ca217e44f1fe25645d307db52b4745f3c4b354601f4a8fa979845388ac2464",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:TRANSFORMATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "phase-transition",
+    "thermodynamics",
+    "transformation"
+  ],
+  "aliases": [],
+  "glyph": "❄️↻💧",
+  "glyph_name": "Glyph of State Change",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P11 Transformation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Phase Transition"
+    }
+  ]
+}

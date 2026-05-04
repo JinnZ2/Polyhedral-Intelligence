@@ -1,0 +1,34 @@
+{
+  "id": "EQ:070",
+  "canonical_name": "Minkowski Metric",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "ds² = -c²dt² + dx² + dy² + dz²",
+  "hash": "sha256:de2676e392e184c2d2bb176106a0cec197de803c1f7c0a8dc46ef40d92ec071d",
+  "variables": [],
+  "families": [
+    "FAM:RELATIVITY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "special-relativity",
+    "metric",
+    "spacetime"
+  ],
+  "aliases": [],
+  "glyph": "⊗⊕",
+  "glyph_name": "Glyph of Flat Spacetime",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F18 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Minkowski Metric"
+    }
+  ]
+}

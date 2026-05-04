@@ -1,0 +1,34 @@
+{
+  "id": "EQ:124",
+  "canonical_name": "Maxwell's Unification",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∇·E = ρ/ε₀; ∇×B - ∂E/∂t = μ₀J; etc.",
+  "hash": "sha256:7a14764fa5c4ff313b48cd0103b07f7a693bcef641c01188fa40094de3bfb7b0",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "electromagnetism",
+    "unification",
+    "maxwell"
+  ],
+  "aliases": [],
+  "glyph": "⚡◎🧲",
+  "glyph_name": "Glyph of Electric-Magnetic Unity",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P12 Unity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Maxwell's Unification"
+    }
+  ]
+}

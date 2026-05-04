@@ -1,0 +1,34 @@
+{
+  "id": "EQ:037",
+  "canonical_name": "Dirac Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "(iγ^μ∂_μ - m)ψ = 0",
+  "hash": "sha256:fd15bc15ed90979991d4f45f3e0e07a179311a6ea35d2fbc31c2651e0c5879a8",
+  "variables": [],
+  "families": [
+    "FAM:PARTICLE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "relativistic",
+    "fermion",
+    "spin"
+  ],
+  "aliases": [],
+  "glyph": "⚛️↻",
+  "glyph_name": "Glyph of Spinning Electron",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F10 Particle",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Dirac Equation"
+    }
+  ]
+}

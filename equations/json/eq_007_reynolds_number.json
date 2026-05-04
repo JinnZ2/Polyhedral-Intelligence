@@ -1,0 +1,34 @@
+{
+  "id": "EQ:007",
+  "canonical_name": "Reynolds Number",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Re = ρvL/μ = vL/ν",
+  "hash": "sha256:8a0311acf57696a85926fb8bc17e31b6ff1e4c8dfd037f372618630358eba9ec",
+  "variables": [],
+  "families": [
+    "FAM:FLOW"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "dimensionless",
+    "turbulence-threshold",
+    "similarity"
+  ],
+  "aliases": [],
+  "glyph": "〰≋",
+  "glyph_name": "Glyph of Flow Character",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F02 Flow",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Reynolds Number"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:027",
+  "canonical_name": "Orbital Velocity",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "v = √(GM/r)",
+  "hash": "sha256:db4a57aa6fcccf3523293b9622b87eaf1faca95231692cce9acfb05bf570a24e",
+  "variables": [],
+  "families": [
+    "FAM:EARTH_COSMOS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "velocity",
+    "orbit",
+    "mechanics"
+  ],
+  "aliases": [],
+  "glyph": "⟲💨",
+  "glyph_name": "Glyph of Circular Motion",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F07 Earth-Cosmos",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Orbital Velocity"
+    }
+  ]
+}

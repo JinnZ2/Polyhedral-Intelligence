@@ -1,0 +1,34 @@
+{
+  "id": "EQ:019",
+  "canonical_name": "Heat Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂T/∂t = α∇²T",
+  "hash": "sha256:551828ace0374e921303bb315b4e79f126c73edfbec0a4ba8b226a915787619a",
+  "variables": [],
+  "families": [
+    "FAM:ENERGY_THERMO"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "diffusion",
+    "temperature",
+    "parabolic-pde"
+  ],
+  "aliases": [],
+  "glyph": "🌡️〰",
+  "glyph_name": "Glyph of Thermal Diffusion",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F05 Energy-Thermo",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Heat Equation"
+    }
+  ]
+}

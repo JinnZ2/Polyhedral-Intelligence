@@ -1,0 +1,34 @@
+{
+  "id": "EQ:078",
+  "canonical_name": "Chern Class (First)",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "c₁(E) = (i/2π)Tr(F)",
+  "hash": "sha256:acfdc9c9b4f8164721bb0542a083338d47caef6cba145c1af45aeae001c5da70",
+  "variables": [],
+  "families": [
+    "FAM:TOPOLOGY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "topology",
+    "characteristic-class",
+    "differential-geometry"
+  ],
+  "aliases": [],
+  "glyph": "∮⊗",
+  "glyph_name": "Glyph of Bundle Curvature",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F20 Topology",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Chern Class (First)"
+    }
+  ]
+}

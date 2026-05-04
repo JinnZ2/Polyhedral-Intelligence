@@ -1,0 +1,34 @@
+{
+  "id": "EQ:087",
+  "canonical_name": "Charge Conservation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂ρ/∂t + ∇·J = 0",
+  "hash": "sha256:11404d1e587f4e7767cf033080f756a421d51001d0288c05daf230467267bd18",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONSERVATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "charge",
+    "conservation",
+    "continuity"
+  ],
+  "aliases": [],
+  "glyph": "⚡↺∇",
+  "glyph_name": "Glyph of Charge Continuity",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P02 Conservation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Charge Conservation"
+    }
+  ]
+}

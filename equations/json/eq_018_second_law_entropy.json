@@ -1,0 +1,34 @@
+{
+  "id": "EQ:018",
+  "canonical_name": "Second Law (Entropy)",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dS ≥ δQ/T",
+  "hash": "sha256:54fe110962067e652a32e0de35bd4dc065ae8644e66c2fbd1188b2b6e71c92f7",
+  "variables": [],
+  "families": [
+    "FAM:ENERGY_THERMO"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "entropy",
+    "irreversibility",
+    "disorder"
+  ],
+  "aliases": [],
+  "glyph": "⏳↗",
+  "glyph_name": "Glyph of Time's Arrow",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F05 Energy-Thermo",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Second Law (Entropy)"
+    }
+  ]
+}

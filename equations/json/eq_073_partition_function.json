@@ -1,0 +1,34 @@
+{
+  "id": "EQ:073",
+  "canonical_name": "Partition Function",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Z = Σᵢ e^(-Eᵢ/kT)",
+  "hash": "sha256:9d8219b7d71534504678563bc79e62bebd6961e350b8773495e3ba2e58167534",
+  "variables": [],
+  "families": [
+    "FAM:STATISTICAL"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "statistical-mechanics",
+    "thermodynamics",
+    "ensemble"
+  ],
+  "aliases": [],
+  "glyph": "Σ⚡❄️",
+  "glyph_name": "Glyph of Statistical Sum",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F19 Statistical",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Partition Function"
+    }
+  ]
+}

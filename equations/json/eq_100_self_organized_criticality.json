@@ -1,0 +1,34 @@
+{
+  "id": "EQ:100",
+  "canonical_name": "Self-Organized Criticality",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "System → critical state without tuning",
+  "hash": "sha256:ef20e5d455250aaf15f61f8ea995128c20de8147bf004dc60f5189eabf110aa2",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:EMERGENCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "complexity",
+    "criticality",
+    "emergence"
+  ],
+  "aliases": [],
+  "glyph": "●●⚖️",
+  "glyph_name": "Glyph of Spontaneous Balance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P05 Emergence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Self-Organized Criticality"
+    }
+  ]
+}

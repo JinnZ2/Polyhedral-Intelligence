@@ -1,0 +1,34 @@
+{
+  "id": "EQ:096",
+  "canonical_name": "Time-Energy Duality",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Δt ΔE ≥ ℏ/2",
+  "hash": "sha256:86b4a50b75928d9e58f0c8bd29204a8ec9b1347a71a8fe68718ae9172321f68a",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:DUALITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quantum",
+    "uncertainty",
+    "time-energy"
+  ],
+  "aliases": [],
+  "glyph": "⏱◑⚡",
+  "glyph_name": "Glyph of Temporal Energy",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P04 Duality",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Time-Energy Duality"
+    }
+  ]
+}
