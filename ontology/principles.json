@@ -26,12 +26,31 @@
     "validation_rule": "external bindings (e.g. equation.principles[]) must resolve to an id in this file or be rejected at index-build time",
     "license": "CC0-1.0",
     "axes": {
-      "Invariance": ["PRIN:SYMMETRY", "PRIN:CONSERVATION", "PRIN:RELATIVITY"],
-      "Transformation": ["PRIN:DUALITY", "PRIN:EMERGENCE", "PRIN:RESONANCE"],
-      "Connectivity": ["PRIN:CONTINUITY", "PRIN:QUANTIZATION", "PRIN:PROPORTION"],
-      "Evolution": ["PRIN:UNCERTAINTY", "PRIN:TRANSFORMATION", "PRIN:UNITY"]
+      "Invariance": [
+        "PRIN:SYMMETRY",
+        "PRIN:CONSERVATION",
+        "PRIN:RELATIVITY"
+      ],
+      "Transformation": [
+        "PRIN:DUALITY",
+        "PRIN:EMERGENCE",
+        "PRIN:RESONANCE"
+      ],
+      "Connectivity": [
+        "PRIN:CONTINUITY",
+        "PRIN:QUANTIZATION",
+        "PRIN:PROPORTION"
+      ],
+      "Evolution": [
+        "PRIN:UNCERTAINTY",
+        "PRIN:TRANSFORMATION",
+        "PRIN:UNITY"
+      ]
     },
-    "notes": "Block-0 extraction. Symbols are canonical from atlas_schema.json. Axis assignments follow the BioGrid2.0 Principles Lattice mapping (CLAUDE.md). Field equation_ids[] and neighbors_on_dodecahedron[] are populated by Block C.1 after equation_index.json lands. Note: PRIN:RESONANCE collides in name with FAM:RESONANCE; PRIN:RELATIVITY with FAM:RELATIVITY; PRIN:TRANSFORMATION shares the ↻ glyph with FAM:FLOW. Namespace prefixes (FAM:/PRIN:) keep them distinct."
+    "notes": "Block-0 extraction. Symbols are canonical from atlas_schema.json. Axis assignments follow the BioGrid2.0 Principles Lattice mapping (CLAUDE.md). Field equation_ids[] and neighbors_on_dodecahedron[] are populated by Block C.1 after equation_index.json lands. Note: PRIN:RESONANCE collides in name with FAM:RESONANCE; PRIN:RELATIVITY with FAM:RELATIVITY; PRIN:TRANSFORMATION shares the ↻ glyph with FAM:FLOW. Namespace prefixes (FAM:/PRIN:) keep them distinct.",
+    "enriched_at": "2026-05-04T15:05:22Z",
+    "face_assignment": "legacy_id index → dodecahedron face index (P01→face 0, ..., P12→face 11); arbitrary placeholder convention.",
+    "adjacency_source": "computed via icosahedron-dodecahedron duality: dodecahedron face i corresponds to icosahedron vertex i; two dodec faces adjacent iff their dual icosa vertices share an edge."
   },
   "principles": [
     {
@@ -47,9 +66,26 @@
         "CPT Symmetry",
         "Gauge Symmetry"
       ],
-      "physics_domains": ["group-theory", "lie-groups", "fundamental-physics"],
+      "physics_domains": [
+        "group-theory",
+        "lie-groups",
+        "fundamental-physics"
+      ],
       "axis": "Invariance",
-      "source_md": "equations/P01_Symmetry.md"
+      "source_md": "equations/P01_Symmetry.md",
+      "equation_ids": [
+        "EQ:081",
+        "EQ:082",
+        "EQ:083",
+        "EQ:084"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:RELATIVITY",
+        "PRIN:EMERGENCE",
+        "PRIN:CONTINUITY",
+        "PRIN:PROPORTION",
+        "PRIN:TRANSFORMATION"
+      ]
     },
     {
       "id": "PRIN:CONSERVATION",
@@ -64,9 +100,26 @@
         "Charge Conservation",
         "Angular Momentum Conservation"
       ],
-      "physics_domains": ["classical-mechanics", "thermodynamics", "field-theory"],
+      "physics_domains": [
+        "classical-mechanics",
+        "thermodynamics",
+        "field-theory"
+      ],
       "axis": "Invariance",
-      "source_md": "equations/P02_Conservation.md"
+      "source_md": "equations/P02_Conservation.md",
+      "equation_ids": [
+        "EQ:085",
+        "EQ:086",
+        "EQ:087",
+        "EQ:088"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:DUALITY",
+        "PRIN:EMERGENCE",
+        "PRIN:CONTINUITY",
+        "PRIN:UNCERTAINTY",
+        "PRIN:UNITY"
+      ]
     },
     {
       "id": "PRIN:RELATIVITY",
@@ -81,9 +134,26 @@
         "General Covariance",
         "Light Speed Constancy"
       ],
-      "physics_domains": ["special-relativity", "general-relativity", "covariance"],
+      "physics_domains": [
+        "special-relativity",
+        "general-relativity",
+        "covariance"
+      ],
       "axis": "Invariance",
-      "source_md": "equations/P03_Relativity.md"
+      "source_md": "equations/P03_Relativity.md",
+      "equation_ids": [
+        "EQ:089",
+        "EQ:090",
+        "EQ:091",
+        "EQ:092"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:SYMMETRY",
+        "PRIN:RESONANCE",
+        "PRIN:QUANTIZATION",
+        "PRIN:PROPORTION",
+        "PRIN:TRANSFORMATION"
+      ]
     },
     {
       "id": "PRIN:DUALITY",
@@ -98,9 +168,26 @@
         "Position-Momentum Duality",
         "Time-Energy Duality"
       ],
-      "physics_domains": ["quantum-mechanics", "electromagnetism", "string-theory"],
+      "physics_domains": [
+        "quantum-mechanics",
+        "electromagnetism",
+        "string-theory"
+      ],
       "axis": "Transformation",
-      "source_md": "equations/P04_Duality.md"
+      "source_md": "equations/P04_Duality.md",
+      "equation_ids": [
+        "EQ:093",
+        "EQ:094",
+        "EQ:095",
+        "EQ:096"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:CONSERVATION",
+        "PRIN:RESONANCE",
+        "PRIN:QUANTIZATION",
+        "PRIN:UNCERTAINTY",
+        "PRIN:UNITY"
+      ]
     },
     {
       "id": "PRIN:EMERGENCE",
@@ -115,9 +202,26 @@
         "Power Law",
         "Self-Organized Criticality"
       ],
-      "physics_domains": ["complex-systems", "phase-transitions", "self-organization"],
+      "physics_domains": [
+        "complex-systems",
+        "phase-transitions",
+        "self-organization"
+      ],
       "axis": "Transformation",
-      "source_md": "equations/P05_Emergence.md"
+      "source_md": "equations/P05_Emergence.md",
+      "equation_ids": [
+        "EQ:097",
+        "EQ:098",
+        "EQ:099",
+        "EQ:100"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:SYMMETRY",
+        "PRIN:CONSERVATION",
+        "PRIN:CONTINUITY",
+        "PRIN:PROPORTION",
+        "PRIN:UNCERTAINTY"
+      ]
     },
     {
       "id": "PRIN:RESONANCE",
@@ -132,9 +236,26 @@
         "NMR Resonance",
         "Orbital Resonance"
       ],
-      "physics_domains": ["wave-mechanics", "spectroscopy", "celestial-mechanics"],
+      "physics_domains": [
+        "wave-mechanics",
+        "spectroscopy",
+        "celestial-mechanics"
+      ],
       "axis": "Transformation",
-      "source_md": "equations/P06_Resonance.md"
+      "source_md": "equations/P06_Resonance.md",
+      "equation_ids": [
+        "EQ:101",
+        "EQ:102",
+        "EQ:103",
+        "EQ:104"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:RELATIVITY",
+        "PRIN:DUALITY",
+        "PRIN:QUANTIZATION",
+        "PRIN:PROPORTION",
+        "PRIN:UNCERTAINTY"
+      ]
     },
     {
       "id": "PRIN:CONTINUITY",
@@ -149,9 +270,26 @@
         "Kirchhoff's Current Law",
         "Gauge Continuity"
       ],
-      "physics_domains": ["fluid-dynamics", "real-analysis", "field-theory"],
+      "physics_domains": [
+        "fluid-dynamics",
+        "real-analysis",
+        "field-theory"
+      ],
       "axis": "Connectivity",
-      "source_md": "equations/P07_Continuity.md"
+      "source_md": "equations/P07_Continuity.md",
+      "equation_ids": [
+        "EQ:105",
+        "EQ:106",
+        "EQ:107",
+        "EQ:108"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:SYMMETRY",
+        "PRIN:CONSERVATION",
+        "PRIN:EMERGENCE",
+        "PRIN:TRANSFORMATION",
+        "PRIN:UNITY"
+      ]
     },
     {
       "id": "PRIN:QUANTIZATION",
@@ -166,9 +304,26 @@
         "Charge Quantization",
         "Angular Momentum Quantization"
       ],
-      "physics_domains": ["quantum-mechanics", "atomic-physics", "discrete-mathematics"],
+      "physics_domains": [
+        "quantum-mechanics",
+        "atomic-physics",
+        "discrete-mathematics"
+      ],
       "axis": "Connectivity",
-      "source_md": "equations/P08_Quantization.md"
+      "source_md": "equations/P08_Quantization.md",
+      "equation_ids": [
+        "EQ:109",
+        "EQ:110",
+        "EQ:111",
+        "EQ:112"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:RELATIVITY",
+        "PRIN:DUALITY",
+        "PRIN:RESONANCE",
+        "PRIN:TRANSFORMATION",
+        "PRIN:UNITY"
+      ]
     },
     {
       "id": "PRIN:PROPORTION",
@@ -183,9 +338,26 @@
         "Harmonic Series",
         "Euler's Number"
       ],
-      "physics_domains": ["number-theory", "dimensional-analysis", "fundamental-constants"],
+      "physics_domains": [
+        "number-theory",
+        "dimensional-analysis",
+        "fundamental-constants"
+      ],
       "axis": "Connectivity",
-      "source_md": "equations/P09_Proportion.md"
+      "source_md": "equations/P09_Proportion.md",
+      "equation_ids": [
+        "EQ:113",
+        "EQ:114",
+        "EQ:115",
+        "EQ:116"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:SYMMETRY",
+        "PRIN:RELATIVITY",
+        "PRIN:EMERGENCE",
+        "PRIN:RESONANCE",
+        "PRIN:UNCERTAINTY"
+      ]
     },
     {
       "id": "PRIN:UNCERTAINTY",
@@ -200,9 +372,26 @@
         "Information Entropy",
         "Gödel Incompleteness"
       ],
-      "physics_domains": ["quantum-mechanics", "statistics", "logic"],
+      "physics_domains": [
+        "quantum-mechanics",
+        "statistics",
+        "logic"
+      ],
       "axis": "Evolution",
-      "source_md": "equations/P10_Uncertainty.md"
+      "source_md": "equations/P10_Uncertainty.md",
+      "equation_ids": [
+        "EQ:095",
+        "EQ:117",
+        "EQ:118",
+        "EQ:119"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:CONSERVATION",
+        "PRIN:DUALITY",
+        "PRIN:EMERGENCE",
+        "PRIN:RESONANCE",
+        "PRIN:PROPORTION"
+      ]
     },
     {
       "id": "PRIN:TRANSFORMATION",
@@ -217,9 +406,26 @@
         "Phase Transition",
         "Legendre Transform"
       ],
-      "physics_domains": ["functional-analysis", "thermodynamics", "signal-processing"],
+      "physics_domains": [
+        "functional-analysis",
+        "thermodynamics",
+        "signal-processing"
+      ],
       "axis": "Evolution",
-      "source_md": "equations/P11_Transformation.md"
+      "source_md": "equations/P11_Transformation.md",
+      "equation_ids": [
+        "EQ:120",
+        "EQ:121",
+        "EQ:122",
+        "EQ:123"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:SYMMETRY",
+        "PRIN:RELATIVITY",
+        "PRIN:CONTINUITY",
+        "PRIN:QUANTIZATION",
+        "PRIN:UNITY"
+      ]
     },
     {
       "id": "PRIN:UNITY",
@@ -234,9 +440,26 @@
         "Identity Element",
         "Einstein's Mass-Energy"
       ],
-      "physics_domains": ["unified-field-theory", "standard-model", "abstract-algebra"],
+      "physics_domains": [
+        "unified-field-theory",
+        "standard-model",
+        "abstract-algebra"
+      ],
       "axis": "Evolution",
-      "source_md": "equations/P12_Unity.md"
+      "source_md": "equations/P12_Unity.md",
+      "equation_ids": [
+        "EQ:124",
+        "EQ:125",
+        "EQ:126",
+        "EQ:127"
+      ],
+      "neighbors_on_dodecahedron": [
+        "PRIN:CONSERVATION",
+        "PRIN:DUALITY",
+        "PRIN:CONTINUITY",
+        "PRIN:QUANTIZATION",
+        "PRIN:TRANSFORMATION"
+      ]
     }
   ]
 }
