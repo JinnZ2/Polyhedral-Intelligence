@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "license": "CC0-1.0",
+    "source_md": "Ontology.md",
+    "description": "Structured form of the ontological mapping in Ontology.md. Captures functional definitions of key concepts across Western and Relational/Indigenous frameworks, the hidden variables Western framings tend to miss, and the protocol for cross-framework translation.",
+    "generated": "2026-05-04T00:00:00Z"
+  },
+  "concepts": [
+    "control",
+    "strength",
+    "efficiency",
+    "speed",
+    "technology",
+    "intelligence",
+    "knowledge",
+    "sensing",
+    "scientific_rigor"
+  ],
+  "concept_files": {
+    "control": "concepts/control.json",
+    "strength": "concepts/strength.json",
+    "efficiency": "concepts/efficiency.json",
+    "speed": "concepts/speed.json",
+    "technology": "concepts/technology.json",
+    "intelligence": "concepts/intelligence.json",
+    "knowledge": "concepts/knowledge.json",
+    "sensing": "concepts/sensing.json",
+    "scientific_rigor": "concepts/scientific_rigor.json"
+  },
+  "by_hidden_variable_type": {
+    "relational": ["control", "efficiency", "speed", "technology", "intelligence", "knowledge", "sensing", "scientific_rigor"],
+    "temporal": ["efficiency", "knowledge", "scientific_rigor"],
+    "field": ["strength", "intelligence", "knowledge", "sensing", "scientific_rigor"],
+    "embodied": ["control", "speed", "technology", "intelligence", "knowledge", "sensing", "scientific_rigor"],
+    "systemic": ["control", "strength", "efficiency", "speed", "technology"]
+  },
+  "hidden_variable_taxonomy_path": "hidden_variable_taxonomy.json",
+  "integration_protocol": [
+    "Name the framework being used for each term.",
+    "List hidden variables that framework might miss.",
+    "Translate core concepts rather than assuming shared meaning.",
+    "Verify understanding by asking for functional examples.",
+    "Document mismatches when they occur for future reference."
+  ],
+  "schemas": {
+    "concept": "concept.schema.json"
+  }
+}

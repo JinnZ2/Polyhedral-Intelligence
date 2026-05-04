@@ -1,0 +1,58 @@
+{
+  "id": "efficiency",
+  "name": "Efficiency",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Maximum output per unit input (usually measured in single dimension); speed of processing; minimizing 'wasted' resources.",
+      "assumptions": ["Efficiency = faster/cheaper in narrow metric."],
+      "failure_modes": []
+    },
+    "relational": {
+      "definition": "Whole-system optimization across multiple timescales; minimal resistance to natural processes; resource cycling and regeneration.",
+      "assumptions": ["Long-term system health matters more than short-term metrics."],
+      "failure_modes": []
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Timeframe", "western": "Quarterly/annual", "relational": "Multi-generational"},
+    {"aspect": "Scope", "western": "Single process", "relational": "Whole ecosystem"},
+    {"aspect": "Waste", "western": "Eliminated", "relational": "Becomes input elsewhere"},
+    {"aspect": "Measurement", "western": "Linear metrics", "relational": "Circular flows and linear within defined scope"},
+    {"aspect": "Example", "western": "Assembly line", "relational": "Forest ecosystem"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "systemic",
+      "name": "Externalized costs",
+      "description": "Costs displaced onto other systems, communities, or future timescales.",
+      "why_western_misses_it": "Single-process accounting draws the boundary at the production unit."
+    },
+    {
+      "type": "relational",
+      "name": "Relationship maintenance",
+      "description": "The ongoing investment required to sustain working partnerships with suppliers, ecosystems, and downstream users.",
+      "why_western_misses_it": "Treated as overhead rather than infrastructure."
+    },
+    {
+      "type": "systemic",
+      "name": "Regenerative capacity",
+      "description": "The system's ability to renew its own inputs.",
+      "why_western_misses_it": "Linear input-output models assume infinite supply."
+    },
+    {
+      "type": "temporal",
+      "name": "Future resilience",
+      "description": "How the system performs under future shocks the current metric does not capture.",
+      "why_western_misses_it": "Quarterly/annual horizons clip the relevant timescale."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When an efficiency metric draws its system boundary narrower than the actual cost flow.",
+    "how": "Ask: 'What costs are leaving the boundary of this metric, and on what timescale do they return?'",
+    "examples": []
+  },
+  "related_concepts": ["speed", "strength"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

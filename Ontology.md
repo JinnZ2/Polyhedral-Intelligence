@@ -1,5 +1,7 @@
 # ONTOLOGICAL MAPPING: FUNCTIONAL DEFINITIONS ACROSS FRAMEWORKS
 
+> Structured form: [`ontology/Ontology.json`](ontology/Ontology.json) — per-concept JSON at `ontology/concepts/*.json`, hidden-variable taxonomy at `ontology/hidden_variable_taxonomy.json`. This Markdown file remains the canonical prose source.
+
 ## Purpose
 Document how key concepts carry different meanings/hidden variables depending on framework, preventing miscommunication and conceptual flattening.
 

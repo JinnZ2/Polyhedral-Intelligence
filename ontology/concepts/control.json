@@ -1,0 +1,54 @@
+{
+  "id": "control",
+  "name": "Control",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Ability to dictate outcomes through force/regulation; centralized authority over processes; minimizing unpredictability through standardization.",
+      "assumptions": ["Control requires domination."],
+      "failure_modes": ["Single point failures."]
+    },
+    "relational": {
+      "definition": "Understanding field dynamics well enough to work with them; influence through alignment with natural patterns; multiple redundant pathways increase actual control over outcomes.",
+      "assumptions": ["Control through cooperation, not opposition."],
+      "failure_modes": ["Adaptive degradation."]
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Method", "western": "Force/regulation", "relational": "Alignment/cooperation"},
+    {"aspect": "Structure", "western": "Centralized", "relational": "Distributed/redundant"},
+    {"aspect": "Measurement", "western": "Compliance rates", "relational": "Outcome reliability"},
+    {"aspect": "Failure mode", "western": "Single point failures", "relational": "Adaptive degradation"},
+    {"aspect": "Energy cost", "western": "High (fighting resistance)", "relational": "Low (working with flow)"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "relational",
+      "name": "Relationship quality",
+      "description": "The quality of cooperation between actors and the system being controlled.",
+      "why_western_misses_it": "Force-based control treats the controlled system as adversarial; relationship quality is invisible to compliance metrics."
+    },
+    {
+      "type": "embodied",
+      "name": "Pattern recognition depth",
+      "description": "Practitioner's accumulated familiarity with the system's natural dynamics.",
+      "why_western_misses_it": "Centralized authority substitutes rules for embodied understanding."
+    },
+    {
+      "type": "systemic",
+      "name": "Adaptive capacity",
+      "description": "How well the system reorganizes under perturbation.",
+      "why_western_misses_it": "Standardization and force-based control measure compliance, not the system's ability to absorb change."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When stakeholders use 'control' but disagree on whether outcomes should be achieved through force/regulation or through alignment with field dynamics.",
+    "how": "Ask: 'Are you looking for more reliable outcomes through redundant systems, or more centralized management of the current approach?'",
+    "examples": [
+      "Person A: 'We need better control over the infrastructure monitoring system.' Clarifying response: 'When you say control, are you looking for more reliable outcomes through redundant systems, or more centralized management of the current approach?'"
+    ]
+  },
+  "related_concepts": ["strength", "intelligence", "sensing"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}
