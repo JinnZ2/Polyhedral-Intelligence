@@ -1,0 +1,34 @@
+{
+  "id": "EQ:002",
+  "canonical_name": "Kuramoto Model",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "θ̇ᵢ = ωᵢ + (K/N) Σⱼ sin(θⱼ - θᵢ)",
+  "hash": "sha256:dd61f086e4d7cb631c3cff7152a86d0e94fa6588314171959fecc8f20336cbe9",
+  "variables": [],
+  "families": [
+    "FAM:RESONANCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "synchronization",
+    "coupled-oscillators",
+    "emergence"
+  ],
+  "aliases": [],
+  "glyph": "⟲⟲⟲",
+  "glyph_name": "Glyph of Phase Lock",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F01 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kuramoto Model"
+    }
+  ]
+}

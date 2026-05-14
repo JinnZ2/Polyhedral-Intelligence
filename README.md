@@ -99,3 +99,15 @@ where equations, systems, and designs are united by resonance, emergence, and re
 - Pull + stage manifests with:
   ```bash
   ./fieldlink-pull.sh
+  ```
+
+### Bridge encoder
+- `polyhedral_bridge.py` encodes any text / dict / `PhysicalConstraint` into a 20-d Family vector + 12-d Principle vector, equation hashes, and a composite glyph signature.
+- Run directly: `python polyhedral_bridge.py "hexagonal mesh under tidal load"`
+- Or via CLI: `python Poly.py bridge encode "<text>"`
+
+### Tests
+```bash
+python -m pytest tests/
+```
+Smoke tests for `polyhedral_bridge` live in `tests/test_polyhedral_bridge.py` and run without pytest too: `python tests/test_polyhedral_bridge.py`.

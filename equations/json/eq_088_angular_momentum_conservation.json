@@ -1,0 +1,34 @@
+{
+  "id": "EQ:088",
+  "canonical_name": "Angular Momentum Conservation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dL/dt = τ_external",
+  "hash": "sha256:3fe96da339ce5b04eefd747ac14b647e0453f877a4238878170f80ea1101fc07",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONSERVATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "angular-momentum",
+    "conservation",
+    "rotation"
+  ],
+  "aliases": [],
+  "glyph": "⟲↺",
+  "glyph_name": "Glyph of Spinning Balance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P02 Conservation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Angular Momentum Conservation"
+    }
+  ]
+}

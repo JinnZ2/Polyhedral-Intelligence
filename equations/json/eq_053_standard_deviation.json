@@ -1,0 +1,34 @@
+{
+  "id": "EQ:053",
+  "canonical_name": "Standard Deviation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "σ = √[Σ(xᵢ - μ)²/N]",
+  "hash": "sha256:ec6409308fc60673535c0484eb7c8e7b182740e6f7e56e060d14d960d70765e5",
+  "variables": [],
+  "families": [
+    "FAM:MEASUREMENT"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "statistics",
+    "variance",
+    "dispersion"
+  ],
+  "aliases": [],
+  "glyph": "↕️📊",
+  "glyph_name": "Glyph of Scatter Measure",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F14 Measurement",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Standard Deviation"
+    }
+  ]
+}

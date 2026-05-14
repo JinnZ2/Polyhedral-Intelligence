@@ -1,0 +1,34 @@
+{
+  "id": "EQ:043",
+  "canonical_name": "Euler-Bernoulli Beam",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "EI(∂⁴w/∂x⁴) = q(x)",
+  "hash": "sha256:90763c95b94d5952448118a2394e7bbee21dc0880180caef7260fcbb5303a469",
+  "variables": [],
+  "families": [
+    "FAM:ENGINEERING"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "structural",
+    "beam",
+    "deflection"
+  ],
+  "aliases": [],
+  "glyph": "⎯⌒⎯",
+  "glyph_name": "Glyph of Bending Beam",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F11 Engineering",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Euler-Bernoulli Beam"
+    }
+  ]
+}

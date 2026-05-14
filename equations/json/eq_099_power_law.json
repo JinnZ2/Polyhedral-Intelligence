@@ -1,0 +1,34 @@
+{
+  "id": "EQ:099",
+  "canonical_name": "Power Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "P(x) ∝ x^(-α)",
+  "hash": "sha256:d0e5c8812e197eb2412ab695e2954608651f5c3fa6c8bc13f547cd14301667d8",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:EMERGENCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "scaling",
+    "power-law",
+    "emergence"
+  ],
+  "aliases": [],
+  "glyph": "●●↘",
+  "glyph_name": "Glyph of Scale Invariance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P05 Emergence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Power Law"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:092",
+  "canonical_name": "Light Speed Constancy",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "c = constant in all frames",
+  "hash": "sha256:97d6d801dbb57b24bad9c86ad8c0d067124e421c5a2169ac56c3a0a17a99bd63",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RELATIVITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "special-relativity",
+    "light",
+    "constant"
+  ],
+  "aliases": [],
+  "glyph": "⚡⊗",
+  "glyph_name": "Glyph of Absolute Light",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P03 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Light Speed Constancy"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:064",
+  "canonical_name": "Free Energy Principle",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "F = ⟨-ln P(s,ψ|m)⟩_Q(ψ|μ)",
+  "hash": "sha256:8d01df0cd04d1eb86a15f8755c83afe799c8bdd174843bf99ba5227adc59fe48",
+  "variables": [],
+  "families": [
+    "FAM:CONSCIOUSNESS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "predictive-coding",
+    "bayesian",
+    "friston"
+  ],
+  "aliases": [],
+  "glyph": "◎⬇️",
+  "glyph_name": "Glyph of Prediction Error",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F16 Consciousness",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Free Energy Principle"
+    }
+  ]
+}

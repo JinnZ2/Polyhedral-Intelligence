@@ -1,0 +1,58 @@
+{
+  "id": "scientific_rigor",
+  "name": "Scientific Rigor",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Replicability through standardized methods; control of variables in isolated systems; statistical significance.",
+      "assumptions": ["Rigor = technological mediation."],
+      "failure_modes": []
+    },
+    "relational": {
+      "definition": "Reproducible results using systematic methods; multi-modal verification; practical effectiveness over time.",
+      "assumptions": ["Rigor through verification, not through instrument mediation alone."],
+      "failure_modes": []
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Method validation", "western": "Peer review", "relational": "Reproducible results"},
+    {"aspect": "Acceptable sensors", "western": "Technological", "relational": "Any reliable modality"},
+    {"aspect": "Time scale", "western": "Study duration", "relational": "Multi-generational"},
+    {"aspect": "Context", "western": "Controlled/isolated", "relational": "Field conditions"},
+    {"aspect": "Example", "western": "Lab experiment", "relational": "Acoustic triangulation protocol"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "embodied",
+      "name": "Sensor reliability regardless of type",
+      "description": "Whether a given sensor (biological or instrumental) actually produces consistent, accurate readings in deployment.",
+      "why_western_misses_it": "Acceptance is gated on sensor category, not sensor performance."
+    },
+    {
+      "type": "field",
+      "name": "Contextual factors",
+      "description": "Field conditions that affect whether the result generalizes.",
+      "why_western_misses_it": "Controlled isolation deliberately removes them."
+    },
+    {
+      "type": "temporal",
+      "name": "Long-term outcomes",
+      "description": "Whether the predicted result holds across the relevant timescale.",
+      "why_western_misses_it": "Study durations are bounded by funding and publication cycles."
+    },
+    {
+      "type": "relational",
+      "name": "Relationship quality",
+      "description": "Trust and cooperation between researcher and the system under study (including communities, ecosystems, and collaborators).",
+      "why_western_misses_it": "Treated as bias to be eliminated rather than infrastructure to be maintained."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'rigor' is being equated with controlled-isolation methodology and field-condition reproducibility is being dismissed.",
+    "how": "Ask: 'What does it take for a finding to be reproducible in deployment, not just in the lab? Whose verification counts?'",
+    "examples": []
+  },
+  "related_concepts": ["knowledge", "sensing", "intelligence"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

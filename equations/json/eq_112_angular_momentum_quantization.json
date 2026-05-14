@@ -1,0 +1,34 @@
+{
+  "id": "EQ:112",
+  "canonical_name": "Angular Momentum Quantization",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "L = ℏ√(l(l+1)); L_z = mℏ",
+  "hash": "sha256:56597fa58bab3037ca422ea6dea6928f22998127cd8ea5c188057e504077807c",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:QUANTIZATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "angular-momentum",
+    "quantum",
+    "quantization"
+  ],
+  "aliases": [],
+  "glyph": "▭⟲",
+  "glyph_name": "Glyph of Spin Ladder",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P08 Quantization",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Angular Momentum Quantization"
+    }
+  ]
+}

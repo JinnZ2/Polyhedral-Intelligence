@@ -1,0 +1,34 @@
+{
+  "id": "EQ:106",
+  "canonical_name": "Cauchy Continuity",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "lim_{x→a} f(x) = f(a)",
+  "hash": "sha256:d9f6c636fb45dcff6ea7ff9da459fdc2450ccafe148dae23cd2bc7b659e7b19b",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONTINUITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "calculus",
+    "continuity",
+    "limit"
+  ],
+  "aliases": [],
+  "glyph": "⎯→⎯",
+  "glyph_name": "Glyph of Smooth Limit",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P07 Continuity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Cauchy Continuity"
+    }
+  ]
+}

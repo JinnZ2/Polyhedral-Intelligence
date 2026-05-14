@@ -1,0 +1,34 @@
+{
+  "id": "EQ:077",
+  "canonical_name": "Euler Characteristic",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "χ = V - E + F",
+  "hash": "sha256:f5d65cd960ca2d70841ef7d0b5d2e5b91ba911a1c5207def418370635e2ed1df",
+  "variables": [],
+  "families": [
+    "FAM:TOPOLOGY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "topology",
+    "invariant",
+    "euler"
+  ],
+  "aliases": [],
+  "glyph": "⬡-⎯+△",
+  "glyph_name": "Glyph of Shape Essence",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F20 Topology",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Euler Characteristic"
+    }
+  ]
+}

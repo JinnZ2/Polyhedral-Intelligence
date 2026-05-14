@@ -44,7 +44,7 @@ Flagged families/principles from the MRP sweeps (❗) become NIP inputs. Each fl
 ├── README.md                        # Project introduction
 ├── Ontology.md                      # Framework mappings (Western vs Relational)
 ├── Polyhedral-Intelligence-Schema.md # Detailed family/principle/equation reference
-├── LICENSE                          # MIT License
+├── LICENSE                          # CC0-1.0
 ├── entries/                         # Atlas entries (paired .md + .json per entry)
 │   ├── 0001_honeycomb_infrastructure.*
 │   ├── 0002_echolocating_autonomy.*
@@ -207,7 +207,7 @@ When adding equations, add them to `atlas_schema.json`. When referencing familie
 - **No CI/CD**: No GitHub Actions workflows configured.
 - **No linter/formatter**: No pylint, black, flake8, or ruff configuration.
 - **No dependency management**: Click is the only external dependency but is not pinned anywhere.
-- **License**: MIT (Copyright 2025 JinnZ2)
+- **License**: CC0-1.0 (sole author: JinnZ2; previously MIT — relicensed 2026-05 as intent correction)
 - **Git conventions**: Simple commit messages following "Create X" / "Update X" pattern.
 
 ## Ontological Framework (`Ontology.md`)

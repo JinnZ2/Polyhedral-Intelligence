@@ -1,0 +1,34 @@
+{
+  "id": "EQ:026",
+  "canonical_name": "Newton's Gravitation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "F = G(m₁m₂)/r²",
+  "hash": "sha256:a68fb14dc7b97829072b1f51520cb3a342da472f5f968e97d9c89d2c6ebbd737",
+  "variables": [],
+  "families": [
+    "FAM:EARTH_COSMOS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "gravity",
+    "force",
+    "inverse-square"
+  ],
+  "aliases": [],
+  "glyph": "●●⬌",
+  "glyph_name": "Glyph of Universal Pull",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F07 Earth-Cosmos",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Newton's Gravitation"
+    }
+  ]
+}

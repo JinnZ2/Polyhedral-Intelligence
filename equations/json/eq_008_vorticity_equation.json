@@ -1,0 +1,34 @@
+{
+  "id": "EQ:008",
+  "canonical_name": "Vorticity Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂ω/∂t + (u·∇)ω = (ω·∇)u + ν∇²ω",
+  "hash": "sha256:46bc7b4deddb0072c15c021639837b6b70189d4b728f3ec74b5668ae231e370a",
+  "variables": [],
+  "families": [
+    "FAM:FLOW"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "rotation",
+    "vortex",
+    "circulation"
+  ],
+  "aliases": [],
+  "glyph": "⟳∇",
+  "glyph_name": "Glyph of Spinning Currents",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F02 Flow",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Vorticity Equation"
+    }
+  ]
+}

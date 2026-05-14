@@ -1,0 +1,34 @@
+{
+  "id": "EQ:060",
+  "canonical_name": "Kalman Filter",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "x̂_k = x̂_k⁻ + K_k(z_k - Hx̂_k⁻)",
+  "hash": "sha256:c85e85723cc91f39fd8aa2fe30f67d3ec707492aad7392076e393deb1bc2a9f2",
+  "variables": [],
+  "families": [
+    "FAM:NAVIGATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "estimation",
+    "filtering",
+    "optimal"
+  ],
+  "aliases": [],
+  "glyph": "↻📡",
+  "glyph_name": "Glyph of Optimal Estimate",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F15 Navigation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kalman Filter"
+    }
+  ]
+}

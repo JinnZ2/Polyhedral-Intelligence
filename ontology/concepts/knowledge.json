@@ -1,0 +1,58 @@
+{
+  "id": "knowledge",
+  "name": "Knowledge",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Codified, transmissible information; verified through replication; abstracted from context.",
+      "assumptions": ["Knowledge = explicit information."],
+      "failure_modes": []
+    },
+    "relational": {
+      "definition": "Embodied understanding of relationships; verified through practical effectiveness; context-dependent and experiential.",
+      "assumptions": ["Knowledge is relational."],
+      "failure_modes": []
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Storage", "western": "Books, databases", "relational": "Bodies, practices, land, writings, databases of diverse types"},
+    {"aspect": "Transmission", "western": "Teaching/reading", "relational": "Apprenticeship, doing, teaching and reading environments and books"},
+    {"aspect": "Validation", "western": "Peer review", "relational": "Practical outcomes and reviews"},
+    {"aspect": "Accessibility", "western": "Universal (in theory)", "relational": "Context-specific, universal if able"},
+    {"aspect": "Example", "western": "Physics equations", "relational": "Water-as-teacher, energy-as-teacher, biology, astronomy, multigenerational observations"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "relational",
+      "name": "Relational context",
+      "description": "The web of relationships in which the knowledge was acquired and is applied.",
+      "why_western_misses_it": "Abstraction strips context as a feature, not a loss."
+    },
+    {
+      "type": "embodied",
+      "name": "Embodied skill",
+      "description": "Knowledge that lives in the practiced body, not in symbols.",
+      "why_western_misses_it": "Codification converts what can be written, leaving the rest invisible."
+    },
+    {
+      "type": "temporal",
+      "name": "Timing sensitivity",
+      "description": "Knowledge of when, not just what — seasonal, developmental, situational.",
+      "why_western_misses_it": "Decontextualized facts erase their proper moment."
+    },
+    {
+      "type": "field",
+      "name": "Field awareness",
+      "description": "Knowledge of the surrounding conditions that the explicit content takes for granted.",
+      "why_western_misses_it": "Abstraction assumes the field is constant."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'knowledge' is being equated with what can be written down, and embodied or context-dependent knowing is being treated as folklore.",
+    "how": "Ask: 'What conditions does this knowledge assume? What practices keep it alive? What can be learned without those?'",
+    "examples": []
+  },
+  "related_concepts": ["intelligence", "sensing", "technology", "scientific_rigor"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

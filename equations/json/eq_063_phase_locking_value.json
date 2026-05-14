@@ -1,0 +1,34 @@
+{
+  "id": "EQ:063",
+  "canonical_name": "Phase-Locking Value",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "PLV = |⟨e^(i(θ₁(t)-θ₂(t)))⟩|",
+  "hash": "sha256:a30f03a84190a1f50a8bccdd5833352312e4eb6fb5c2e1345cfdacc82a88ea27",
+  "variables": [],
+  "families": [
+    "FAM:CONSCIOUSNESS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "synchrony",
+    "oscillation",
+    "coherence"
+  ],
+  "aliases": [],
+  "glyph": "∿∿⟲",
+  "glyph_name": "Glyph of Brain Coherence",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F16 Consciousness",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Phase-Locking Value"
+    }
+  ]
+}

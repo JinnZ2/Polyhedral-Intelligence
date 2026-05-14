@@ -1,0 +1,34 @@
+{
+  "id": "EQ:120",
+  "canonical_name": "Fourier Transform",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "F(ω) = ∫ f(t)e^(-iωt) dt",
+  "hash": "sha256:3ff3c964b8f1a216a7260c69716ccea8278632ec9dc90df1da04ad33f805ae1d",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:TRANSFORMATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "fourier",
+    "transform",
+    "frequency"
+  ],
+  "aliases": [],
+  "glyph": "↻∿→ℹ️",
+  "glyph_name": "Glyph of Time-Frequency Bridge",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P11 Transformation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Fourier Transform"
+    }
+  ]
+}

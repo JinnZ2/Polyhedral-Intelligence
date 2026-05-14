@@ -1,0 +1,34 @@
+{
+  "id": "EQ:113",
+  "canonical_name": "Golden Ratio",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "φ = (1 + √5)/2 ≈ 1.618",
+  "hash": "sha256:c3039dfbf4d9c439576b07389a1ead48c5c0d371b666512ff7e7f730858ada0b",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:PROPORTION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "golden-ratio",
+    "proportion",
+    "geometry"
+  ],
+  "aliases": [],
+  "glyph": "▯φ",
+  "glyph_name": "Glyph of Divine Proportion",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P09 Proportion",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Golden Ratio"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:109",
+  "canonical_name": "Planck Relation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E = hf = ℏω",
+  "hash": "sha256:a9f114cdfdcdbf9717aad932eab362962af7f1d0bef2e690664e24c6ced1eff0",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:QUANTIZATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quantum",
+    "energy",
+    "fundamental"
+  ],
+  "aliases": [],
+  "glyph": "▭⚡",
+  "glyph_name": "Glyph of Energy Quanta",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P08 Quantization",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Planck Relation"
+    }
+  ]
+}

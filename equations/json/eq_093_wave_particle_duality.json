@@ -1,0 +1,34 @@
+{
+  "id": "EQ:093",
+  "canonical_name": "Wave-Particle Duality",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E = hf; p = h/λ",
+  "hash": "sha256:acb77557acf482a00d43b965e796eedfe945003054f07a5fc4051f7257016883",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:DUALITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quantum",
+    "duality",
+    "complementarity"
+  ],
+  "aliases": [],
+  "glyph": "〰◑⚫",
+  "glyph_name": "Glyph of Quantum Complementarity",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P04 Duality",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Wave-Particle Duality"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "speed",
+  "name": "Speed (Decision-making)",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Minimal time from problem to action; rapid iteration cycles; quick response prioritized.",
+      "assumptions": ["Faster = better."],
+      "failure_modes": []
+    },
+    "relational": {
+      "definition": "Appropriate timing based on system readiness; decision speed matched to consequence timescale; pattern recognition enabling efficient response.",
+      "assumptions": ["Right timing matters more than maximum speed."],
+      "failure_modes": []
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Priority", "western": "Minimize time", "relational": "Optimize timing"},
+    {"aspect": "Preparation", "western": "Often minimal", "relational": "Calibrated to stakes"},
+    {"aspect": "Reversibility", "western": "Assumed manageable", "relational": "Considered upfront"},
+    {"aspect": "Consequences", "western": "Deal with later", "relational": "Anticipated before action"},
+    {"aspect": "Example", "western": "'Move fast, break things'", "relational": "'Water knows the path'"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "embodied",
+      "name": "Preparation quality",
+      "description": "How well the actor is conditioned for the moment of decision.",
+      "why_western_misses_it": "Speed-as-priority eats into preparation time."
+    },
+    {
+      "type": "systemic",
+      "name": "Consequence scope",
+      "description": "How far the decision's effects spread before they can be reversed.",
+      "why_western_misses_it": "Iteration speed assumes consequences stay local."
+    },
+    {
+      "type": "embodied",
+      "name": "Learning integration",
+      "description": "How thoroughly past iterations have been metabolized into pattern recognition.",
+      "why_western_misses_it": "'Move fast' optimizes throughput at the expense of consolidation."
+    },
+    {
+      "type": "relational",
+      "name": "Relationship impacts",
+      "description": "How decisions disturb the trust and reciprocity networks the actor depends on.",
+      "why_western_misses_it": "These costs surface only in the next few cycles."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'speed' is being valued without reference to the consequence timescale or the cost of premature action.",
+    "how": "Ask: 'How long do the consequences of this decision propagate, and is the decision being matched to that timescale or to a faster one?'",
+    "examples": []
+  },
+  "related_concepts": ["efficiency", "intelligence"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

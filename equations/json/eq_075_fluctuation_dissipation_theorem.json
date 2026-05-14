@@ -1,0 +1,34 @@
+{
+  "id": "EQ:075",
+  "canonical_name": "Fluctuation-Dissipation Theorem",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "⟨A(t)B(0)⟩ = kT χ_AB(ω)",
+  "hash": "sha256:ffc4d885f4dd485e5e3e4ab57b8fdbf29e948786207f048c47fc8434a2ea9e47",
+  "variables": [],
+  "families": [
+    "FAM:STATISTICAL"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "fluctuation",
+    "dissipation",
+    "linear-response"
+  ],
+  "aliases": [],
+  "glyph": "〰⇄",
+  "glyph_name": "Glyph of Noise-Response Duality",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F19 Statistical",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Fluctuation-Dissipation Theorem"
+    }
+  ]
+}

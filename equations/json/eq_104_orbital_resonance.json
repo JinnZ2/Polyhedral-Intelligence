@@ -1,0 +1,34 @@
+{
+  "id": "EQ:104",
+  "canonical_name": "Orbital Resonance",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "T₁/T₂ = n/m (rational ratio)",
+  "hash": "sha256:96a40999ef64d88a6f2c1af9e815b852956275f22977de7b9312420f983e1e61",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RESONANCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "orbital",
+    "resonance",
+    "astronomy"
+  ],
+  "aliases": [],
+  "glyph": "🪐∿🪐",
+  "glyph_name": "Glyph of Celestial Harmony",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P06 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Orbital Resonance"
+    }
+  ]
+}

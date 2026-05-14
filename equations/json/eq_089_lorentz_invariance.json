@@ -1,0 +1,34 @@
+{
+  "id": "EQ:089",
+  "canonical_name": "Lorentz Invariance",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "s² = -c²t² + x² + y² + z² (invariant)",
+  "hash": "sha256:2c6f7e73be0c766d7689b27d0a0ba9348106b31349aec69e6cae4a1564ea51f4",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RELATIVITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "relativity",
+    "invariance",
+    "spacetime"
+  ],
+  "aliases": [],
+  "glyph": "⊗=⊗",
+  "glyph_name": "Glyph of Frame Independence",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P03 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Lorentz Invariance"
+    }
+  ]
+}

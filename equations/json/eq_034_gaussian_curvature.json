@@ -1,0 +1,34 @@
+{
+  "id": "EQ:034",
+  "canonical_name": "Gaussian Curvature",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "K = κ₁κ₂",
+  "hash": "sha256:b06c1d4ed58ae694971c284fb557c6d33ba807b7102c643263dec275ec43159b",
+  "variables": [],
+  "families": [
+    "FAM:GEOMETRY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "differential-geometry",
+    "curvature",
+    "intrinsic"
+  ],
+  "aliases": [],
+  "glyph": "⌒⌓",
+  "glyph_name": "Glyph of Surface Bending",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F09 Geometry",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Gaussian Curvature"
+    }
+  ]
+}

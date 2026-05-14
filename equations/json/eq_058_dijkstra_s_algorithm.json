@@ -1,0 +1,34 @@
+{
+  "id": "EQ:058",
+  "canonical_name": "Dijkstra's Algorithm",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dist[v] = min(dist[v], dist[u] + weight(u,v))",
+  "hash": "sha256:114c2c15d23bd6bb63108e3adf68398280e7a72153a099728fc9162cc3b17929",
+  "variables": [],
+  "families": [
+    "FAM:NAVIGATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "graph",
+    "pathfinding",
+    "optimization"
+  ],
+  "aliases": [],
+  "glyph": "◆→◆→◆",
+  "glyph_name": "Glyph of Shortest Path",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F15 Navigation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Dijkstra's Algorithm"
+    }
+  ]
+}

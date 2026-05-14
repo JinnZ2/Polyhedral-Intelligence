@@ -1,0 +1,34 @@
+{
+  "id": "EQ:047",
+  "canonical_name": "Percolation Threshold",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "p_c ≈ 1/⟨k⟩",
+  "hash": "sha256:ce2d76bba7792f072923ef19f210e8592e8b5185fe7eb659889e49b1587ce1d4",
+  "variables": [],
+  "families": [
+    "FAM:NETWORKS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "percolation",
+    "threshold",
+    "phase-transition"
+  ],
+  "aliases": [],
+  "glyph": "⬡⚡⬡",
+  "glyph_name": "Glyph of Critical Connection",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F12 Networks",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Percolation Threshold"
+    }
+  ]
+}

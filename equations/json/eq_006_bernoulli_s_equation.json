@@ -1,0 +1,34 @@
+{
+  "id": "EQ:006",
+  "canonical_name": "Bernoulli's Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "p + ½ρv² + ρgh = constant",
+  "hash": "sha256:41b8b77f4cb75165104b357f83d107529e488d102a054f81b40bbe18ac848d6f",
+  "variables": [],
+  "families": [
+    "FAM:FLOW"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "conservation",
+    "pressure",
+    "velocity"
+  ],
+  "aliases": [],
+  "glyph": "↗⚖↘",
+  "glyph_name": "Glyph of Energy Stream",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F02 Flow",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Bernoulli's Equation"
+    }
+  ]
+}

@@ -1,0 +1,683 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "generated": "2026-05-04T00:00:00Z",
+    "count": 20,
+    "polyhedron": "icosahedron",
+    "source_files": [
+      "atlas_schema.json",
+      "equations/F01.md",
+      "equations/F02.md",
+      "equations/F03.md",
+      "equations/F04.md",
+      "equations/F05.md",
+      "equations/F06.md",
+      "equations/F07.md",
+      "equations/F08.md",
+      "equations/F09.md",
+      "equations/F10.md",
+      "equations/F11.md",
+      "equations/F12.md",
+      "equations/F13.md",
+      "equations/F14.md",
+      "equations/F15.md",
+      "equations/F16.md",
+      "equations/F17_Turbulence.md",
+      "equations/F18_Relativity.md",
+      "equations/F19_Statistical.md",
+      "equations/F20_Topology.md",
+      "five_field_schema_map.json"
+    ],
+    "id_namespace": "FAM:",
+    "id_status": "CONFIRMED",
+    "id_confirmed_by": "Kavik (JinnZ2)",
+    "id_confirmed_at": "2026-05-04",
+    "validation_rule": "external bindings (e.g. equation.families[]) must resolve to an id in this file or be rejected at index-build time",
+    "license": "CC0-1.0",
+    "notes": "Block-0 extraction. Symbols are the canonical schema symbols from atlas_schema.json (not the emoji-prefixed variants used as section glyphs in the equations/F*.md files). Field equation_ids[] and neighbors_on_icosahedron[] are populated by Block C.1 after equation_index.json lands.",
+    "enriched_at": "2026-05-04T15:05:22Z",
+    "face_assignment": "legacy_id index → icosahedron face index (F01→face 0, ..., F20→face 19); arbitrary placeholder convention.",
+    "adjacency_source": "computed from standard icosahedron at vertices ±(0,1,φ) cyclic; faces are vertex triples at edge length 2 pairwise; two faces adjacent iff they share 2 vertices."
+  },
+  "families": [
+    {
+      "id": "FAM:RESONANCE",
+      "legacy_id": "F01",
+      "name": "Resonance",
+      "glyph": "≡≡≡",
+      "symbol_canonical": "≡≡≡",
+      "description": "Harmonics, standing waves, synchronization, natural frequencies.",
+      "exemplars": [
+        "Wave Equation (1D Standing Wave)",
+        "Kuramoto Model",
+        "Resonance Frequency",
+        "Fourier Series"
+      ],
+      "physics_domains": [
+        "wave-mechanics",
+        "harmonic-analysis",
+        "synchronization"
+      ],
+      "meta_field": "Chemical",
+      "source_md": "equations/F01.md",
+      "equation_ids": [
+        "EQ:001",
+        "EQ:002",
+        "EQ:003",
+        "EQ:004"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:FLOW",
+        "FAM:LIFE",
+        "FAM:NETWORKS"
+      ]
+    },
+    {
+      "id": "FAM:FLOW",
+      "legacy_id": "F02",
+      "name": "Flow",
+      "glyph": "↻",
+      "symbol_canonical": "↻",
+      "description": "Fluid motion, laminar flow, vorticity, boundary layers.",
+      "exemplars": [
+        "Navier-Stokes (Incompressible)",
+        "Bernoulli's Equation",
+        "Reynolds Number",
+        "Vorticity Equation"
+      ],
+      "physics_domains": [
+        "fluid-dynamics",
+        "vector-calculus",
+        "continuum-mechanics"
+      ],
+      "meta_field": "Chemical",
+      "source_md": "equations/F02.md",
+      "equation_ids": [
+        "EQ:005",
+        "EQ:006",
+        "EQ:007",
+        "EQ:008"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:RESONANCE",
+        "FAM:ENERGY_THERMO",
+        "FAM:REACTION"
+      ]
+    },
+    {
+      "id": "FAM:INFORMATION",
+      "legacy_id": "F03",
+      "name": "Information",
+      "glyph": "⊗",
+      "symbol_canonical": "⊗",
+      "description": "Shannon entropy, coding theory, information measures, compression.",
+      "exemplars": [
+        "Shannon Entropy",
+        "Channel Capacity",
+        "Kullback-Leibler Divergence",
+        "Mutual Information"
+      ],
+      "physics_domains": [
+        "information-theory",
+        "probability",
+        "coding-theory"
+      ],
+      "meta_field": "Chemical",
+      "source_md": "equations/F03.md",
+      "equation_ids": [
+        "EQ:009",
+        "EQ:010",
+        "EQ:011",
+        "EQ:012"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:LIFE",
+        "FAM:ENERGY_THERMO",
+        "FAM:MATTER"
+      ]
+    },
+    {
+      "id": "FAM:LIFE",
+      "legacy_id": "F04",
+      "name": "Life",
+      "glyph": "••••",
+      "symbol_canonical": "••••",
+      "description": "Population dynamics, metabolic networks, genetic regulation, ecological balance.",
+      "exemplars": [
+        "Lotka-Volterra Equations",
+        "Michaelis-Menten Kinetics",
+        "Logistic Growth",
+        "Hill Equation"
+      ],
+      "physics_domains": [
+        "biology",
+        "ecology",
+        "biochemistry"
+      ],
+      "meta_field": "Chemical",
+      "source_md": "equations/F04.md",
+      "equation_ids": [
+        "EQ:013",
+        "EQ:014",
+        "EQ:015",
+        "EQ:016"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:RESONANCE",
+        "FAM:INFORMATION",
+        "FAM:TURBULENCE"
+      ]
+    },
+    {
+      "id": "FAM:ENERGY_THERMO",
+      "legacy_id": "F05",
+      "name": "Energy-Thermo",
+      "glyph": "△≈",
+      "symbol_canonical": "△≈",
+      "description": "Heat transfer, entropy, thermodynamic potentials, phase equilibria.",
+      "exemplars": [
+        "First Law of Thermodynamics",
+        "Second Law (Entropy)",
+        "Heat Equation",
+        "Carnot Efficiency"
+      ],
+      "physics_domains": [
+        "thermodynamics",
+        "heat-transfer"
+      ],
+      "meta_field": "Emotional",
+      "source_md": "equations/F05.md",
+      "equation_ids": [
+        "EQ:017",
+        "EQ:018",
+        "EQ:019",
+        "EQ:020"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:FLOW",
+        "FAM:INFORMATION",
+        "FAM:STATISTICAL"
+      ]
+    },
+    {
+      "id": "FAM:COGNITION",
+      "legacy_id": "F06",
+      "name": "Cognition",
+      "glyph": "⋯⋯",
+      "symbol_canonical": "⋯⋯",
+      "description": "Neural dynamics, learning rules, cognitive models, brain oscillations.",
+      "exemplars": [
+        "Hopfield Network Energy",
+        "Hebbian Learning",
+        "Sigmoid Activation",
+        "Backpropagation"
+      ],
+      "physics_domains": [
+        "neuroscience",
+        "machine-learning",
+        "dynamical-systems"
+      ],
+      "meta_field": "Emotional",
+      "source_md": "equations/F06.md",
+      "equation_ids": [
+        "EQ:021",
+        "EQ:022",
+        "EQ:023",
+        "EQ:024"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:EARTH_COSMOS",
+        "FAM:GEOMETRY",
+        "FAM:NAVIGATION"
+      ]
+    },
+    {
+      "id": "FAM:EARTH_COSMOS",
+      "legacy_id": "F07",
+      "name": "Earth-Cosmos",
+      "glyph": "◯",
+      "symbol_canonical": "◯",
+      "description": "Planetary motion, orbital mechanics, celestial dynamics, tides.",
+      "exemplars": [
+        "Kepler's Third Law",
+        "Newton's Gravitation",
+        "Orbital Velocity",
+        "Tidal Force"
+      ],
+      "physics_domains": [
+        "astrophysics",
+        "celestial-mechanics",
+        "gravitation"
+      ],
+      "meta_field": "Emotional",
+      "source_md": "equations/F07.md",
+      "equation_ids": [
+        "EQ:025",
+        "EQ:026",
+        "EQ:027",
+        "EQ:028"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:COGNITION",
+        "FAM:PARTICLE",
+        "FAM:CONSCIOUSNESS"
+      ]
+    },
+    {
+      "id": "FAM:MATTER",
+      "legacy_id": "F08",
+      "name": "Matter",
+      "glyph": "◆",
+      "symbol_canonical": "◆",
+      "description": "Phase transitions, crystal structures, superconductivity, material properties.",
+      "exemplars": [
+        "Ising Model",
+        "BCS Gap Equation",
+        "London Equation",
+        "Drude Model"
+      ],
+      "physics_domains": [
+        "condensed-matter",
+        "statistical-mechanics",
+        "materials-science"
+      ],
+      "meta_field": "Emotional",
+      "source_md": "equations/F08.md",
+      "equation_ids": [
+        "EQ:029",
+        "EQ:030",
+        "EQ:031",
+        "EQ:032"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:INFORMATION",
+        "FAM:GEOMETRY",
+        "FAM:PARTICLE"
+      ]
+    },
+    {
+      "id": "FAM:GEOMETRY",
+      "legacy_id": "F09",
+      "name": "Geometry",
+      "glyph": "☆",
+      "symbol_canonical": "☆",
+      "description": "Euclidean and non-Euclidean theorems, curvature, differential geometry.",
+      "exemplars": [
+        "Pythagorean Theorem",
+        "Gaussian Curvature",
+        "Gauss-Bonnet Theorem",
+        "Parallel Postulate"
+      ],
+      "physics_domains": [
+        "geometry",
+        "differential-geometry",
+        "topology"
+      ],
+      "meta_field": "Cognitive",
+      "source_md": "equations/F09.md",
+      "equation_ids": [
+        "EQ:033",
+        "EQ:034",
+        "EQ:035",
+        "EQ:036"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:COGNITION",
+        "FAM:MATTER",
+        "FAM:TURBULENCE"
+      ]
+    },
+    {
+      "id": "FAM:PARTICLE",
+      "legacy_id": "F10",
+      "name": "Particle",
+      "glyph": "⚪",
+      "symbol_canonical": "⚪",
+      "description": "Standard Model, quantum field theory, particle interactions, gauge theories.",
+      "exemplars": [
+        "Dirac Equation",
+        "Klein-Gordon Equation",
+        "Yang-Mills Field Strength",
+        "Higgs Mechanism"
+      ],
+      "physics_domains": [
+        "quantum-field-theory",
+        "particle-physics",
+        "gauge-theory"
+      ],
+      "meta_field": "Cognitive",
+      "source_md": "equations/F10.md",
+      "equation_ids": [
+        "EQ:037",
+        "EQ:038",
+        "EQ:039",
+        "EQ:040"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:EARTH_COSMOS",
+        "FAM:MATTER",
+        "FAM:STATISTICAL"
+      ]
+    },
+    {
+      "id": "FAM:ENGINEERING",
+      "legacy_id": "F11",
+      "name": "Engineering",
+      "glyph": "⚙",
+      "symbol_canonical": "⚙",
+      "description": "Stress/strain, circuit laws, control theory, structural mechanics.",
+      "exemplars": [
+        "Hooke's Law",
+        "Ohm's Law",
+        "Euler-Bernoulli Beam",
+        "PID Controller"
+      ],
+      "physics_domains": [
+        "mechanical-engineering",
+        "electrical-engineering",
+        "control-theory"
+      ],
+      "meta_field": "Cognitive",
+      "source_md": "equations/F11.md",
+      "equation_ids": [
+        "EQ:041",
+        "EQ:042",
+        "EQ:043",
+        "EQ:044"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:NETWORKS",
+        "FAM:REACTION",
+        "FAM:MEASUREMENT"
+      ]
+    },
+    {
+      "id": "FAM:NETWORKS",
+      "legacy_id": "F12",
+      "name": "Networks",
+      "glyph": "⬡",
+      "symbol_canonical": "⬡",
+      "description": "Graph theory, network topology, percolation, small-world phenomena.",
+      "exemplars": [
+        "Power Law Degree Distribution",
+        "Clustering Coefficient",
+        "Percolation Threshold",
+        "Laplacian Matrix"
+      ],
+      "physics_domains": [
+        "graph-theory",
+        "complex-networks",
+        "percolation-theory"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F12.md",
+      "equation_ids": [
+        "EQ:045",
+        "EQ:046",
+        "EQ:047",
+        "EQ:048"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:RESONANCE",
+        "FAM:ENGINEERING",
+        "FAM:RELATIVITY"
+      ]
+    },
+    {
+      "id": "FAM:REACTION",
+      "legacy_id": "F13",
+      "name": "Reaction",
+      "glyph": "⇑",
+      "symbol_canonical": "⇑",
+      "description": "Chemical kinetics, catalysis, rate laws, reaction mechanisms.",
+      "exemplars": [
+        "Arrhenius Equation",
+        "Transition State Theory",
+        "Mass Action Law",
+        "Autocatalytic Reaction"
+      ],
+      "physics_domains": [
+        "chemical-kinetics",
+        "physical-chemistry",
+        "catalysis"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F13.md",
+      "equation_ids": [
+        "EQ:049",
+        "EQ:050",
+        "EQ:051",
+        "EQ:052"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:FLOW",
+        "FAM:ENGINEERING",
+        "FAM:TOPOLOGY"
+      ]
+    },
+    {
+      "id": "FAM:MEASUREMENT",
+      "legacy_id": "F14",
+      "name": "Measurement",
+      "glyph": "↕",
+      "symbol_canonical": "↕",
+      "description": "Uncertainty quantification, calibration, dimensional analysis, error propagation.",
+      "exemplars": [
+        "Standard Deviation",
+        "Uncertainty Propagation",
+        "Signal-to-Noise Ratio",
+        "Buckingham Pi Theorem"
+      ],
+      "physics_domains": [
+        "metrology",
+        "statistics",
+        "dimensional-analysis"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F14.md",
+      "equation_ids": [
+        "EQ:053",
+        "EQ:054",
+        "EQ:055",
+        "EQ:056"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:ENGINEERING",
+        "FAM:NAVIGATION",
+        "FAM:CONSCIOUSNESS"
+      ]
+    },
+    {
+      "id": "FAM:NAVIGATION",
+      "legacy_id": "F15",
+      "name": "Navigation",
+      "glyph": "◆→",
+      "symbol_canonical": "◆→",
+      "description": "Geodesics, GPS corrections, optimal routing, coordinate systems.",
+      "exemplars": [
+        "Haversine Formula",
+        "Dijkstra's Algorithm",
+        "Geodesic Equation",
+        "Kalman Filter"
+      ],
+      "physics_domains": [
+        "geodesy",
+        "optimal-control",
+        "differential-geometry"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F15.md",
+      "equation_ids": [
+        "EQ:057",
+        "EQ:058",
+        "EQ:059",
+        "EQ:060"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:COGNITION",
+        "FAM:MEASUREMENT",
+        "FAM:RELATIVITY"
+      ]
+    },
+    {
+      "id": "FAM:CONSCIOUSNESS",
+      "legacy_id": "F16",
+      "name": "Consciousness",
+      "glyph": "◎",
+      "symbol_canonical": "◎",
+      "description": "Neural oscillations, integrated information theory, attention, awareness measures.",
+      "exemplars": [
+        "Integrated Information (Φ)",
+        "Global Workspace Broadcasting",
+        "Phase-Locking Value",
+        "Free Energy Principle"
+      ],
+      "physics_domains": [
+        "neuroscience",
+        "integrated-information-theory",
+        "predictive-processing"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F16.md",
+      "equation_ids": [
+        "EQ:061",
+        "EQ:062",
+        "EQ:063",
+        "EQ:064"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:EARTH_COSMOS",
+        "FAM:MEASUREMENT",
+        "FAM:TOPOLOGY"
+      ]
+    },
+    {
+      "id": "FAM:TURBULENCE",
+      "legacy_id": "F17",
+      "name": "Turbulence",
+      "glyph": "ᘯᘰ",
+      "symbol_canonical": "ᘯᘰ",
+      "description": "Unpredictable flow, sensitive dependence, fractal turbulence, chaos.",
+      "exemplars": [
+        "Lorenz Attractor",
+        "Kolmogorov Turbulence Scaling",
+        "Feigenbaum Constants",
+        "Navier-Stokes Chaos Regimes"
+      ],
+      "physics_domains": [
+        "chaos-theory",
+        "fluid-dynamics",
+        "nonlinear-dynamics"
+      ],
+      "meta_field": "Dream",
+      "source_md": "equations/F17_Turbulence.md",
+      "equation_ids": [
+        "EQ:065",
+        "EQ:066",
+        "EQ:067",
+        "EQ:068"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:LIFE",
+        "FAM:GEOMETRY",
+        "FAM:RELATIVITY"
+      ]
+    },
+    {
+      "id": "FAM:RELATIVITY",
+      "legacy_id": "F18",
+      "name": "Relativity",
+      "glyph": "⊗≡",
+      "symbol_canonical": "⊗≡",
+      "description": "Spacetime curvature, gravitational waves, relativistic effects, cosmic structure.",
+      "exemplars": [
+        "Einstein Field Equations",
+        "Minkowski Metric",
+        "Lorentz Transformation",
+        "Gravitational Wave Equation"
+      ],
+      "physics_domains": [
+        "general-relativity",
+        "special-relativity",
+        "cosmology"
+      ],
+      "meta_field": "Symbolic",
+      "source_md": "equations/F18_Relativity.md",
+      "equation_ids": [
+        "EQ:069",
+        "EQ:070",
+        "EQ:071",
+        "EQ:072"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:NETWORKS",
+        "FAM:NAVIGATION",
+        "FAM:TURBULENCE"
+      ]
+    },
+    {
+      "id": "FAM:STATISTICAL",
+      "legacy_id": "F19",
+      "name": "Statistical",
+      "glyph": "▁▃▅∿",
+      "symbol_canonical": "▁▃▅∿",
+      "description": "Statistical mechanics, partition functions, fluctuations, large-number behavior.",
+      "exemplars": [
+        "Partition Function",
+        "Boltzmann Distribution",
+        "Fluctuation-Dissipation Theorem",
+        "Heat Capacity"
+      ],
+      "physics_domains": [
+        "statistical-mechanics",
+        "thermodynamics",
+        "stochastic-processes"
+      ],
+      "meta_field": "Symbolic",
+      "source_md": "equations/F19_Statistical.md",
+      "equation_ids": [
+        "EQ:073",
+        "EQ:074",
+        "EQ:075",
+        "EQ:076"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:ENERGY_THERMO",
+        "FAM:PARTICLE",
+        "FAM:TOPOLOGY"
+      ]
+    },
+    {
+      "id": "FAM:TOPOLOGY",
+      "legacy_id": "F20",
+      "name": "Topology",
+      "glyph": "∞",
+      "symbol_canonical": "∞",
+      "description": "Topological invariants, knots, homotopy, manifolds, higher-dimensional geometry.",
+      "exemplars": [
+        "Euler Characteristic",
+        "Chern Class (First)",
+        "Jones Polynomial",
+        "Fundamental Group"
+      ],
+      "physics_domains": [
+        "topology",
+        "algebraic-topology",
+        "knot-theory"
+      ],
+      "meta_field": "Symbolic",
+      "source_md": "equations/F20_Topology.md",
+      "equation_ids": [
+        "EQ:077",
+        "EQ:078",
+        "EQ:079",
+        "EQ:080"
+      ],
+      "neighbors_on_icosahedron": [
+        "FAM:REACTION",
+        "FAM:CONSCIOUSNESS",
+        "FAM:STATISTICAL"
+      ]
+    }
+  ]
+}

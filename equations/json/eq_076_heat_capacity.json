@@ -1,0 +1,34 @@
+{
+  "id": "EQ:076",
+  "canonical_name": "Heat Capacity",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "C_V = (∂U/∂T)_V = k β² ⟨(ΔE)²⟩",
+  "hash": "sha256:ffa00f6e4fba15a67a12825fc17b8d42f03f90d3f55542ddb0539917b99988d2",
+  "variables": [],
+  "families": [
+    "FAM:STATISTICAL"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "thermodynamics",
+    "capacity",
+    "fluctuation"
+  ],
+  "aliases": [],
+  "glyph": "🌡️²",
+  "glyph_name": "Glyph of Thermal Storage",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F19 Statistical",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Heat Capacity"
+    }
+  ]
+}

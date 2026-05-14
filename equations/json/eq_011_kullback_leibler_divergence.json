@@ -1,0 +1,34 @@
+{
+  "id": "EQ:011",
+  "canonical_name": "Kullback-Leibler Divergence",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "D_KL(P‖Q) = Σᵢ P(i) log[P(i)/Q(i)]",
+  "hash": "sha256:4c1ef3c38f93a9d790f5d9425d55c2e4c8c5466cfcf0106937f0ea4818ff3aa0",
+  "variables": [],
+  "families": [
+    "FAM:INFORMATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "divergence",
+    "probability",
+    "relative-entropy"
+  ],
+  "aliases": [],
+  "glyph": "⊗↔⊗",
+  "glyph_name": "Glyph of Distribution Distance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F03 Information",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kullback-Leibler Divergence"
+    }
+  ]
+}

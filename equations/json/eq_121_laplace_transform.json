@@ -1,0 +1,34 @@
+{
+  "id": "EQ:121",
+  "canonical_name": "Laplace Transform",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "F(s) = ∫₀^∞ f(t)e^(-st) dt",
+  "hash": "sha256:d57ea5ced206b2a43dbdb4a18c2e9e7a439cedaf13d83fab96b4d35b131e6bb4",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:TRANSFORMATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "laplace",
+    "transform",
+    "complex"
+  ],
+  "aliases": [],
+  "glyph": "↻⏱→s",
+  "glyph_name": "Glyph of Exponential Mapping",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P11 Transformation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Laplace Transform"
+    }
+  ]
+}

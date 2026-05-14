@@ -1,0 +1,34 @@
+{
+  "id": "EQ:110",
+  "canonical_name": "Quantum Harmonic Oscillator",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E_n = ℏω(n + ½)",
+  "hash": "sha256:1e2f36e76c83a078427fc8636e4a22604b29445f25bd01ebf37b87ad353497b7",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:QUANTIZATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "quantum",
+    "oscillator",
+    "energy-levels"
+  ],
+  "aliases": [],
+  "glyph": "▭ₙ∿",
+  "glyph_name": "Glyph of Discrete Vibration",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P08 Quantization",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Quantum Harmonic Oscillator"
+    }
+  ]
+}

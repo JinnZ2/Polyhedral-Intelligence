@@ -1,0 +1,34 @@
+{
+  "id": "EQ:041",
+  "canonical_name": "Hooke's Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "σ = Eε",
+  "hash": "sha256:2fa04c28dbe08c3b9548bae3b3cfcc0bb1080dad54e8abbb3987ac0dd4c57b7b",
+  "variables": [],
+  "families": [
+    "FAM:ENGINEERING"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "mechanics",
+    "elasticity",
+    "linear"
+  ],
+  "aliases": [],
+  "glyph": "⟷↔",
+  "glyph_name": "Glyph of Elastic Response",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F11 Engineering",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Hooke's Law"
+    }
+  ]
+}

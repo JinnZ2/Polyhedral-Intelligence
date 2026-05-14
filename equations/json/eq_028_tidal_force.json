@@ -1,0 +1,34 @@
+{
+  "id": "EQ:028",
+  "canonical_name": "Tidal Force",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "ΔF ∝ (2GMm/r³)Δr",
+  "hash": "sha256:ae3d10b2a0adf33b86235fac1efc26206a66ce91ebfe64e3f1192cb848c8669c",
+  "variables": [],
+  "families": [
+    "FAM:EARTH_COSMOS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "tides",
+    "gradient",
+    "differential-force"
+  ],
+  "aliases": [],
+  "glyph": "🌊🌙",
+  "glyph_name": "Glyph of Moon's Grasp",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F07 Earth-Cosmos",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Tidal Force"
+    }
+  ]
+}

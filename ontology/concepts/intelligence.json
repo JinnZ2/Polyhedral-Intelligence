@@ -1,0 +1,58 @@
+{
+  "id": "intelligence",
+  "name": "Intelligence",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Abstract reasoning capacity; problem-solving speed; information processing rate.",
+      "assumptions": ["Intelligence = cognitive/computational."],
+      "failure_modes": []
+    },
+    "relational": {
+      "definition": "Pattern recognition across domains; adaptive response to field conditions; multi-sensory information integration.",
+      "assumptions": ["Intelligence as sensing/adapting, not just computing."],
+      "failure_modes": []
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Location", "western": "Brain/processor", "relational": "Distributed system"},
+    {"aspect": "Method", "western": "Computational", "relational": "Sensing/responsive"},
+    {"aspect": "Measurement", "western": "IQ, processing speed", "relational": "Adaptive effectiveness"},
+    {"aspect": "Development", "western": "Training/education", "relational": "Embodied practice"},
+    {"aspect": "Example", "western": "Chess calculation", "relational": "Reading river currents"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "relational",
+      "name": "Relationship awareness",
+      "description": "Sensitivity to the state of connections within the system being navigated.",
+      "why_western_misses_it": "Computational metrics treat the actor as isolated from its context."
+    },
+    {
+      "type": "embodied",
+      "name": "Embodied knowledge",
+      "description": "Skill stored in the body and the practiced response.",
+      "why_western_misses_it": "IQ measures decontextualized symbol manipulation."
+    },
+    {
+      "type": "field",
+      "name": "Field coherence detection",
+      "description": "Ability to read the state of an entire field, not just isolated signals.",
+      "why_western_misses_it": "Information processing models bias toward discrete tokens."
+    },
+    {
+      "type": "field",
+      "name": "Multi-dimensional pattern recognition",
+      "description": "Recognizing patterns that span multiple modalities or scales simultaneously.",
+      "why_western_misses_it": "Single-modality benchmarks are easier to standardize."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'intelligence' is being measured by computational benchmarks and field/embodied capacity is being treated as soft skill.",
+    "how": "Ask: 'In the actual conditions where this intelligence has to operate, which signals matter, and which framework's metrics actually capture them?'",
+    "examples": []
+  },
+  "related_concepts": ["sensing", "knowledge", "control"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

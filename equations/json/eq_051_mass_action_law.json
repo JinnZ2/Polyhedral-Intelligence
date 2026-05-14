@@ -1,0 +1,34 @@
+{
+  "id": "EQ:051",
+  "canonical_name": "Mass Action Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Rate = k[A]^m[B]^n",
+  "hash": "sha256:ea61eecf18b9d95cf9924308fd4c4446b84f1e238720413efb266631071126b7",
+  "variables": [],
+  "families": [
+    "FAM:REACTION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "rate-law",
+    "kinetics",
+    "concentration"
+  ],
+  "aliases": [],
+  "glyph": "⚗️×⚗️",
+  "glyph_name": "Glyph of Concentration Power",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F13 Reaction",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Mass Action Law"
+    }
+  ]
+}

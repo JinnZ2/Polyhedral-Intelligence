@@ -1,0 +1,34 @@
+{
+  "id": "EQ:050",
+  "canonical_name": "Transition State Theory",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "k = (k_BT/h)e^(-ΔG‡/RT)",
+  "hash": "sha256:f9b0cc288d0500e0fa6014ca02cc362874dbb013ca667e526df6571ac2c9dee2",
+  "variables": [],
+  "families": [
+    "FAM:REACTION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "transition-state",
+    "kinetics",
+    "thermodynamics"
+  ],
+  "aliases": [],
+  "glyph": "⚗️⛰️⚗️",
+  "glyph_name": "Glyph of Activated Complex",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F13 Reaction",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Transition State Theory"
+    }
+  ]
+}

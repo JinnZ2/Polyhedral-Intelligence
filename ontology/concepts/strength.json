@@ -1,0 +1,52 @@
+{
+  "id": "strength",
+  "name": "Strength",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Ability to impose will regardless of conditions; resistance to change or deformation; dominance over opposing forces.",
+      "assumptions": ["Strength = rigidity."],
+      "failure_modes": ["Catastrophic fracture."]
+    },
+    "relational": {
+      "definition": "Adaptive capacity of body/mind/environment system; efficient energy usage and transmission; structural resilience under varied conditions.",
+      "assumptions": ["Strength through flexibility, not rigidity."],
+      "failure_modes": ["Graceful degradation."]
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Metric", "western": "Force applied", "relational": "Energy efficiency"},
+    {"aspect": "Response", "western": "Resist change", "relational": "Adapt to conditions"},
+    {"aspect": "Durability", "western": "Until breaking point", "relational": "Continuous adaptation"},
+    {"aspect": "Example", "western": "Concrete wall", "relational": "Diamond lattice"},
+    {"aspect": "Failure mode", "western": "Catastrophic fracture", "relational": "Graceful degradation"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "field",
+      "name": "Energy flow efficiency",
+      "description": "How well energy moves through the system without dissipation.",
+      "why_western_misses_it": "Force-based metrics measure peak load, not throughput economy."
+    },
+    {
+      "type": "systemic",
+      "name": "Structural organization",
+      "description": "How distributed and redundant the load-bearing topology is.",
+      "why_western_misses_it": "Single-axis strength tests reduce structure to a scalar."
+    },
+    {
+      "type": "systemic",
+      "name": "Multi-system integration",
+      "description": "How body/mind/environment co-bear loads.",
+      "why_western_misses_it": "Component-level testing isolates the part from its support network."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'strength' is being measured by single-axis force resistance and adaptive resilience is being ignored.",
+    "how": "Ask: 'Strength against what perturbation, on what timescale, at what cost to the rest of the system?'",
+    "examples": []
+  },
+  "related_concepts": ["control", "efficiency"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:062",
+  "canonical_name": "Global Workspace Broadcasting",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Attention(x) = Σᵢ wᵢ activation(xᵢ)",
+  "hash": "sha256:6362c4e6b43701e278914ef1c8ac6f902d82c718f712a6b6393bd5836eb58690",
+  "variables": [],
+  "families": [
+    "FAM:CONSCIOUSNESS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "attention",
+    "consciousness",
+    "broadcasting"
+  ],
+  "aliases": [],
+  "glyph": "◎⚡",
+  "glyph_name": "Glyph of Spotlight Mind",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F16 Consciousness",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Global Workspace Broadcasting"
+    }
+  ]
+}

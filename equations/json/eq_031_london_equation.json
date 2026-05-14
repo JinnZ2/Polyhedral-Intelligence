@@ -1,0 +1,34 @@
+{
+  "id": "EQ:031",
+  "canonical_name": "London Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∇×J_s = -(n_s e²/m)B",
+  "hash": "sha256:70cc3fcf365ef6f6b257ac1040ca78abd61a3de6d290acb80b4dcf84d02fcdd9",
+  "variables": [],
+  "families": [
+    "FAM:MATTER"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "superconductivity",
+    "meissner-effect",
+    "current"
+  ],
+  "aliases": [],
+  "glyph": "🧲↺",
+  "glyph_name": "Glyph of Perfect Diamagnet",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F08 Matter",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "London Equation"
+    }
+  ]
+}

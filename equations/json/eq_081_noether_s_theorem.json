@@ -1,0 +1,34 @@
+{
+  "id": "EQ:081",
+  "canonical_name": "Noether's Theorem",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Continuous symmetry → Conserved quantity",
+  "hash": "sha256:000d6dd38b8fd55a6bf1c682162ef1c43bbf79726213bf16cba51990cc7c7222",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:SYMMETRY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "symmetry",
+    "conservation",
+    "fundamental"
+  ],
+  "aliases": [],
+  "glyph": "⧖→⚖️",
+  "glyph_name": "Glyph of Symmetry-Conservation Bridge",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P01 Symmetry",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Noether's Theorem"
+    }
+  ]
+}

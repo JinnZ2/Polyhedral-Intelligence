@@ -1,0 +1,34 @@
+{
+  "id": "EQ:097",
+  "canonical_name": "Conway's Game of Life",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Cell state = f(neighbors)",
+  "hash": "sha256:327eecdebf92444bd458b07d9b4624628929fa758fc2ed56c138ad0c02b7cd39",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:EMERGENCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "emergence",
+    "cellular-automata",
+    "complexity"
+  ],
+  "aliases": [],
+  "glyph": "●●→●●●",
+  "glyph_name": "Glyph of Simple Rules, Complex Worlds",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P05 Emergence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Conway's Game of Life"
+    }
+  ]
+}

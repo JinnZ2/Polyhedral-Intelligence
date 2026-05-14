@@ -1,0 +1,34 @@
+{
+  "id": "EQ:004",
+  "canonical_name": "Fourier Series",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "f(t) = a₀/2 + Σₙ[aₙcos(nωt) + bₙsin(nωt)]",
+  "hash": "sha256:92192b24ba17f926fa38170fffcbf656e699a1f9768bb31bd1a73b8f02e7ea5f",
+  "variables": [],
+  "families": [
+    "FAM:RESONANCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "frequency-domain",
+    "decomposition",
+    "spectrum"
+  ],
+  "aliases": [],
+  "glyph": "∿∿∿⊕",
+  "glyph_name": "Glyph of Harmonic Decomposition",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F01 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Fourier Series"
+    }
+  ]
+}

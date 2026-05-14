@@ -1,0 +1,58 @@
+{
+  "id": "sensing",
+  "name": "Sensor / Sensing",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Instrument detecting specific variables; produces quantified data; replaceable/standardized.",
+      "assumptions": ["Sensors = technological instruments."],
+      "failure_modes": ["Replace sensor."]
+    },
+    "relational": {
+      "definition": "Any system detecting field patterns; biological, technological, or social; specialized by environment, training, and development.",
+      "assumptions": ["Sensor as specialized capability, not just instrument."],
+      "failure_modes": ["Deploy different modality."]
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Types recognized", "western": "Electronic/mechanical", "relational": "Biological, social, technological, electronic"},
+    {"aspect": "Validation", "western": "Specification match", "relational": "Outcome reliability"},
+    {"aspect": "Redundancy", "western": "Backup identical units", "relational": "Diverse sensing modes"},
+    {"aspect": "Failure response", "western": "Replace sensor", "relational": "Deploy different modality"},
+    {"aspect": "Example", "western": "GPS unit", "relational": "Perfect pitch + triangulation"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "embodied",
+      "name": "Calibration quality",
+      "description": "How well the sensor (biological, social, or instrumental) has been tuned to its operating conditions.",
+      "why_western_misses_it": "Specification-based validation tests the device, not the deployment."
+    },
+    {
+      "type": "relational",
+      "name": "Relational awareness",
+      "description": "The sensor's situatedness in the relationship being measured.",
+      "why_western_misses_it": "Standardized instruments are designed to be context-independent."
+    },
+    {
+      "type": "field",
+      "name": "Multi-modal integration",
+      "description": "Cross-checking signals from multiple sensing modes simultaneously.",
+      "why_western_misses_it": "Identical-unit redundancy doesn't catch correlated failure modes."
+    },
+    {
+      "type": "embodied",
+      "name": "Developmental history",
+      "description": "How the sensing capacity was trained, over what timescale, in what conditions.",
+      "why_western_misses_it": "Treated as a manufacturing detail rather than a feature of the deployment."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'sensors' are being scoped to instruments only, and biological or social sensing is being excluded as anecdote.",
+    "how": "Ask: 'What modality is best calibrated to this signal in this environment? Is the answer necessarily an instrument?'",
+    "examples": []
+  },
+  "related_concepts": ["intelligence", "knowledge", "technology", "scientific_rigor"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

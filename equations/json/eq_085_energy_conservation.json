@@ -1,0 +1,34 @@
+{
+  "id": "EQ:085",
+  "canonical_name": "Energy Conservation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dE/dt = 0 (closed system)",
+  "hash": "sha256:02bb7be371e7caaa5154b39364351040195b0f1d51f20352a5cbd36e094afd56",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONSERVATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "energy",
+    "conservation",
+    "fundamental"
+  ],
+  "aliases": [],
+  "glyph": "⚡↺",
+  "glyph_name": "Glyph of Eternal Energy",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P02 Conservation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Energy Conservation"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:091",
+  "canonical_name": "General Covariance",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Physical laws same in all coordinate systems",
+  "hash": "sha256:942afb717c2891302811de9cf34eea1593d8105c29b2e804be1c816adf3398b8",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RELATIVITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "general-relativity",
+    "covariance",
+    "coordinate-invariance"
+  ],
+  "aliases": [],
+  "glyph": "⊗∀⊗",
+  "glyph_name": "Glyph of Universal Form",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P03 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "General Covariance"
+    }
+  ]
+}

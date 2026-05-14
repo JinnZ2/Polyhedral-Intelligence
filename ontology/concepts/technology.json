@@ -1,0 +1,58 @@
+{
+  "id": "technology",
+  "name": "Technology",
+  "source_md": "Ontology.md",
+  "frameworks": {
+    "western": {
+      "definition": "Mechanical/electronic tools and systems; usually requires external energy inputs; often replaces human/biological processes.",
+      "assumptions": ["Technology = artificial/manufactured."],
+      "failure_modes": ["Complete breakdown."]
+    },
+    "relational": {
+      "definition": "Any systematic method for accomplishing goals; includes biological, social, technological, and knowledge systems; often enhances rather than replaces natural processes.",
+      "assumptions": ["Technology as tool, not technology as replacement."],
+      "failure_modes": ["Graceful degradation."]
+    }
+  },
+  "functional_comparison": [
+    {"aspect": "Definition", "western": "Manufactured tools", "relational": "Systematic methods and tools built with knowledge of tool building"},
+    {"aspect": "Dependency", "western": "External infrastructure", "relational": "Distributed knowledge"},
+    {"aspect": "Failure mode", "western": "Complete breakdown", "relational": "Graceful degradation"},
+    {"aspect": "Examples", "western": "GPS, electronic sensors", "relational": "Acoustic triangulation, star navigation, plus technology if available"},
+    {"aspect": "Transmission", "western": "Manuals/training", "relational": "Embodied practice, ceremony, training"}
+  ],
+  "hidden_variables": [
+    {
+      "type": "systemic",
+      "name": "Maintenance requirements",
+      "description": "Ongoing inputs the technology needs to keep functioning.",
+      "why_western_misses_it": "Capital cost is foregrounded; lifecycle cost is treated as an externality."
+    },
+    {
+      "type": "systemic",
+      "name": "Breakdown resilience",
+      "description": "How the wider system performs when the technology fails.",
+      "why_western_misses_it": "Replacement-driven design assumes uptime."
+    },
+    {
+      "type": "embodied",
+      "name": "Knowledge transmission",
+      "description": "Whether the practice survives without the artifact.",
+      "why_western_misses_it": "Tool and knowledge are conflated."
+    },
+    {
+      "type": "relational",
+      "name": "Relationship to natural systems",
+      "description": "Whether the technology cooperates with or displaces existing biological/ecological processes.",
+      "why_western_misses_it": "'Replacement' is treated as neutral progress."
+    }
+  ],
+  "translation_protocol": {
+    "when_to_translate": "When 'technology' is being defined narrowly as manufactured tools and biological/social methods are being implicitly excluded.",
+    "how": "Ask: 'What systematic method are we comparing against? Including biological and social methods, what is the actual choice space?'",
+    "examples": []
+  },
+  "related_concepts": ["sensing", "knowledge", "intelligence"],
+  "version": "1.0",
+  "license": "CC0-1.0"
+}

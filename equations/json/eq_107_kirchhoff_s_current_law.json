@@ -1,0 +1,34 @@
+{
+  "id": "EQ:107",
+  "canonical_name": "Kirchhoff's Current Law",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Σ I_in = Σ I_out",
+  "hash": "sha256:d2858c1f8efe50b9e9cd1c81a65883fc1d11ab57bedc546baf36d81d04f4c6d4",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONTINUITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "circuits",
+    "conservation",
+    "continuity"
+  ],
+  "aliases": [],
+  "glyph": "⎯⚡⎯",
+  "glyph_name": "Glyph of Current Conservation",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P07 Continuity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kirchhoff's Current Law"
+    }
+  ]
+}

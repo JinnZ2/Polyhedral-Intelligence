@@ -1,0 +1,34 @@
+{
+  "id": "EQ:067",
+  "canonical_name": "Feigenbaum Constants",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "δ ≈ 4.669; α ≈ 2.5029",
+  "hash": "sha256:bbdd31ce22ecb8b0f730d76b96d538925deeaaa56cf6fe5b8c1f7a032a0b5481",
+  "variables": [],
+  "families": [
+    "FAM:TURBULENCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "chaos",
+    "universality",
+    "period-doubling"
+  ],
+  "aliases": [],
+  "glyph": "⑂⑂⑂",
+  "glyph_name": "Glyph of Universal Bifurcation",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F17 Turbulence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Feigenbaum Constants"
+    }
+  ]
+}

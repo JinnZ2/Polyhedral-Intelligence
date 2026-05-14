@@ -1,0 +1,34 @@
+{
+  "id": "EQ:022",
+  "canonical_name": "Hebbian Learning",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Δwᵢⱼ = η xᵢ xⱼ",
+  "hash": "sha256:dd3ca0f59c0498ef11cf550eb5d9ef3fbc90b2dd257417933416b57df5536b57",
+  "variables": [],
+  "families": [
+    "FAM:COGNITION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "learning",
+    "plasticity",
+    "correlation"
+  ],
+  "aliases": [],
+  "glyph": "⚡⚡➕",
+  "glyph_name": "Glyph of Neurons That Fire Together",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F06 Cognition",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Hebbian Learning"
+    }
+  ]
+}

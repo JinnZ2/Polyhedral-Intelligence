@@ -1,0 +1,34 @@
+{
+  "id": "EQ:125",
+  "canonical_name": "Electroweak Unification",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "SU(2) × U(1) → electromagnetic + weak",
+  "hash": "sha256:671c6e5f69fa57938ac6ff2aa275bb7645ecd011c57e9b5d02aa3876380a8bd5",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "particle-physics",
+    "unification",
+    "gauge-theory"
+  ],
+  "aliases": [],
+  "glyph": "◎⚛️",
+  "glyph_name": "Glyph of Force Merger",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P12 Unity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Electroweak Unification"
+    }
+  ]
+}

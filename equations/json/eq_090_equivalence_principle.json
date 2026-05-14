@@ -1,0 +1,34 @@
+{
+  "id": "EQ:090",
+  "canonical_name": "Equivalence Principle",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Gravitation ≡ Acceleration",
+  "hash": "sha256:72a031a1e3c0d77ee5fb6cfa7c93e2008ed959b505d165f0a07b3961c173e46f",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RELATIVITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "general-relativity",
+    "equivalence",
+    "gravity"
+  ],
+  "aliases": [],
+  "glyph": "⊗≡⇅",
+  "glyph_name": "Glyph of Gravity-Inertia Unity",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P03 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Equivalence Principle"
+    }
+  ]
+}

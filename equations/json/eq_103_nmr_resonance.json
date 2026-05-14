@@ -1,0 +1,34 @@
+{
+  "id": "EQ:103",
+  "canonical_name": "NMR Resonance",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "ω = γB₀",
+  "hash": "sha256:3cc4f9f176fff0a60857d2fd9a096906dd12a405497deee0f855c3e16e6de393",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:RESONANCE"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "nmr",
+    "resonance",
+    "spectroscopy"
+  ],
+  "aliases": [],
+  "glyph": "🧲∿⚛️",
+  "glyph_name": "Glyph of Nuclear Song",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P06 Resonance",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "NMR Resonance"
+    }
+  ]
+}

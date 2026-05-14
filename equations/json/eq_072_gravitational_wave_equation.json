@@ -1,0 +1,34 @@
+{
+  "id": "EQ:072",
+  "canonical_name": "Gravitational Wave Equation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "□h̄μν = -(16πG/c⁴)Tμν",
+  "hash": "sha256:c3540707c0b63ebd2766aaf79f15b1d66b39d95c992812bde9294bbd0cf3439e",
+  "variables": [],
+  "families": [
+    "FAM:RELATIVITY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "gravitational-waves",
+    "linearized",
+    "radiation"
+  ],
+  "aliases": [],
+  "glyph": "〰⊗〰",
+  "glyph_name": "Glyph of Rippling Spacetime",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F18 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Gravitational Wave Equation"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:066",
+  "canonical_name": "Kolmogorov Turbulence Scaling",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "E(k) ∝ k^(-5/3)",
+  "hash": "sha256:b7085051298d276558827e72a585918097e6986dc1484ce8d8bd8e38e27c1d7f",
+  "variables": [],
+  "families": [
+    "FAM:TURBULENCE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "turbulence",
+    "spectrum",
+    "scaling"
+  ],
+  "aliases": [],
+  "glyph": "〰↘〰",
+  "glyph_name": "Glyph of Energy Cascade",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F17 Turbulence",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Kolmogorov Turbulence Scaling"
+    }
+  ]
+}

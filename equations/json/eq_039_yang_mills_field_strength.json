@@ -1,0 +1,34 @@
+{
+  "id": "EQ:039",
+  "canonical_name": "Yang-Mills Field Strength",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "F^a_μν = ∂_μA^a_ν - ∂_νA^a_μ + gf^(abc)A^b_μA^c_ν",
+  "hash": "sha256:d0fa5b48319b0c17f0a1dc76051cd51170a95293237b01ba75baa02376bc5a12",
+  "variables": [],
+  "families": [
+    "FAM:PARTICLE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "gauge-theory",
+    "non-abelian",
+    "force"
+  ],
+  "aliases": [],
+  "glyph": "⚡∇⚡",
+  "glyph_name": "Glyph of Gauge Force",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F10 Particle",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Yang-Mills Field Strength"
+    }
+  ]
+}

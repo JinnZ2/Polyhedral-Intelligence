@@ -1,0 +1,34 @@
+{
+  "id": "EQ:057",
+  "canonical_name": "Haversine Formula",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "d = 2r arcsin(√[sin²(Δφ/2) + cos φ₁ cos φ₂ sin²(Δλ/2)])",
+  "hash": "sha256:b5921d09e0536a7b41ad04c8b43bf68706f967767711dc2d90a3a8753e9a49e4",
+  "variables": [],
+  "families": [
+    "FAM:NAVIGATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "geodesy",
+    "distance",
+    "sphere"
+  ],
+  "aliases": [],
+  "glyph": "🌍⌒",
+  "glyph_name": "Glyph of Great Circle",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F15 Navigation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Haversine Formula"
+    }
+  ]
+}

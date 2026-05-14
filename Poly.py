@@ -583,6 +583,36 @@ def sync(remote: str):
 
 
 # ============================================================================
+# BRIDGE COMMANDS
+# ============================================================================
+
+@cli.group()
+def bridge():
+    """Encode payloads into family/principle vectors via polyhedral_bridge."""
+    pass
+
+
+@bridge.command(name='encode')
+@click.argument('text')
+@click.option('--threshold', type=float, default=0.05,
+              help='Amplitude floor for including a family/principle\'s equations.')
+def bridge_encode(text: str, threshold: float):
+    """
+    Encode a text payload into a PolyhedralEncoding (JSON to stdout).
+
+    Example: poly bridge encode "a hexagonal mesh under tidal load"
+    """
+    try:
+        from polyhedral_bridge import encode
+    except ImportError as e:
+        click.echo(f"{Colors.ERROR}✗{Colors.RESET} polyhedral_bridge not importable: {e}",
+                   err=True)
+        sys.exit(1)
+    enc = encode(text, threshold=threshold)
+    click.echo(json.dumps(enc.to_json(), ensure_ascii=False, indent=2))
+
+
+# ============================================================================
 # INIT COMMAND
 # ============================================================================
 

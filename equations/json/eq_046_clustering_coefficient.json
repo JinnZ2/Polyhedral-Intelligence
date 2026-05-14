@@ -1,0 +1,34 @@
+{
+  "id": "EQ:046",
+  "canonical_name": "Clustering Coefficient",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "C = (3 × # triangles)/(# connected triples)",
+  "hash": "sha256:2134291478b5bfbcf8c8acb691a6bd475033cffa4cfa236734438df8811374ce",
+  "variables": [],
+  "families": [
+    "FAM:NETWORKS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "clustering",
+    "graph",
+    "topology"
+  ],
+  "aliases": [],
+  "glyph": "△⬡",
+  "glyph_name": "Glyph of Local Cohesion",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F12 Networks",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Clustering Coefficient"
+    }
+  ]
+}

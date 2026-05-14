@@ -1,0 +1,34 @@
+{
+  "id": "EQ:119",
+  "canonical_name": "Gödel Incompleteness",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∃ true statements unprovable in system",
+  "hash": "sha256:b1b4a14e815413c92fdc7a6eecd73e6a64a7e70455a00371209f377aa53efa79",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNCERTAINTY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "logic",
+    "incompleteness",
+    "limits"
+  ],
+  "aliases": [],
+  "glyph": "◧∞",
+  "glyph_name": "Glyph of Logical Horizon",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P10 Uncertainty",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Gödel Incompleteness"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:055",
+  "canonical_name": "Signal-to-Noise Ratio",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "SNR = P_signal/P_noise",
+  "hash": "sha256:13571505a1758547e78dd03b6522d1c33416e11599a5039e999b04a196da0942",
+  "variables": [],
+  "families": [
+    "FAM:MEASUREMENT"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "signal-processing",
+    "noise",
+    "quality"
+  ],
+  "aliases": [],
+  "glyph": "📡/〰",
+  "glyph_name": "Glyph of Clarity Index",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F14 Measurement",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Signal-to-Noise Ratio"
+    }
+  ]
+}

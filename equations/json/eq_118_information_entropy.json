@@ -1,0 +1,34 @@
+{
+  "id": "EQ:118",
+  "canonical_name": "Information Entropy",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "H = -Σ p(x) log p(x)",
+  "hash": "sha256:001cdc55c6a0c25f5a284503c43bb3404ea54fe9f31893280bf73ad97ece0c0c",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNCERTAINTY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "information",
+    "entropy",
+    "uncertainty"
+  ],
+  "aliases": [],
+  "glyph": "◧ℹ️",
+  "glyph_name": "Glyph of Maximum Surprise",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P10 Uncertainty",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Information Entropy"
+    }
+  ]
+}

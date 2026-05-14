@@ -1,0 +1,34 @@
+{
+  "id": "EQ:086",
+  "canonical_name": "Momentum Conservation",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Σ pᵢ = constant",
+  "hash": "sha256:8f0d227be1de5ca9af4fd0ee372c23c3db93615cb22f31d143f70cba21441221",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:CONSERVATION"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "momentum",
+    "conservation",
+    "mechanics"
+  ],
+  "aliases": [],
+  "glyph": "→↺",
+  "glyph_name": "Glyph of Unchanging Motion",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P02 Conservation",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Momentum Conservation"
+    }
+  ]
+}

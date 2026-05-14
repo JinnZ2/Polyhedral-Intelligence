@@ -1,0 +1,34 @@
+{
+  "id": "EQ:126",
+  "canonical_name": "Identity Element",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "a · e = e · a = a",
+  "hash": "sha256:76804564ac70b085c613734f916b0cc5196dfb42f448a8903766b285e6c2ae86",
+  "variables": [],
+  "families": [],
+  "principles": [
+    "PRIN:UNITY"
+  ],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "algebra",
+    "identity",
+    "group-theory"
+  ],
+  "aliases": [],
+  "glyph": "◎×=",
+  "glyph_name": "Glyph of Neutral Action",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "P12 Unity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Identity Element"
+    }
+  ]
+}

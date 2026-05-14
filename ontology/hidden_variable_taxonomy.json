@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "license": "CC0-1.0",
+    "source_md": "Ontology.md",
+    "description": "Five categories of variables that Western framings tend to lose in translation. Sourced from the HIDDEN VARIABLE CATEGORIES section of Ontology.md."
+  },
+  "categories": {
+    "relational": {
+      "description": "Variables about how components connect and reciprocate.",
+      "examples": [
+        "Quality of connections between components",
+        "Reciprocity patterns",
+        "Trust/cooperation levels",
+        "Mutual benefit structures"
+      ]
+    },
+    "temporal": {
+      "description": "Variables operating across multiple timescales.",
+      "examples": [
+        "Multi-generational impacts",
+        "Seasonal/cyclical patterns",
+        "Preparation vs reaction timing",
+        "Consequence timescales"
+      ]
+    },
+    "field": {
+      "description": "Variables about the surrounding energetic and informational field.",
+      "examples": [
+        "Energy flow patterns",
+        "Information coherence",
+        "Pattern absences (what should be present but isn't)",
+        "Structural resonances"
+      ]
+    },
+    "embodied": {
+      "description": "Variables encoded in the body, the practitioner, or developmental history.",
+      "examples": [
+        "Developmental history",
+        "Practiced capabilities",
+        "Sensor calibration quality",
+        "Somatic knowledge"
+      ]
+    },
+    "systemic": {
+      "description": "Variables operating at the whole-system level.",
+      "examples": [
+        "Externalized costs",
+        "Regenerative capacity",
+        "Adaptive resilience",
+        "Graceful failure / degradation"
+      ]
+    }
+  }
+}

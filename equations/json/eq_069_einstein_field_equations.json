@@ -1,0 +1,34 @@
+{
+  "id": "EQ:069",
+  "canonical_name": "Einstein Field Equations",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "Rμν - ½Rgμν + Λgμν = (8πG/c⁴)Tμν",
+  "hash": "sha256:c68b1b508d08c106f6d67431ac432fb2ddc9a13261f2bdaee60d8dc281472573",
+  "variables": [],
+  "families": [
+    "FAM:RELATIVITY"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "general-relativity",
+    "gravity",
+    "curvature"
+  ],
+  "aliases": [],
+  "glyph": "⊗≡⌒",
+  "glyph_name": "Glyph of Spacetime Curvature",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F18 Relativity",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Einstein Field Equations"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "EQ:048",
+  "canonical_name": "Laplacian Matrix",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "L = D - A",
+  "hash": "sha256:89a8ad6704ee1e7597b9f241bd975668ce70e74647bea0b11bee591510abac37",
+  "variables": [],
+  "families": [
+    "FAM:NETWORKS"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "graph-theory",
+    "spectral",
+    "laplacian"
+  ],
+  "aliases": [],
+  "glyph": "∇⬡",
+  "glyph_name": "Glyph of Network Structure",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F12 Networks",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Laplacian Matrix"
+    }
+  ]
+}

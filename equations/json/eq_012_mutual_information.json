@@ -1,0 +1,34 @@
+{
+  "id": "EQ:012",
+  "canonical_name": "Mutual Information",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "I(X;Y) = H(X) + H(Y) - H(X,Y)",
+  "hash": "sha256:88d0f7f6036bd6623a2699524b6ddfc4479e3636cd2a6c5ab93a86c5770cf119",
+  "variables": [],
+  "families": [
+    "FAM:INFORMATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "correlation",
+    "dependency",
+    "information-flow"
+  ],
+  "aliases": [],
+  "glyph": "⊗∩⊗",
+  "glyph_name": "Glyph of Shared Knowledge",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F03 Information",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Mutual Information"
+    }
+  ]
+}

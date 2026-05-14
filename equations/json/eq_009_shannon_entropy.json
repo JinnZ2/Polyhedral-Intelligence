@@ -1,0 +1,34 @@
+{
+  "id": "EQ:009",
+  "canonical_name": "Shannon Entropy",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "H(X) = -Σᵢ p(xᵢ) log₂ p(xᵢ)",
+  "hash": "sha256:ff3d390c354b3832bdf23fcb20a72844b17d03a0c4f0b0ad0ec0f541fecd72d3",
+  "variables": [],
+  "families": [
+    "FAM:INFORMATION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "information-theory",
+    "entropy",
+    "uncertainty"
+  ],
+  "aliases": [],
+  "glyph": "ℹ◧⊚",
+  "glyph_name": "Glyph of Uncertainty Measure",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F03 Information",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Shannon Entropy"
+    }
+  ]
+}

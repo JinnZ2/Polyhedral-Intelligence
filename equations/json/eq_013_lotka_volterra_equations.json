@@ -1,0 +1,34 @@
+{
+  "id": "EQ:013",
+  "canonical_name": "Lotka-Volterra Equations",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "dx/dt = αx - βxy; dy/dt = δxy - γy",
+  "hash": "sha256:1b4a9c7b609a590493fefeae40413aaab8a4d7d95b3e08a9ab299ccf273cf133",
+  "variables": [],
+  "families": [
+    "FAM:LIFE"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "ecology",
+    "population",
+    "oscillation"
+  ],
+  "aliases": [],
+  "glyph": "🐇🦊⟲",
+  "glyph_name": "Glyph of Predator Dance",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F04 Life",
+      "extracted_at": "2026-05-04T14:32:37Z",
+      "context_name": "Lotka-Volterra Equations"
+    }
+  ]
+}
