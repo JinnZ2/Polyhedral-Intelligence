@@ -1,0 +1,34 @@
+{
+  "id": "EQ:128",
+  "canonical_name": "Turing Reaction-Diffusion",
+  "canonical_form_latex": "",
+  "canonical_form_ascii": "∂u/∂t = D_u∇²u + f(u,v); ∂v/∂t = D_v∇²v + g(u,v)",
+  "hash": "sha256:a0031eaa1e2bfb2d66fbb32f70154d64c0b26b3853b428a71614e94e91ee0eb6",
+  "variables": [],
+  "families": [
+    "FAM:REACTION"
+  ],
+  "principles": [],
+  "source_provenance": [],
+  "applies_in_repos": [
+    "polyhedral-intelligence"
+  ],
+  "version": "1.0",
+  "license": "CC0-1.0",
+  "tags": [
+    "pattern-formation",
+    "morphogenesis",
+    "diffusion"
+  ],
+  "aliases": [],
+  "glyph": "◇∿◇",
+  "glyph_name": "Glyph of Grown Pattern",
+  "extracted_from": [
+    {
+      "file": "atlas_schema.json",
+      "path": "F13 Reaction",
+      "extracted_at": "2026-07-02T00:00:00Z",
+      "context_name": "Turing Reaction-Diffusion"
+    }
+  ]
+}

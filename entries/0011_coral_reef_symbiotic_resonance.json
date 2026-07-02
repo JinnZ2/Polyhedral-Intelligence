@@ -1,0 +1,24 @@
+{
+  "id": "0011",
+  "title": "Coral Reef Symbiotic Resonance",
+  "seed_glyph": "◇⒮⬡⇑〰〰〰",
+  "intent": "Reef architecture that grows through Turing reaction-diffusion calcification patterns, synchronizes coral polyp resonance with tidal rhythm, and networks symbiotic algae exchange across the colony for climate resilience.",
+  "resonance_sweep": {
+    "families_balanced": 17,
+    "families_total": 20,
+    "flags": ["△≈ Energy-Thermo", "ᘯᘰ Turbulence", "∞ Topology"]
+  },
+  "principle_sweep": {
+    "principles_balanced": 11,
+    "principles_total": 12,
+    "flags": ["◧ Uncertainty"]
+  },
+  "noise_to_insight": {
+    "△≈": "Thermal stress margin reframed as an early-warning resonance sensor — the bleaching threshold becomes a climate gauge embedded in the structure itself",
+    "ᘯᘰ": "Wave turbulence reframed as a pruning signal — breakage redistributes growth energy toward sturdier branch geometries",
+    "∞": "Fracture-and-regrowth reframed as modular self-healing — the reef's topology stays continuous by replacing parts, not by preventing damage",
+    "◧": "Probabilistic bleaching threshold reframed as a hidden-structure signal — variance across the colony reveals which coral already carry resilience"
+  },
+  "refined_glyph": "◇⒮⬡⇑〰〰〰△≈ᘯᘰ∞◧",
+  "insight": "A reef that grows the way it heals — calcification following reaction-diffusion pattern law, spawning timed to tidal resonance, and nutrient exchange braided through a living network of polyp and algae. Thermal stress becomes an early gauge rather than a silent failure, wave breakage becomes pruning rather than loss, and each regrown branch keeps the colony's topology whole. The uncertainty in who bleaches and who doesn't is not noise to eliminate — it is the record of which colonies already carry the resilience the whole reef will need."
+}

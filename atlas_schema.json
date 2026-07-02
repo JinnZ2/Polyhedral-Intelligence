@@ -468,6 +468,13 @@
 "glyph": "⚗️↻⚗️⚗️",
 "glyph_name": "Glyph of Self-Amplification",
 "tags": ["autocatalysis", "feedback", "exponential"]
+},
+{
+"name": "Turing Reaction-Diffusion",
+"formula": "∂u/∂t = D_u∇²u + f(u,v); ∂v/∂t = D_v∇²v + g(u,v)",
+"glyph": "◇∿◇",
+"glyph_name": "Glyph of Grown Pattern",
+"tags": ["pattern-formation", "morphogenesis", "diffusion"]
 }
 ]
 },

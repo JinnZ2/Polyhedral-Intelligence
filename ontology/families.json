@@ -447,7 +447,8 @@
         "EQ:049",
         "EQ:050",
         "EQ:051",
-        "EQ:052"
+        "EQ:052",
+        "EQ:128"
       ],
       "neighbors_on_icosahedron": [
         "FAM:FLOW",

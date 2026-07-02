@@ -17,7 +17,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import polyhedral_bridge  # noqa: E402
-from polyhedral_bridge import PolyhedralEncoding, encode  # noqa: E402
+from polyhedral_bridge import (  # noqa: E402
+    PolyhedralEncoding,
+    encode,
+    generate_mandala_insight,
+    noise_to_insight,
+)
 
 
 def _l1_invariant(amps: dict[str, float]) -> bool:
@@ -106,6 +111,66 @@ def test_glyph_signature_uses_top_three_then_top_two():
     assert 1 <= len(parts) <= 5
 
 
+def test_turing_reaction_diffusion_equation_bound_to_reaction():
+    """New EQ:128 (Turing Reaction-Diffusion) is reachable through FAM:REACTION."""
+    enc = encode("a colony that grows through reaction-diffusion pattern formation")
+    assert enc.family_amplitudes_l1["FAM:REACTION"] > 0
+    turing_hash = "sha256:a0031eaa1e2bfb2d66fbb32f70154d64c0b26b3853b428a71614e94e91ee0eb6"
+    assert turing_hash in enc.equation_hashes
+
+
+def test_noise_to_insight_keys_by_glyph_and_covers_all_flags():
+    """noise_to_insight() returns one reframed entry per flag, keyed by glyph."""
+    names = {"FAM:TURBULENCE": "Turbulence", "PRIN:UNCERTAINTY": "Uncertainty"}
+    glyphs = {"FAM:TURBULENCE": "ᘯᘰ", "PRIN:UNCERTAINTY": "◧"}
+    insights = noise_to_insight(["FAM:TURBULENCE", "PRIN:UNCERTAINTY"], names, glyphs)
+    assert set(insights.keys()) == {"ᘯᘰ", "◧"}
+    assert "Fractal Signal" in insights["ᘯᘰ"]
+    assert "Silence Signal" in insights["◧"]
+
+
+def test_generate_mandala_insight_schema_matches_atlas_entry():
+    """generate_mandala_insight() drafts a dict shaped like entries/NNNN_*.json."""
+    entry = generate_mandala_insight(
+        "a hexagonal mesh under tidal load with turbulent resonance", name="Test Concept"
+    )
+    for key in (
+        "title", "seed_glyph", "intent", "resonance_sweep", "principle_sweep",
+        "noise_to_insight", "refined_glyph", "insight",
+    ):
+        assert key in entry
+    assert entry["title"] == "Test Concept"
+    fs = entry["resonance_sweep"]
+    assert fs["families_total"] == 20
+    assert fs["families_balanced"] == 20 - len(fs["flags"])
+    ps = entry["principle_sweep"]
+    assert ps["principles_total"] == 12
+    assert ps["principles_balanced"] == 12 - len(ps["flags"])
+    # every flagged glyph symbol has a noise_to_insight reframe
+    flag_glyphs = {f.split(" ", 1)[0] for f in fs["flags"] + ps["flags"]}
+    assert flag_glyphs == set(entry["noise_to_insight"].keys())
+
+
+def test_generate_mandala_insight_deterministic():
+    """Same payload → identical draft entry (flags, glyph, insight keys) across runs."""
+    entry1 = generate_mandala_insight("turbulent flow with quantum uncertainty", name="A")
+    entry2 = generate_mandala_insight("turbulent flow with quantum uncertainty", name="A")
+    assert entry1["resonance_sweep"] == entry2["resonance_sweep"]
+    assert entry1["principle_sweep"] == entry2["principle_sweep"]
+    assert entry1["noise_to_insight"] == entry2["noise_to_insight"]
+    assert entry1["seed_glyph"] == entry2["seed_glyph"]
+
+
+def test_generate_mandala_insight_no_signal_flags_nothing():
+    """A payload with no recognized keywords produces zero flags, fully balanced."""
+    entry = generate_mandala_insight("xyzzy plugh foobar", name="Empty")
+    assert entry["resonance_sweep"]["flags"] == []
+    assert entry["resonance_sweep"]["families_balanced"] == 20
+    assert entry["principle_sweep"]["flags"] == []
+    assert entry["principle_sweep"]["principles_balanced"] == 12
+    assert entry["noise_to_insight"] == {}
+
+
 if __name__ == "__main__":
     tests = [
         test_text_input_networks_and_flow,
@@ -115,6 +180,11 @@ if __name__ == "__main__":
         test_missing_crf_fallback,
         test_equation_hashes_above_threshold,
         test_glyph_signature_uses_top_three_then_top_two,
+        test_turing_reaction_diffusion_equation_bound_to_reaction,
+        test_noise_to_insight_keys_by_glyph_and_covers_all_flags,
+        test_generate_mandala_insight_schema_matches_atlas_entry,
+        test_generate_mandala_insight_deterministic,
+        test_generate_mandala_insight_no_signal_flags_nothing,
     ]
     failures = 0
     for t in tests:
