@@ -278,10 +278,126 @@ def encode(payload: Any, threshold: float = 0.05) -> PolyhedralEncoding:
     )
 
 
+# -------------------------------------------------------------------
+# Noise-to-Insight Protocol (NIP) — reframes MRP-flagged families/
+# principles as design features, per the 5 patterns in CLAUDE.md.
+# -------------------------------------------------------------------
+NIP_PATTERNS: dict[str, str] = {
+    "noise": "Noise = Fractal Signal (turbulence becomes structure)",
+    "silence": "Uncertainty = Silence Signal (absence reveals truth)",
+    "delay": "Delay = Relative Time (lags reveal hidden dimensions)",
+    "error": "Error = Hidden Dimension (contradictions expand space)",
+    "instability": "Instability = Emergent Flexibility (wobble becomes adaptation)",
+}
+
+# Which NIP pattern best reframes a flag raised on this family/principle.
+_NIP_PATTERN_FOR_ID: dict[str, str] = {
+    "FAM:TURBULENCE": "noise",
+    "FAM:STATISTICAL": "noise",
+    "PRIN:UNCERTAINTY": "silence",
+    "FAM:MEASUREMENT": "silence",
+    "FAM:REACTION": "delay",
+    "FAM:NAVIGATION": "delay",
+    "FAM:RELATIVITY": "error",
+    "PRIN:DUALITY": "error",
+    "FAM:TOPOLOGY": "instability",
+    "PRIN:TRANSFORMATION": "instability",
+}
+_DEFAULT_NIP_PATTERN = "instability"
+
+# Families/principles that most often carry generative friction for any
+# concept (MRP steps 2-3): preferred flag candidates when their amplitude
+# is nonzero, before falling back to whatever else resonated.
+_FRICTION_FAMILIES = [
+    "FAM:TURBULENCE", "FAM:REACTION", "FAM:STATISTICAL",
+    "FAM:MEASUREMENT", "FAM:RELATIVITY", "FAM:TOPOLOGY",
+]
+_FRICTION_PRINCIPLES = ["PRIN:UNCERTAINTY", "PRIN:TRANSFORMATION", "PRIN:DUALITY"]
+
+
+def _select_flags(amps: dict[str, float], order: list[str], archetypes: list[str], count: int) -> list[str]:
+    """Pick up to `count` ids to flag: friction archetypes with signal
+    first (highest amplitude first), then any other id with signal."""
+    present = sorted((k for k in archetypes if amps.get(k, 0) > 0), key=lambda k: -amps[k])
+    flags = present[:count]
+    if len(flags) < count:
+        others = sorted(
+            (k for k in order if k not in flags and amps.get(k, 0) > 0),
+            key=lambda k: -amps[k],
+        )
+        flags += others[: count - len(flags)]
+    return flags
+
+
+def noise_to_insight(flag_ids: list[str], names: dict[str, str], glyphs: dict[str, str]) -> dict[str, str]:
+    """Reframe each flagged family/principle id as a NIP insight, keyed by its glyph symbol."""
+    insights: dict[str, str] = {}
+    for fid in flag_ids:
+        pattern = NIP_PATTERNS[_NIP_PATTERN_FOR_ID.get(fid, _DEFAULT_NIP_PATTERN)]
+        insights[glyphs.get(fid, fid)] = f"{names.get(fid, fid)} reframed via {pattern}"
+    return insights
+
+
+def generate_mandala_insight(
+    payload: Any,
+    name: str,
+    family_flag_count: int = 3,
+    principle_flag_count: int = 1,
+) -> dict:
+    """Run MRP steps 1-4 + NIP on a payload and draft an Atlas-entry-shaped dict.
+
+    Wraps encode() with flag selection and noise-to-insight reframing so a
+    new entries/NNNN_*.json can be bootstrapped from free text, then
+    hand-refined (title, insight prose, refined_glyph) same as any other
+    Atlas entry — mirrors Poly.py's --ai-enhance draft-then-edit workflow.
+    """
+    fam_doc, prin_doc = _load_ontology()
+    fam_order = [f["id"] for f in fam_doc["families"]]
+    prin_order = [p["id"] for p in prin_doc["principles"]]
+    names = {f["id"]: f["name"] for f in fam_doc["families"]}
+    names.update({p["id"]: p["name"] for p in prin_doc["principles"]})
+    glyphs = {f["id"]: f["glyph"] for f in fam_doc["families"]}
+    glyphs.update({p["id"]: p["glyph"] for p in prin_doc["principles"]})
+
+    enc = encode(payload)
+    text, _tags, _input_type = _payload_to_text_and_tags(payload)
+
+    fam_flags = _select_flags(enc.family_amplitudes_l1, fam_order, _FRICTION_FAMILIES, family_flag_count)
+    prin_flags = _select_flags(enc.principle_amplitudes_l1, prin_order, _FRICTION_PRINCIPLES, principle_flag_count)
+
+    return {
+        "title": name,
+        "seed_glyph": enc.glyph_signature,
+        "intent": text,
+        "resonance_sweep": {
+            "families_balanced": len(fam_order) - len(fam_flags),
+            "families_total": len(fam_order),
+            "flags": [f"{glyphs[f]} {names[f]}" for f in fam_flags],
+        },
+        "principle_sweep": {
+            "principles_balanced": len(prin_order) - len(prin_flags),
+            "principles_total": len(prin_order),
+            "flags": [f"{glyphs[p]} {names[p]}" for p in prin_flags],
+        },
+        "noise_to_insight": noise_to_insight(fam_flags + prin_flags, names, glyphs),
+        "refined_glyph": enc.glyph_signature,
+        "insight": "",
+        "_encoding": enc.to_json(),
+    }
+
+
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
         print("usage: polyhedral_bridge.py '<text>'", file=sys.stderr)
+        print("       polyhedral_bridge.py --insight '<name>' '<text>'", file=sys.stderr)
         return 2
+    if argv[1] == "--insight":
+        if len(argv) < 4:
+            print("usage: polyhedral_bridge.py --insight '<name>' '<text>'", file=sys.stderr)
+            return 2
+        entry = generate_mandala_insight(argv[3], name=argv[2])
+        print(json.dumps(entry, ensure_ascii=False, indent=2))
+        return 0
     enc = encode(argv[1])
     print(json.dumps(enc.to_json(), ensure_ascii=False, indent=2))
     return 0

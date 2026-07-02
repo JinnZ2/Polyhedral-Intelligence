@@ -33,3 +33,14 @@ Glyphs are symbolic composites — text-based runes that can later be rendered a
 - Conservation (⟳)  
 - Life (⒮)  
 - Noise insights: Reaction (⇑), Consciousness (◉), Turbulence (ᘯᘰ), Statistical fluctuation (▁▃▅∿), Uncertainty (◧)  
+
+---
+
+## Entry 0011: Coral Reef Symbiotic Resonance
+**Refined Glyph:** ◇⒮⬡⇑〰〰〰△≈ᘯᘰ∞◧  
+- Matter (◇)  
+- Life (⒮)  
+- Networks (⬡)  
+- Reaction (⇑)  
+- Resonance (〰〰〰)  
+- Noise insights: Energy-Thermo (△≈), Turbulence (ᘯᘰ), Topology (∞), Uncertainty (◧)  

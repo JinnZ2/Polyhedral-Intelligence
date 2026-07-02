@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generated": "2026-05-04T14:32:37Z",
-  "count": 127,
+  "count": 128,
   "by_id": {
     "EQ:001": "eq_001_wave_equation_1d_standing_wave.json",
     "EQ:002": "eq_002_kuramoto_model.json",
@@ -129,7 +129,8 @@
     "EQ:124": "eq_124_maxwell_s_unification.json",
     "EQ:125": "eq_125_electroweak_unification.json",
     "EQ:126": "eq_126_identity_element.json",
-    "EQ:127": "eq_127_einstein_s_mass_energy.json"
+    "EQ:127": "eq_127_einstein_s_mass_energy.json",
+    "EQ:128": "eq_128_turing_reaction_diffusion.json"
   },
   "by_hash": {
     "sha256:b16fdb22b218efd065154a91c2c11afd74c0d96171445cbdc3d752e24bacbea9": "EQ:001",
@@ -258,7 +259,8 @@
     "sha256:7a14764fa5c4ff313b48cd0103b07f7a693bcef641c01188fa40094de3bfb7b0": "EQ:124",
     "sha256:671c6e5f69fa57938ac6ff2aa275bb7645ecd011c57e9b5d02aa3876380a8bd5": "EQ:125",
     "sha256:76804564ac70b085c613734f916b0cc5196dfb42f448a8903766b285e6c2ae86": "EQ:126",
-    "sha256:39eb2187d78ae9198442cd0d427e3aac693a06e862b7b66a48086daf6ff4eb46": "EQ:127"
+    "sha256:39eb2187d78ae9198442cd0d427e3aac693a06e862b7b66a48086daf6ff4eb46": "EQ:127",
+    "sha256:a0031eaa1e2bfb2d66fbb32f70154d64c0b26b3853b428a71614e94e91ee0eb6": "EQ:128"
   },
   "by_family": {
     "FAM:RESONANCE": [
@@ -337,7 +339,8 @@
       "EQ:049",
       "EQ:050",
       "EQ:051",
-      "EQ:052"
+      "EQ:052",
+      "EQ:128"
     ],
     "FAM:MEASUREMENT": [
       "EQ:053",
@@ -584,7 +587,8 @@
       "EQ:124",
       "EQ:125",
       "EQ:126",
-      "EQ:127"
+      "EQ:127",
+      "EQ:128"
     ]
   }
 }
