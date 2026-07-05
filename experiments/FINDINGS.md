@@ -128,15 +128,26 @@ decision above.
 |---|---|---|---|---|---|
 | 5 | Glyph opacity | 58.6% opaque, 95% is a known 16-entry alias table | **High** | **Low** | Do now |
 | 3 | NIP mapping | 75% coverage, n too small to learn, easy to extend+datify | **High** | **Low** | Do now |
-| 1 | Semantic resonance | 42% baseline, cheap fix falsified (33%, worse) | Medium, **only with embeddings** | **Medium-High** (new dependency) | Needs a go/no-go decision (below) |
+| 1 | Semantic resonance | 42% baseline, cheap fix falsified (33%, worse), embeddings test blocked by egress policy (huggingface.co 403) | Untested — Medium *if* embeddings work | **Medium-High** (new dependency + needs a reachable model host) | Blocked here; run `semantic_resonance_embeddings_probe.py` in an environment with huggingface.co access |
 | 2 | Equation canonicalization | 1%→3% parseable as-is; needs per-equation re-authoring | **Low** near-term | **Very high** (underestimated) | Defer; revisit if #7 happens first (re-authoring for derivations could produce CAS-ready forms as a byproduct) |
 | 7 | Equation derivations | 100% stubbed | N/A (labor, not risk) | **High**, linear | Ongoing content backlog, pick a subset and go |
 
 ## Decision points — resolutions
 
-1. **#1 embeddings**: resolved as "test for real first." See the follow-up
-   embeddings experiment (below) for actual numbers before any dependency
-   is added to the repo.
+1. **#1 embeddings**: resolved as "test for real first" — but the test
+   itself is blocked in this sandbox, which is its own finding.
+   `sentence-transformers` installs fine (PyPI is on the egress allowlist),
+   but loading any pretrained model (`all-MiniLM-L6-v2` or otherwise) pulls
+   weights from `huggingface.co`, which this environment's egress policy
+   denies with a hard 403 ("policy denial", not a transient failure — see
+   `/root/.ccr/README.md`: don't retry or route around these, report them).
+   So: **real embedding accuracy on the eval set is untested**, not because
+   the idea failed, but because this sandbox can't reach the model host.
+   `experiments/semantic_resonance_embeddings_probe.py` is written and
+   ready to run — it needs an environment where `huggingface.co` (or a
+   mirrored model source) is reachable. Until then, the only concrete
+   numbers we have for #1 are the two lexical baselines above (42%
+   keyword, 33% richer-corpus — worse).
 2. **#3 NIP table format**: resolved as a `default_nip_pattern` field on
    each entry in `ontology/families.json` / `ontology/principles.json`
    (20/20 families, 12/12 principles). `polyhedral_bridge.py`'s
