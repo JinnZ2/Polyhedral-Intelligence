@@ -149,6 +149,7 @@ class BranchState:
         self.params: Dict[str, Any] = {}
         self.atlas_entry: Dict[str, Any] = {}
         self.encoding = None   # PolyhedralEncoding if bridge used
+        self.bridge_draft: Optional[Dict[str, Any]] = None  # generate_mandala_insight() output, if run
 
     def clone(self):
         s = BranchState()
@@ -162,6 +163,7 @@ class BranchState:
         s.params = copy.deepcopy(self.params)
         s.atlas_entry = copy.deepcopy(self.atlas_entry)
         s.encoding = copy.deepcopy(self.encoding)
+        s.bridge_draft = copy.deepcopy(self.bridge_draft)
         return s
 
 class TreeNode:
@@ -324,32 +326,54 @@ class MRPExplorer:
                 self._manual_seed_glyph(new_state, child)
 
         elif action == "add_bridge_glyphs":
-            # low-resonance families, however resonance_vector() keyed them
-            # (legacy "F01" or canonical "FAM:*") — try both id schemes.
-            low_fam = [fid for fid, sc in new_state.family_resonance.items() if sc < 0.2]
-            syms = []
-            for fid in low_fam[:3]:
-                sym = self.fam_glyphs.get(fid) or self.mandala.families.get(fid, {}).get("symbol")
-                if sym:
-                    syms.append(sym)
+            # Prefer the bridge's own flags (run_bridge_insight already
+            # excludes the seed's core drivers from friction — see
+            # generate_mandala_insight/_select_flags). Fall back to a raw
+            # low-resonance-amplitude heuristic only if run_bridge_insight
+            # hasn't been run yet, i.e. there's no bridge draft to accept.
+            if new_state.bridge_draft:
+                flags = new_state.bridge_draft["resonance_sweep"]["flags"]
+                syms = [f.split(" ", 1)[0] for f in flags]
+                source = "bridge flags"
+            else:
+                # low-resonance families, however resonance_vector() keyed them
+                # (legacy "F01" or canonical "FAM:*") — try both id schemes.
+                low_fam = [fid for fid, sc in new_state.family_resonance.items() if sc < 0.2]
+                syms = []
+                for fid in low_fam[:3]:
+                    sym = self.fam_glyphs.get(fid) or self.mandala.families.get(fid, {}).get("symbol")
+                    if sym:
+                        syms.append(sym)
+                source = "manual heuristic (no bridge draft — run run_bridge_insight to accept the bridge's flags instead)"
             if syms:
                 bridge = "".join(syms)
                 new_state.current_glyph += f"⛓️{bridge}"
-                child.state.annotations.append(f"Bridge added: {bridge}")
+                child.state.annotations.append(f"Bridge added [{source}]: {bridge}")
             else:
-                child.state.annotations.append("No low‑resonance families.")
+                child.state.annotations.append(f"No flagged families [{source}].")
 
         elif action == "corrective_evolution":
-            # Use the same flag selection logic as the bridge? We can use the NIP patterns.
-            # For simplicity, we'll reuse the heuristic from earlier.
-            flags = []
-            if new_state.family_resonance.get("FAM:TURBULENCE", 0) < 0.2:
-                flags.append("ᘯᘰ")
-            if new_state.principle_resonance.get("PRIN:UNCERTAINTY", 0) < 0.2:
-                flags.append("◧")
-            for sym in flags:
-                new_state.current_glyph += sym
-                child.state.annotations.append(f"Added noise‑glyph {sym}")
+            # Prefer the bridge's own noise_to_insight reframes (accept
+            # path). Fall back to the old fixed Turbulence/Uncertainty
+            # threshold check (manual override path) only if no bridge
+            # draft has been computed yet.
+            if new_state.bridge_draft:
+                n2i = new_state.bridge_draft.get("noise_to_insight", {})
+                if n2i:
+                    for sym, insight in n2i.items():
+                        new_state.current_glyph += sym
+                        child.state.annotations.append(f"Added noise‑glyph {sym} [bridge]: {insight}")
+                else:
+                    child.state.annotations.append("Bridge draft has no flags to correct.")
+            else:
+                flags = []
+                if new_state.family_resonance.get("FAM:TURBULENCE", 0) < 0.2:
+                    flags.append("ᘯᘰ")
+                if new_state.principle_resonance.get("PRIN:UNCERTAINTY", 0) < 0.2:
+                    flags.append("◧")
+                for sym in flags:
+                    new_state.current_glyph += sym
+                    child.state.annotations.append(f"Added noise‑glyph {sym} [manual heuristic]")
 
         elif action == "mandala_spin_test":
             fam_ok = sum(1 for s in new_state.family_resonance.values() if s > 0.2)
@@ -381,8 +405,12 @@ class MRPExplorer:
                     # entry is a dict with resonance_sweep, flags, noise_to_insight, etc.
                     child.state.annotations.append("Bridge insight generated:")
                     child.state.annotations.append(json.dumps(entry, indent=2, ensure_ascii=False))
-                    # Optionally, store it as the atlas entry directly
+                    # Store it as the atlas entry directly, and keep the raw
+                    # draft around so add_bridge_glyphs/corrective_evolution
+                    # can act on the bridge's own flags instead of
+                    # re-deriving their own heuristic.
                     new_state.atlas_entry = entry
+                    new_state.bridge_draft = entry
                     new_state.current_glyph = entry.get("refined_glyph", new_state.current_glyph)
                 except Exception as e:
                     child.state.annotations.append(f"Bridge insight failed: {e}")

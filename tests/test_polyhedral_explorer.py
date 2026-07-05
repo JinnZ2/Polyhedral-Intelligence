@@ -58,18 +58,53 @@ def test_bridge_actually_used_not_silently_bypassed():
 
 
 def test_add_bridge_glyphs_resolves_symbols_from_canonical_ids():
-    """add_bridge_glyphs must resolve glyph symbols even though
+    """Without a bridge draft, add_bridge_glyphs falls back to the raw
+    amplitude heuristic and must still resolve glyph symbols even though
     family_resonance is keyed by canonical FAM:* ids, not the legacy
     F01-style ids mandala.families uses."""
     exp = MRPExplorer(ATLAS)
-    exp.select("set_seed_concept:xyzzy plugh foobar")  # no keyword hits -> all-zero amplitudes
+    exp.select("set_seed_concept:hexagonal mesh under tidal load")
     exp.select("run_family_sweep")
     exp.select("run_principle_sweep")
     exp.select("generate_seed_glyph")
+    assert exp.current.state.bridge_draft is None
     before = exp.current.state.current_glyph
     exp.select("add_bridge_glyphs")
     out = _joined(exp)
-    assert "No low" not in out or exp.current.state.current_glyph != before
+    assert "manual heuristic" in out
+    assert exp.current.state.current_glyph != before
+
+
+def test_bridge_insight_flags_preferred_over_manual_heuristic():
+    """Once run_bridge_insight has computed a draft, add_bridge_glyphs and
+    corrective_evolution must use its flags/noise_to_insight (the
+    core-driver-excluding, non-hardcoded selection) instead of the fixed
+    Turbulence/Uncertainty threshold heuristic."""
+    seed = (
+        "An unpredictable, chaotic, turbulent boundary layer is the "
+        "deliberately engineered core feature of this wing design, alongside "
+        "a secondary surface reaction coating, with stochastic surface variation."
+    )
+    exp = MRPExplorer(ATLAS)
+    exp.select(f"set_seed_concept:{seed}")
+    exp.select("run_family_sweep")
+    exp.select("run_principle_sweep")
+    exp.select("generate_seed_glyph")
+    exp.select("run_bridge_insight")
+    assert exp.current.state.bridge_draft is not None
+
+    exp.select("add_bridge_glyphs")
+    out = _joined(exp)
+    assert "[bridge flags]" in out
+    assert "manual heuristic" not in out
+    # The engineered-core Turbulence/Reaction families are core drivers,
+    # not friction — the bridge only has Statistical left to flag here.
+    assert "Bridge added [bridge flags]: ▁▃▅∿" in out
+
+    exp.select("corrective_evolution")
+    out = _joined(exp)
+    assert "[bridge]" in out
+    assert "Statistical reframed via Noise = Fractal Signal" in out
 
 
 def test_compare_and_merge_glyphs_are_wired_to_glyph_algebra():
@@ -122,6 +157,7 @@ if __name__ == "__main__":
         test_full_walkthrough_does_not_crash,
         test_bridge_actually_used_not_silently_bypassed,
         test_add_bridge_glyphs_resolves_symbols_from_canonical_ids,
+        test_bridge_insight_flags_preferred_over_manual_heuristic,
         test_compare_and_merge_glyphs_are_wired_to_glyph_algebra,
         test_record_atlas_entry_stages_a_file,
         test_save_branch_round_trips_annotations,

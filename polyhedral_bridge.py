@@ -186,6 +186,16 @@ def _ordered_vector(amps: dict[str, float], order: list[str]) -> list[float]:
     return [amps.get(k, 0.0) for k in order]
 
 
+def _top_ids(amps: dict[str, float], n: int) -> set[str]:
+    """The seed's own top-n nonzero-amplitude ids — its 'core driver' set.
+
+    Shared by _composite_glyph (top-3 families / top-2 principles build the
+    seed glyph) and _select_flags (these same core ids are never eligible
+    to be flagged as friction — see generate_mandala_insight).
+    """
+    return {k for k, a in sorted(amps.items(), key=lambda x: (-x[1], x[0]))[:n] if a > 0}
+
+
 def _composite_glyph(
     fam_amps: dict[str, float],
     prin_amps: dict[str, float],
@@ -315,14 +325,31 @@ _FRICTION_FAMILIES = [
 _FRICTION_PRINCIPLES = ["PRIN:UNCERTAINTY", "PRIN:TRANSFORMATION", "PRIN:DUALITY"]
 
 
-def _select_flags(amps: dict[str, float], order: list[str], archetypes: list[str], count: int) -> list[str]:
-    """Pick up to `count` ids to flag: friction archetypes with signal
-    first (highest amplitude first), then any other id with signal."""
-    present = sorted((k for k in archetypes if amps.get(k, 0) > 0), key=lambda k: -amps[k])
+def _select_flags(
+    amps: dict[str, float],
+    order: list[str],
+    archetypes: list[str],
+    count: int,
+    exclude: set[str] = frozenset(),
+) -> list[str]:
+    """Pick up to `count` ids to flag as friction: archetypes with signal
+    first (highest amplitude first), then any other id with signal.
+
+    `exclude` is the seed's own core-driver set (its top-3 families / top-2
+    principles by amplitude — the same ones already rendered into the seed
+    glyph). A family that dominates a seed's own resonance is that seed's
+    deliberate theme, not unaddressed friction, so it's never eligible here
+    even if it's on the friction-archetype list — e.g. a wing whose whole
+    point is engineered turbulence shouldn't have turbulence flagged as a
+    weakness just because Turbulence is usually a friction signal.
+    """
+    eligible_archetypes = [k for k in archetypes if k not in exclude]
+    eligible_order = [k for k in order if k not in exclude]
+    present = sorted((k for k in eligible_archetypes if amps.get(k, 0) > 0), key=lambda k: -amps[k])
     flags = present[:count]
     if len(flags) < count:
         others = sorted(
-            (k for k in order if k not in flags and amps.get(k, 0) > 0),
+            (k for k in eligible_order if k not in flags and amps.get(k, 0) > 0),
             key=lambda k: -amps[k],
         )
         flags += others[: count - len(flags)]
@@ -362,8 +389,18 @@ def generate_mandala_insight(
     enc = encode(payload)
     text, _tags, _input_type = _payload_to_text_and_tags(payload)
 
-    fam_flags = _select_flags(enc.family_amplitudes_l1, fam_order, _FRICTION_FAMILIES, family_flag_count)
-    prin_flags = _select_flags(enc.principle_amplitudes_l1, prin_order, _FRICTION_PRINCIPLES, principle_flag_count)
+    # Same top-3 families / top-2 principles _composite_glyph() already
+    # rendered into the seed glyph — a seed's core drivers, excluded from
+    # friction flagging (see _select_flags docstring).
+    core_fams = _top_ids(enc.family_amplitudes_l1, 3)
+    core_prins = _top_ids(enc.principle_amplitudes_l1, 2)
+
+    fam_flags = _select_flags(
+        enc.family_amplitudes_l1, fam_order, _FRICTION_FAMILIES, family_flag_count, exclude=core_fams
+    )
+    prin_flags = _select_flags(
+        enc.principle_amplitudes_l1, prin_order, _FRICTION_PRINCIPLES, principle_flag_count, exclude=core_prins
+    )
 
     return {
         "title": name,

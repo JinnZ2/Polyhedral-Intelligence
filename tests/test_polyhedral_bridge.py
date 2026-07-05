@@ -171,6 +171,24 @@ def test_generate_mandala_insight_no_signal_flags_nothing():
     assert entry["noise_to_insight"] == {}
 
 
+def test_core_driver_family_not_flagged_as_friction():
+    """A friction-archetype family that dominates the seed's own resonance
+    (i.e. it's already rendered into the seed glyph as a top-3 core driver)
+    must not also be flagged as unaddressed friction — e.g. a wing whose
+    whole point is engineered turbulence shouldn't have Turbulence reframed
+    as a weakness just because Turbulence is usually a friction signal."""
+    text = (
+        "An unpredictable, chaotic, turbulent boundary layer is the "
+        "deliberately engineered core feature of this wing design, alongside "
+        "a secondary surface reaction coating, with stochastic surface variation."
+    )
+    entry = generate_mandala_insight(text, name="Turbulent Wing")
+    flag_names = [f.split(" ", 1)[1] for f in entry["resonance_sweep"]["flags"]]
+    assert "Turbulence" not in flag_names
+    assert "Reaction" not in flag_names
+    assert "Statistical" in flag_names
+
+
 if __name__ == "__main__":
     tests = [
         test_text_input_networks_and_flow,
@@ -185,6 +203,7 @@ if __name__ == "__main__":
         test_generate_mandala_insight_schema_matches_atlas_entry,
         test_generate_mandala_insight_deterministic,
         test_generate_mandala_insight_no_signal_flags_nothing,
+        test_core_driver_family_not_flagged_as_friction,
     ]
     failures = 0
     for t in tests:
