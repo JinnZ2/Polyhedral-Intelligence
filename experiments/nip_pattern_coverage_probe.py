@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: CC0-1.0
 """Probe for #3 (hardcoded NIP mappings): how much of the *real* flagged-id
-space does polyhedral_bridge._NIP_PATTERN_FOR_ID actually cover, measured
-against every flag that has ever appeared in entries/*.json?
+space does the default_nip_pattern data on ontology/families.json and
+ontology/principles.json actually cover, measured against every flag that
+has ever appeared in entries/*.json?
 
-Claim under test: "the mapping is hand-assigned... it doesn't scale."
-This measures the coverage gap on real data, and separately flags a data
-quality issue found along the way (a family/principle name misfiled under
-the wrong sweep in an existing entry) — you can't responsibly build a
-learned model on top of a labeling bug you haven't found yet.
+ORIGINAL RUN (before the #3 fix) found a hardcoded 10-id Python dict
+covering 75% of real flag occurrences, plus a data quality bug (entry 0001
+flagged a Principle under the family sweep — since fixed). See
+FINDINGS.md for that baseline. This script now re-measures against the
+current, full 20+12 ontology-data coverage as a standing regression check:
+coverage should read 100% going forward unless the ontology data regresses.
 
 Run: python experiments/nip_pattern_coverage_probe.py
 """
@@ -21,7 +23,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from polyhedral_bridge import _NIP_PATTERN_FOR_ID  # noqa: E402
+from polyhedral_bridge import _load_ontology, _nip_patterns_from_ontology  # noqa: E402
+
+_fam_doc, _prin_doc = _load_ontology()
+_NIP_PATTERN_FOR_ID = _nip_patterns_from_ontology(_fam_doc, _prin_doc)
 
 # The 20 canonical family names and 12 principle names, for the data-quality check.
 FAMILY_NAMES = {

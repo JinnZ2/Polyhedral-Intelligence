@@ -132,18 +132,31 @@ decision above.
 | 2 | Equation canonicalization | 1%→3% parseable as-is; needs per-equation re-authoring | **Low** near-term | **Very high** (underestimated) | Defer; revisit if #7 happens first (re-authoring for derivations could produce CAS-ready forms as a byproduct) |
 | 7 | Equation derivations | 100% stubbed | N/A (labor, not risk) | **High**, linear | Ongoing content backlog, pick a subset and go |
 
-## Decision points for the user
+## Decision points — resolutions
 
-1. **#1 embeddings**: real fix needs a new dependency (e.g.
-   `sentence-transformers`, which pulls in `torch` — likely 500MB-2GB).
-   This repo currently has *zero* third-party dependencies (Click for the
-   CLI is the only one, per CLAUDE.md). Want me to test real embedding
-   accuracy on the same eval set before committing to adding it, or install
-   it directly?
-2. **#3 NIP table format**: move `_NIP_PATTERN_FOR_ID` from a Python dict
-   into ontology data — as a new field on `ontology/families.json` /
-   `principles.json` entries, or a standalone `ontology/nip_patterns.json`?
-3. **#2/#7 sequencing**: since #2 is blocked on formulas not being
-   CAS-ready, and #7 requires hand-authoring narrative + technical detail
-   per equation anyway — want #7's derivation work to also produce a
-   SymPy-parseable form per equation (one content pass instead of two)?
+1. **#1 embeddings**: resolved as "test for real first." See the follow-up
+   embeddings experiment (below) for actual numbers before any dependency
+   is added to the repo.
+2. **#3 NIP table format**: resolved as a `default_nip_pattern` field on
+   each entry in `ontology/families.json` / `ontology/principles.json`
+   (20/20 families, 12/12 principles). `polyhedral_bridge.py`'s
+   `_nip_patterns_from_ontology()` reads it at runtime; the old 10-id
+   hardcoded `_NIP_PATTERN_FOR_ID` dict is gone. Values for the 6 ids the
+   coverage probe found already had real historical precedent were taken
+   from the actual authored noise_to_insight text in entries/*.json; the
+   rest were assigned by domain judgment. Re-running
+   `nip_pattern_coverage_probe.py` now shows 100%/100% coverage (was
+   79%/64%), and it also surfaced+fixed the entry-0001 data bug (a
+   Principle flagged under the family sweep).
+3. **#2/#7 sequencing**: resolved as "fold it in." `tools/
+   extract_equations_atlas.py`'s per-equation `.md` template now has a
+   "## Canonical SymPy Form" section next to "## Derivation", and the JSON
+   schema has a matching `canonical_form_sympy` field (parallel to the
+   existing empty `canonical_form_latex`). Deliberately **not** back-filled
+   across all 128 existing equation files right now — re-running the
+   extractor touches every file's `extracted_at` timestamp even with zero
+   content changes (see the tool's own docstring), so that's a cost worth
+   paying once, as part of an actual derivation-writing pass, not today for
+   an empty stub. New equations extracted from here on get the field
+   automatically; existing ones pick it up equation-by-equation as their
+   derivations get written.

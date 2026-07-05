@@ -300,20 +300,29 @@ NIP_PATTERNS: dict[str, str] = {
     "instability": "Instability = Emergent Flexibility (wobble becomes adaptation)",
 }
 
-# Which NIP pattern best reframes a flag raised on this family/principle.
-_NIP_PATTERN_FOR_ID: dict[str, str] = {
-    "FAM:TURBULENCE": "noise",
-    "FAM:STATISTICAL": "noise",
-    "PRIN:UNCERTAINTY": "silence",
-    "FAM:MEASUREMENT": "silence",
-    "FAM:REACTION": "delay",
-    "FAM:NAVIGATION": "delay",
-    "FAM:RELATIVITY": "error",
-    "PRIN:DUALITY": "error",
-    "FAM:TOPOLOGY": "instability",
-    "PRIN:TRANSFORMATION": "instability",
-}
 _DEFAULT_NIP_PATTERN = "instability"
+
+
+def _nip_patterns_from_ontology(fam_doc: dict, prin_doc: dict) -> dict[str, str]:
+    """Which NIP pattern best reframes a flag raised on each family/principle.
+
+    Reads the `default_nip_pattern` field ontology/families.json and
+    ontology/principles.json carry per entity, instead of a hardcoded
+    Python dict — extending coverage (currently 20/20 families, 12/12
+    principles) is a data edit, not a code change. Values were grounded in
+    the actual noise_to_insight reframes already authored across
+    entries/*.json where precedent existed (see experiments/
+    nip_pattern_coverage_probe.py), and by domain judgment elsewhere.
+    """
+    patterns: dict[str, str] = {}
+    for fam in fam_doc["families"]:
+        if "default_nip_pattern" in fam:
+            patterns[fam["id"]] = fam["default_nip_pattern"]
+    for prin in prin_doc["principles"]:
+        if "default_nip_pattern" in prin:
+            patterns[prin["id"]] = prin["default_nip_pattern"]
+    return patterns
+
 
 # Families/principles that most often carry generative friction for any
 # concept (MRP steps 2-3): preferred flag candidates when their amplitude
@@ -356,11 +365,18 @@ def _select_flags(
     return flags
 
 
-def noise_to_insight(flag_ids: list[str], names: dict[str, str], glyphs: dict[str, str]) -> dict[str, str]:
-    """Reframe each flagged family/principle id as a NIP insight, keyed by its glyph symbol."""
+def noise_to_insight(
+    flag_ids: list[str],
+    names: dict[str, str],
+    glyphs: dict[str, str],
+    patterns: dict[str, str],
+) -> dict[str, str]:
+    """Reframe each flagged family/principle id as a NIP insight, keyed by
+    its glyph symbol. `patterns` is an id -> NIP_PATTERNS key map, e.g.
+    from _nip_patterns_from_ontology()."""
     insights: dict[str, str] = {}
     for fid in flag_ids:
-        pattern = NIP_PATTERNS[_NIP_PATTERN_FOR_ID.get(fid, _DEFAULT_NIP_PATTERN)]
+        pattern = NIP_PATTERNS[patterns.get(fid, _DEFAULT_NIP_PATTERN)]
         insights[glyphs.get(fid, fid)] = f"{names.get(fid, fid)} reframed via {pattern}"
     return insights
 
@@ -385,6 +401,7 @@ def generate_mandala_insight(
     names.update({p["id"]: p["name"] for p in prin_doc["principles"]})
     glyphs = {f["id"]: f["glyph"] for f in fam_doc["families"]}
     glyphs.update({p["id"]: p["glyph"] for p in prin_doc["principles"]})
+    patterns = _nip_patterns_from_ontology(fam_doc, prin_doc)
 
     enc = encode(payload)
     text, _tags, _input_type = _payload_to_text_and_tags(payload)
@@ -416,7 +433,7 @@ def generate_mandala_insight(
             "principles_total": len(prin_order),
             "flags": [f"{glyphs[p]} {names[p]}" for p in prin_flags],
         },
-        "noise_to_insight": noise_to_insight(fam_flags + prin_flags, names, glyphs),
+        "noise_to_insight": noise_to_insight(fam_flags + prin_flags, names, glyphs, patterns),
         "refined_glyph": enc.glyph_signature,
         "insight": "",
         "_encoding": enc.to_json(),

@@ -97,6 +97,17 @@ def md_template(eq: dict, filename_stem: str) -> str:
 
 > _TODO: narrative derivation. How is this equation constructed from first principles?_
 
+## Canonical SymPy Form
+
+> _TODO: a SymPy-parseable expression, filled in alongside the derivation
+> above (not auto-extracted — see experiments/equation_canonicalization_probe.py:
+> `canonical_form_ascii` is written for human readability, not parsing, and
+> only ~3% of the corpus parses as-is even after generic preprocessing).
+> Back-port into this equation's `canonical_form_sympy` field in
+> `equations/json/{filename_stem}.json` once written, so mathematically
+> equivalent equations can eventually be found by canonicalized-form
+> comparison instead of string-hash identity._
+
 ## History
 
 > _TODO: when and where this equation arose; key contributors; cultural context._
@@ -202,6 +213,7 @@ def main() -> int:
                 "canonical_name": name,
                 "canonical_form_latex": "",
                 "canonical_form_ascii": formula,
+                "canonical_form_sympy": "",  # filled by hand during derivation-writing, see md_template()
                 "hash": h,
                 "variables": [],
                 "families": [fid] if fid else [],

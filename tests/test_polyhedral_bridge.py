@@ -123,10 +123,22 @@ def test_noise_to_insight_keys_by_glyph_and_covers_all_flags():
     """noise_to_insight() returns one reframed entry per flag, keyed by glyph."""
     names = {"FAM:TURBULENCE": "Turbulence", "PRIN:UNCERTAINTY": "Uncertainty"}
     glyphs = {"FAM:TURBULENCE": "ᘯᘰ", "PRIN:UNCERTAINTY": "◧"}
-    insights = noise_to_insight(["FAM:TURBULENCE", "PRIN:UNCERTAINTY"], names, glyphs)
+    patterns = {"FAM:TURBULENCE": "noise", "PRIN:UNCERTAINTY": "silence"}
+    insights = noise_to_insight(["FAM:TURBULENCE", "PRIN:UNCERTAINTY"], names, glyphs, patterns)
     assert set(insights.keys()) == {"ᘯᘰ", "◧"}
     assert "Fractal Signal" in insights["ᘯᘰ"]
     assert "Silence Signal" in insights["◧"]
+
+
+def test_nip_patterns_loaded_from_ontology_data_full_coverage():
+    """default_nip_pattern is data on every family/principle, not a
+    hardcoded Python dict — 20/20 families and 12/12 principles covered."""
+    from polyhedral_bridge import _load_ontology, _nip_patterns_from_ontology, NIP_PATTERNS
+
+    fam_doc, prin_doc = _load_ontology()
+    patterns = _nip_patterns_from_ontology(fam_doc, prin_doc)
+    assert len(patterns) == 20 + 12
+    assert all(v in NIP_PATTERNS for v in patterns.values())
 
 
 def test_generate_mandala_insight_schema_matches_atlas_entry():
@@ -200,6 +212,7 @@ if __name__ == "__main__":
         test_glyph_signature_uses_top_three_then_top_two,
         test_turing_reaction_diffusion_equation_bound_to_reaction,
         test_noise_to_insight_keys_by_glyph_and_covers_all_flags,
+        test_nip_patterns_loaded_from_ontology_data_full_coverage,
         test_generate_mandala_insight_schema_matches_atlas_entry,
         test_generate_mandala_insight_deterministic,
         test_generate_mandala_insight_no_signal_flags_nothing,
