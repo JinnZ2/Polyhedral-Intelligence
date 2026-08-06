@@ -70,7 +70,8 @@
         "FAM:FLOW",
         "FAM:LIFE",
         "FAM:NETWORKS"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "FAM:FLOW",
@@ -102,7 +103,8 @@
         "FAM:RESONANCE",
         "FAM:ENERGY_THERMO",
         "FAM:REACTION"
-      ]
+      ],
+      "default_nip_pattern": "noise"
     },
     {
       "id": "FAM:INFORMATION",
@@ -134,7 +136,8 @@
         "FAM:LIFE",
         "FAM:ENERGY_THERMO",
         "FAM:MATTER"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "FAM:LIFE",
@@ -166,7 +169,8 @@
         "FAM:RESONANCE",
         "FAM:INFORMATION",
         "FAM:TURBULENCE"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "FAM:ENERGY_THERMO",
@@ -197,7 +201,8 @@
         "FAM:FLOW",
         "FAM:INFORMATION",
         "FAM:STATISTICAL"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "FAM:COGNITION",
@@ -229,7 +234,8 @@
         "FAM:EARTH_COSMOS",
         "FAM:GEOMETRY",
         "FAM:NAVIGATION"
-      ]
+      ],
+      "default_nip_pattern": "delay"
     },
     {
       "id": "FAM:EARTH_COSMOS",
@@ -261,7 +267,8 @@
         "FAM:COGNITION",
         "FAM:PARTICLE",
         "FAM:CONSCIOUSNESS"
-      ]
+      ],
+      "default_nip_pattern": "delay"
     },
     {
       "id": "FAM:MATTER",
@@ -293,7 +300,8 @@
         "FAM:INFORMATION",
         "FAM:GEOMETRY",
         "FAM:PARTICLE"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "FAM:GEOMETRY",
@@ -325,7 +333,8 @@
         "FAM:COGNITION",
         "FAM:MATTER",
         "FAM:TURBULENCE"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "FAM:PARTICLE",
@@ -357,7 +366,8 @@
         "FAM:EARTH_COSMOS",
         "FAM:MATTER",
         "FAM:STATISTICAL"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "FAM:ENGINEERING",
@@ -389,7 +399,8 @@
         "FAM:NETWORKS",
         "FAM:REACTION",
         "FAM:MEASUREMENT"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "FAM:NETWORKS",
@@ -421,7 +432,8 @@
         "FAM:RESONANCE",
         "FAM:ENGINEERING",
         "FAM:RELATIVITY"
-      ]
+      ],
+      "default_nip_pattern": "noise"
     },
     {
       "id": "FAM:REACTION",
@@ -454,7 +466,8 @@
         "FAM:FLOW",
         "FAM:ENGINEERING",
         "FAM:TOPOLOGY"
-      ]
+      ],
+      "default_nip_pattern": "delay"
     },
     {
       "id": "FAM:MEASUREMENT",
@@ -486,7 +499,8 @@
         "FAM:ENGINEERING",
         "FAM:NAVIGATION",
         "FAM:CONSCIOUSNESS"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "FAM:NAVIGATION",
@@ -518,7 +532,8 @@
         "FAM:COGNITION",
         "FAM:MEASUREMENT",
         "FAM:RELATIVITY"
-      ]
+      ],
+      "default_nip_pattern": "delay"
     },
     {
       "id": "FAM:CONSCIOUSNESS",
@@ -550,7 +565,8 @@
         "FAM:EARTH_COSMOS",
         "FAM:MEASUREMENT",
         "FAM:TOPOLOGY"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "FAM:TURBULENCE",
@@ -582,7 +598,8 @@
         "FAM:LIFE",
         "FAM:GEOMETRY",
         "FAM:RELATIVITY"
-      ]
+      ],
+      "default_nip_pattern": "noise"
     },
     {
       "id": "FAM:RELATIVITY",
@@ -614,7 +631,8 @@
         "FAM:NETWORKS",
         "FAM:NAVIGATION",
         "FAM:TURBULENCE"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "FAM:STATISTICAL",
@@ -646,7 +664,8 @@
         "FAM:ENERGY_THERMO",
         "FAM:PARTICLE",
         "FAM:TOPOLOGY"
-      ]
+      ],
+      "default_nip_pattern": "noise"
     },
     {
       "id": "FAM:TOPOLOGY",
@@ -678,7 +697,8 @@
         "FAM:REACTION",
         "FAM:CONSCIOUSNESS",
         "FAM:STATISTICAL"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     }
   ]
 }

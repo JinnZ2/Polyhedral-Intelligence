@@ -186,6 +186,16 @@ def _ordered_vector(amps: dict[str, float], order: list[str]) -> list[float]:
     return [amps.get(k, 0.0) for k in order]
 
 
+def _top_ids(amps: dict[str, float], n: int) -> set[str]:
+    """The seed's own top-n nonzero-amplitude ids — its 'core driver' set.
+
+    Shared by _composite_glyph (top-3 families / top-2 principles build the
+    seed glyph) and _select_flags (these same core ids are never eligible
+    to be flagged as friction — see generate_mandala_insight).
+    """
+    return {k for k, a in sorted(amps.items(), key=lambda x: (-x[1], x[0]))[:n] if a > 0}
+
+
 def _composite_glyph(
     fam_amps: dict[str, float],
     prin_amps: dict[str, float],
@@ -290,20 +300,29 @@ NIP_PATTERNS: dict[str, str] = {
     "instability": "Instability = Emergent Flexibility (wobble becomes adaptation)",
 }
 
-# Which NIP pattern best reframes a flag raised on this family/principle.
-_NIP_PATTERN_FOR_ID: dict[str, str] = {
-    "FAM:TURBULENCE": "noise",
-    "FAM:STATISTICAL": "noise",
-    "PRIN:UNCERTAINTY": "silence",
-    "FAM:MEASUREMENT": "silence",
-    "FAM:REACTION": "delay",
-    "FAM:NAVIGATION": "delay",
-    "FAM:RELATIVITY": "error",
-    "PRIN:DUALITY": "error",
-    "FAM:TOPOLOGY": "instability",
-    "PRIN:TRANSFORMATION": "instability",
-}
 _DEFAULT_NIP_PATTERN = "instability"
+
+
+def _nip_patterns_from_ontology(fam_doc: dict, prin_doc: dict) -> dict[str, str]:
+    """Which NIP pattern best reframes a flag raised on each family/principle.
+
+    Reads the `default_nip_pattern` field ontology/families.json and
+    ontology/principles.json carry per entity, instead of a hardcoded
+    Python dict — extending coverage (currently 20/20 families, 12/12
+    principles) is a data edit, not a code change. Values were grounded in
+    the actual noise_to_insight reframes already authored across
+    entries/*.json where precedent existed (see experiments/
+    nip_pattern_coverage_probe.py), and by domain judgment elsewhere.
+    """
+    patterns: dict[str, str] = {}
+    for fam in fam_doc["families"]:
+        if "default_nip_pattern" in fam:
+            patterns[fam["id"]] = fam["default_nip_pattern"]
+    for prin in prin_doc["principles"]:
+        if "default_nip_pattern" in prin:
+            patterns[prin["id"]] = prin["default_nip_pattern"]
+    return patterns
+
 
 # Families/principles that most often carry generative friction for any
 # concept (MRP steps 2-3): preferred flag candidates when their amplitude
@@ -315,25 +334,49 @@ _FRICTION_FAMILIES = [
 _FRICTION_PRINCIPLES = ["PRIN:UNCERTAINTY", "PRIN:TRANSFORMATION", "PRIN:DUALITY"]
 
 
-def _select_flags(amps: dict[str, float], order: list[str], archetypes: list[str], count: int) -> list[str]:
-    """Pick up to `count` ids to flag: friction archetypes with signal
-    first (highest amplitude first), then any other id with signal."""
-    present = sorted((k for k in archetypes if amps.get(k, 0) > 0), key=lambda k: -amps[k])
+def _select_flags(
+    amps: dict[str, float],
+    order: list[str],
+    archetypes: list[str],
+    count: int,
+    exclude: set[str] = frozenset(),
+) -> list[str]:
+    """Pick up to `count` ids to flag as friction: archetypes with signal
+    first (highest amplitude first), then any other id with signal.
+
+    `exclude` is the seed's own core-driver set (its top-3 families / top-2
+    principles by amplitude — the same ones already rendered into the seed
+    glyph). A family that dominates a seed's own resonance is that seed's
+    deliberate theme, not unaddressed friction, so it's never eligible here
+    even if it's on the friction-archetype list — e.g. a wing whose whole
+    point is engineered turbulence shouldn't have turbulence flagged as a
+    weakness just because Turbulence is usually a friction signal.
+    """
+    eligible_archetypes = [k for k in archetypes if k not in exclude]
+    eligible_order = [k for k in order if k not in exclude]
+    present = sorted((k for k in eligible_archetypes if amps.get(k, 0) > 0), key=lambda k: -amps[k])
     flags = present[:count]
     if len(flags) < count:
         others = sorted(
-            (k for k in order if k not in flags and amps.get(k, 0) > 0),
+            (k for k in eligible_order if k not in flags and amps.get(k, 0) > 0),
             key=lambda k: -amps[k],
         )
         flags += others[: count - len(flags)]
     return flags
 
 
-def noise_to_insight(flag_ids: list[str], names: dict[str, str], glyphs: dict[str, str]) -> dict[str, str]:
-    """Reframe each flagged family/principle id as a NIP insight, keyed by its glyph symbol."""
+def noise_to_insight(
+    flag_ids: list[str],
+    names: dict[str, str],
+    glyphs: dict[str, str],
+    patterns: dict[str, str],
+) -> dict[str, str]:
+    """Reframe each flagged family/principle id as a NIP insight, keyed by
+    its glyph symbol. `patterns` is an id -> NIP_PATTERNS key map, e.g.
+    from _nip_patterns_from_ontology()."""
     insights: dict[str, str] = {}
     for fid in flag_ids:
-        pattern = NIP_PATTERNS[_NIP_PATTERN_FOR_ID.get(fid, _DEFAULT_NIP_PATTERN)]
+        pattern = NIP_PATTERNS[patterns.get(fid, _DEFAULT_NIP_PATTERN)]
         insights[glyphs.get(fid, fid)] = f"{names.get(fid, fid)} reframed via {pattern}"
     return insights
 
@@ -358,12 +401,23 @@ def generate_mandala_insight(
     names.update({p["id"]: p["name"] for p in prin_doc["principles"]})
     glyphs = {f["id"]: f["glyph"] for f in fam_doc["families"]}
     glyphs.update({p["id"]: p["glyph"] for p in prin_doc["principles"]})
+    patterns = _nip_patterns_from_ontology(fam_doc, prin_doc)
 
     enc = encode(payload)
     text, _tags, _input_type = _payload_to_text_and_tags(payload)
 
-    fam_flags = _select_flags(enc.family_amplitudes_l1, fam_order, _FRICTION_FAMILIES, family_flag_count)
-    prin_flags = _select_flags(enc.principle_amplitudes_l1, prin_order, _FRICTION_PRINCIPLES, principle_flag_count)
+    # Same top-3 families / top-2 principles _composite_glyph() already
+    # rendered into the seed glyph — a seed's core drivers, excluded from
+    # friction flagging (see _select_flags docstring).
+    core_fams = _top_ids(enc.family_amplitudes_l1, 3)
+    core_prins = _top_ids(enc.principle_amplitudes_l1, 2)
+
+    fam_flags = _select_flags(
+        enc.family_amplitudes_l1, fam_order, _FRICTION_FAMILIES, family_flag_count, exclude=core_fams
+    )
+    prin_flags = _select_flags(
+        enc.principle_amplitudes_l1, prin_order, _FRICTION_PRINCIPLES, principle_flag_count, exclude=core_prins
+    )
 
     return {
         "title": name,
@@ -379,7 +433,7 @@ def generate_mandala_insight(
             "principles_total": len(prin_order),
             "flags": [f"{glyphs[p]} {names[p]}" for p in prin_flags],
         },
-        "noise_to_insight": noise_to_insight(fam_flags + prin_flags, names, glyphs),
+        "noise_to_insight": noise_to_insight(fam_flags + prin_flags, names, glyphs, patterns),
         "refined_glyph": enc.glyph_signature,
         "insight": "",
         "_encoding": enc.to_json(),

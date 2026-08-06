@@ -29,7 +29,7 @@
 - Statistical Physics (▁▃▅∿): ✅ near-optimal packing achieved.  
 - Topology (♾): ✅ modular, self-healing topology.  
 
-**Balance:** 17/20 Families stable, ❗ flags = Turbulence (ᘯᘰ), Reaction (⇑), Uncertainty (◧).  
+**Balance:** 18/20 Families stable, ❗ flags = Turbulence (ᘯᘰ), Reaction (⇑). (Uncertainty is a Principle, not a Family — see Principles Sweep below.)  
 
 ---
 

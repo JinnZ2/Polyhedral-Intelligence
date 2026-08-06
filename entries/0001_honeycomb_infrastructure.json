@@ -4,9 +4,9 @@
   "seed_glyph": "◇⚙➝〰〰〰⬡",
   "intent": "Infrastructure design inspired by matter, engineering, resonance, and bee intelligence.",
   "resonance_sweep": {
-    "families_balanced": 17,
+    "families_balanced": 18,
     "families_total": 20,
-    "flags": ["ᘯᘰ Turbulence", "⇑ Reaction", "◧ Uncertainty"]
+    "flags": ["ᘯᘰ Turbulence", "⇑ Reaction"]
   },
   "principle_sweep": {
     "principles_balanced": 11,

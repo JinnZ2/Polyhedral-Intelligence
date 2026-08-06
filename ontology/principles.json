@@ -85,7 +85,8 @@
         "PRIN:CONTINUITY",
         "PRIN:PROPORTION",
         "PRIN:TRANSFORMATION"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "PRIN:CONSERVATION",
@@ -119,7 +120,8 @@
         "PRIN:CONTINUITY",
         "PRIN:UNCERTAINTY",
         "PRIN:UNITY"
-      ]
+      ],
+      "default_nip_pattern": "delay"
     },
     {
       "id": "PRIN:RELATIVITY",
@@ -153,7 +155,8 @@
         "PRIN:QUANTIZATION",
         "PRIN:PROPORTION",
         "PRIN:TRANSFORMATION"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "PRIN:DUALITY",
@@ -187,7 +190,8 @@
         "PRIN:QUANTIZATION",
         "PRIN:UNCERTAINTY",
         "PRIN:UNITY"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "PRIN:EMERGENCE",
@@ -221,7 +225,8 @@
         "PRIN:CONTINUITY",
         "PRIN:PROPORTION",
         "PRIN:UNCERTAINTY"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "PRIN:RESONANCE",
@@ -255,7 +260,8 @@
         "PRIN:QUANTIZATION",
         "PRIN:PROPORTION",
         "PRIN:UNCERTAINTY"
-      ]
+      ],
+      "default_nip_pattern": "noise"
     },
     {
       "id": "PRIN:CONTINUITY",
@@ -289,7 +295,8 @@
         "PRIN:EMERGENCE",
         "PRIN:TRANSFORMATION",
         "PRIN:UNITY"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "PRIN:QUANTIZATION",
@@ -323,7 +330,8 @@
         "PRIN:RESONANCE",
         "PRIN:TRANSFORMATION",
         "PRIN:UNITY"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "PRIN:PROPORTION",
@@ -357,7 +365,8 @@
         "PRIN:EMERGENCE",
         "PRIN:RESONANCE",
         "PRIN:UNCERTAINTY"
-      ]
+      ],
+      "default_nip_pattern": "error"
     },
     {
       "id": "PRIN:UNCERTAINTY",
@@ -391,7 +400,8 @@
         "PRIN:EMERGENCE",
         "PRIN:RESONANCE",
         "PRIN:PROPORTION"
-      ]
+      ],
+      "default_nip_pattern": "silence"
     },
     {
       "id": "PRIN:TRANSFORMATION",
@@ -425,7 +435,8 @@
         "PRIN:CONTINUITY",
         "PRIN:QUANTIZATION",
         "PRIN:UNITY"
-      ]
+      ],
+      "default_nip_pattern": "instability"
     },
     {
       "id": "PRIN:UNITY",
@@ -459,7 +470,8 @@
         "PRIN:CONTINUITY",
         "PRIN:QUANTIZATION",
         "PRIN:TRANSFORMATION"
-      ]
+      ],
+      "default_nip_pattern": "error"
     }
   ]
 }

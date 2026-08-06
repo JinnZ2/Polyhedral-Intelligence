@@ -123,10 +123,22 @@ def test_noise_to_insight_keys_by_glyph_and_covers_all_flags():
     """noise_to_insight() returns one reframed entry per flag, keyed by glyph."""
     names = {"FAM:TURBULENCE": "Turbulence", "PRIN:UNCERTAINTY": "Uncertainty"}
     glyphs = {"FAM:TURBULENCE": "ᘯᘰ", "PRIN:UNCERTAINTY": "◧"}
-    insights = noise_to_insight(["FAM:TURBULENCE", "PRIN:UNCERTAINTY"], names, glyphs)
+    patterns = {"FAM:TURBULENCE": "noise", "PRIN:UNCERTAINTY": "silence"}
+    insights = noise_to_insight(["FAM:TURBULENCE", "PRIN:UNCERTAINTY"], names, glyphs, patterns)
     assert set(insights.keys()) == {"ᘯᘰ", "◧"}
     assert "Fractal Signal" in insights["ᘯᘰ"]
     assert "Silence Signal" in insights["◧"]
+
+
+def test_nip_patterns_loaded_from_ontology_data_full_coverage():
+    """default_nip_pattern is data on every family/principle, not a
+    hardcoded Python dict — 20/20 families and 12/12 principles covered."""
+    from polyhedral_bridge import _load_ontology, _nip_patterns_from_ontology, NIP_PATTERNS
+
+    fam_doc, prin_doc = _load_ontology()
+    patterns = _nip_patterns_from_ontology(fam_doc, prin_doc)
+    assert len(patterns) == 20 + 12
+    assert all(v in NIP_PATTERNS for v in patterns.values())
 
 
 def test_generate_mandala_insight_schema_matches_atlas_entry():
@@ -171,6 +183,24 @@ def test_generate_mandala_insight_no_signal_flags_nothing():
     assert entry["noise_to_insight"] == {}
 
 
+def test_core_driver_family_not_flagged_as_friction():
+    """A friction-archetype family that dominates the seed's own resonance
+    (i.e. it's already rendered into the seed glyph as a top-3 core driver)
+    must not also be flagged as unaddressed friction — e.g. a wing whose
+    whole point is engineered turbulence shouldn't have Turbulence reframed
+    as a weakness just because Turbulence is usually a friction signal."""
+    text = (
+        "An unpredictable, chaotic, turbulent boundary layer is the "
+        "deliberately engineered core feature of this wing design, alongside "
+        "a secondary surface reaction coating, with stochastic surface variation."
+    )
+    entry = generate_mandala_insight(text, name="Turbulent Wing")
+    flag_names = [f.split(" ", 1)[1] for f in entry["resonance_sweep"]["flags"]]
+    assert "Turbulence" not in flag_names
+    assert "Reaction" not in flag_names
+    assert "Statistical" in flag_names
+
+
 if __name__ == "__main__":
     tests = [
         test_text_input_networks_and_flow,
@@ -182,9 +212,11 @@ if __name__ == "__main__":
         test_glyph_signature_uses_top_three_then_top_two,
         test_turing_reaction_diffusion_equation_bound_to_reaction,
         test_noise_to_insight_keys_by_glyph_and_covers_all_flags,
+        test_nip_patterns_loaded_from_ontology_data_full_coverage,
         test_generate_mandala_insight_schema_matches_atlas_entry,
         test_generate_mandala_insight_deterministic,
         test_generate_mandala_insight_no_signal_flags_nothing,
+        test_core_driver_family_not_flagged_as_friction,
     ]
     failures = 0
     for t in tests:
