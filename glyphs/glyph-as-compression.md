@@ -127,9 +127,32 @@ supply knowledge of the referent; it routes to it.
 
 `[GAP]` There is no in-notation signal for "you have hit your depth
 floor." A shallow reader and a deep reader both believe they have read
-the glyph. Candidate check (PROPOSED): two readers at different depths
-read the same glyph and list what they pulled; the difference is a
-measured depth gap. Not run.
+the glyph.
+
+Depth-floor test (PROPOSED, not run). A two-reader comparison is
+underpowered: a weak reader fails twice (depth, 2.1; mode, 2.2) and two
+readers return one blended miss. Run it as a 2x2 so each failure lands
+in its own cell:
+
+```
+                        co-occurrence base rate
+                        known               unknown
+                      +-------------------+-------------------+
+   referent  known    | full read:        | depth intact,     |
+   depth              | descends AND      | MODE fails: reads |
+                      | decodes the join  | join as scene     |
+                      +-------------------+-------------------+
+             unknown  | MODE intact,      | both fail: the    |
+                      | DEPTH fails:      | blended miss the  |
+                      | flags the join,   | two-reader design |
+                      | lifts shallow     | could not split   |
+                      +-------------------+-------------------+
+```
+
+Readout per cell: (a) pieces lifted per glyph (depth), (b) scene vs
+instruction call on non-co-occurring pairs (mode). The two off-diagonal
+cells are what separate the failures; the corners alone reproduce the
+two-reader result.
 
 ### 2.2 Composable: meaning lives in the join  [OBSERVED]
 
@@ -167,9 +190,31 @@ where an instruction was written. The switch is reader-dependent in the
 same way depth is (2.1); a weak reader fails twice, once on depth and
 once on mode.
 
-`[GAP]` "High information" for cross-field joins is stated, not
-measured. No count here of what a join yields against what either
-glyph yields alone.
+Measurand for "high information" (PROPOSED). Score a pair against its
+corpus co-occurrence base rate. One number then serves two jobs: it
+sizes the information in the join AND it is the instruction-vs-scene
+flag. A pair that rarely co-occurs carries high bits and reads as an
+instruction.
+
+```
+   raw pair surprisal   S(A,B)   = -log2 p(A,B)
+   pair beyond margins  PMI(A,B) =  log2 [ p(A,B) / (p(A) p(B)) ]
+```
+
+Take the second one as the flag. Raw surprisal also fires on any pair
+that contains one rare glyph, because the pair inherits that glyph's
+rarity. PMI asks whether the PAIRING is rarer than its two glyphs
+predict, which is the mismatch-from-the-world 2.2 is about. Strongly
+negative PMI means instruction; near zero means scene.
+
+`[GAP]` A pair with a co-occurrence count of zero has no finite value
+(-log2 0). Record it as its own state, NEVER_OBSERVED_TOGETHER, carrying
+the corpus size. It is not a large number: a zero in a 50-sign corpus
+and a zero in a 50,000-sign corpus are different findings.
+
+`[GAP]` Both quantities are only as good as the corpus. A corpus
+selected on what someone thought belonged together sets the base rate
+the flag reads against. Not run; no corpus is attached here (see 4).
 
 ### 2.3 The index is the referent itself  [DERIVED]
 
@@ -226,10 +271,27 @@ Not "primitive tree-worship." A more sophisticated representation than
 flat alphabetic text. The tree-glyph is every problem the tree solved,
 not a magical tree.
 
-`[GAP]` No specific script, site or carving is cited here. The reframe
-is stated as a reading of the shape; testing it against a named corpus
-(which marks co-occur, whether non-co-occurring pairs cluster where an
-instruction reading would predict) is PROPOSED and not run.
+Corpus candidates (CARRIED, not verified here). Each is a sign
+inventory with positional records, which the PMI measurand in 2.2
+needs. VERIFY EACH BEFORE CITING. None was opened in this session.
+
+```
+   corpus                  catalogue (as carried)
+   ------------------------------------------------------------------
+   Indus                   Mahadevan 1977, concordance
+   Linear A                GORILA (Godart & Olivier)
+   Vinca                   Winn 1981, sign catalogue
+   Upper Paleolithic       von Petzinger, geometric-sign set
+```
+
+Test (PROPOSED, not run): compute PMI over sign pairs that share an
+inscription or panel. The reframe predicts that strongly negative-PMI
+pairs (rare joins) are not noise; they recur at a rate above a
+shuffled-position null. If they do not, 4 breaks on that corpus.
+
+`[GAP]` Three of the four are undeciphered or non-linguistic. The test
+measures co-occurrence structure, not meaning. A result supports "the
+joins are structured" and says nothing about what any join instructs.
 
 ---
 
@@ -252,13 +314,23 @@ territory is the flatten-to-label reflex in a second substrate.
 
 Cross-links:
 
-- [[sense_as_match]] `[GAP]` not present in this repository at the time
-  of writing; the link names a companion document, location unresolved.
-- [[identity-emotions-map-not-territory]] `[GAP]` not present in this
-  repository at the time of writing; location unresolved.
-- Emotion-to-glyph bindings already used in this ecosystem:
-  Emotions-as-Sensors `sensors/glyph-map.json` (see `CLAUDE.md`,
-  "Emotion Glyph Map"). Carried, not re-checked here.
+- [[sense_as_match]]: a module, not a document. It lives at
+  `JinnZ2/Simulators` root as `sense_as_match.py` (commit `e884901`).
+  The module names itself `sense_at_match.py` (docstring line 2 and
+  argparse `prog`). Its `--selftest` exits 2 and points to
+  `test_sense.py`, which is not in that tree. `[GAP]` No prose document
+  exists; this link resolves to the code only.
+- [[identity-emotions-map-not-territory]]: exists in the operator's
+  memory store, not in any repository. `[GAP]` The link stays dead
+  until the note is ported to a repo document.
+- Emotions-as-Sensors `sensors/glyph-map.json`, re-checked at commit
+  `6b51e20` (sha256 `04bf5bb8...c2f61c`). 13 of 13 sensors, glyphs and
+  alignments match the `CLAUDE.md` "Emotion Glyph Map" table. The decay
+  column does NOT match: 9 of 13 rows differ (for example, love is
+  `immortal` in the file and `persistent` in the table, and pride is
+  `resonant` against `linear`). The file also uses decay values
+  (`cyclical`, `resonant`, `immortal`) that the table does not carry.
+  Cite the file, not the `CLAUDE.md` table.
 
 ---
 
