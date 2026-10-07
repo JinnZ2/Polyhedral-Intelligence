@@ -13,10 +13,12 @@ validate(assignment) -> {"verdict": STATE, "findings": [...], "class": id}
         decay          a decay value, if one is claimed
         referent_type  ENERGY | RELATION_AS_ENERGY | MATERIAL | ...
         period, phase, env_index         (CYCLICAL)
-        joint, separate (list)           (RESONANT measurement)
+        joint, separate (list), tol      (RESONANT: two-reference test)
         interaction_status               (RESONANT: "UNMEASURED")
         method                           (RESONANT: how it was scored)
         last_checked, status_inherited   (REVISABLE)
+        readability, reader              (IMMORTAL: local readability is
+                                          reader-relative)
 
         switch         {from, to, condition}; condition =
                        {reads: [...], threshold: {relation_type:
@@ -25,7 +27,11 @@ validate(assignment) -> {"verdict": STATE, "findings": [...], "class": id}
 read_cyclical_absence(phase_state) -> "EXPECTED" | "SIGNAL" | "INCOMPLETE"
 check_switch(history, declared_class=None) -> switch verdict for ONE relation
     in ONE frame; readings carry class, gap (ISO 8601 duration),
-    relation_type, and optionally phase_state / form_change / switch.
+    relation_type, and optionally env_terms / phase_state / form_change /
+    switch. A class change with env_terms declared and identical on both
+    sides is CONTRADICTS_CLASS: coupling is c(E(t)), and time alone does
+    not drive decay.
+interaction_test(joint, separate, tol) -> two-reference outcome.
 
 Verdict precedence (worst first): see PRECEDENCE. CONFLICT is reserved for
 a frame clash (a history spanning two frames). A value that contradicts
@@ -47,7 +53,7 @@ PRECEDENCE = ("UNCLASSED", "UNRATIFIED", "CATEGORY_ERROR",
               "MALFORMED_RULE", "UNDECLARED_THRESHOLD",
               "DECLARED_NOT_FOLLOWED", "INSUFFICIENT_READINGS",
               "BOUNDARY_AMBIGUOUS", "OPEN_CLASS",
-              "FRAME_UNDECLARED", "INCOMPLETE", "UNMEASURED", "OK")
+              "INCOMPLETE", "UNMEASURED", "OK")
 
 # ISO 8601 durations. Years and months have no fixed length; to compare a
 # P3M threshold against a PT2000H gap they need one.  [CHOICE] mean
@@ -147,7 +153,7 @@ def validate(assignment, classes=None):
                 "findings": f}
 
     if _absent(a, "frame"):
-        f.append(("FRAME_UNDECLARED", "rates are frame-indexed; declare frame"))
+        f.append(("INCOMPLETE", "frame undeclared; rates are frame-indexed"))
 
     d = a.get("decay")
 
@@ -172,11 +178,15 @@ def validate(assignment, classes=None):
             f.append(("INCOMPLETE", "last_checked absent"))
 
     elif cid == "CYCLICAL":
-        for key in ("period", "phase", "env_index", "cycling_quantity"):
+        for key in ("period", "phase", "env_index"):
             if _absent(a, key):
                 f.append(("INCOMPLETE", "%s required for CYCLICAL" % key))
         cq = a.get("cycling_quantity")
-        if not _absent(a, "cycling_quantity") and cq not in CYCLING_QUANTITIES:
+        if cq == "coupling":
+            f.append(("CONTRADICTS_CLASS",
+                      "CYCLICAL is a held state; a cycling coupling is "
+                      "environment-indexed c(E(t)), not CYCLICAL"))
+        elif not _absent(a, "cycling_quantity") and cq not in CYCLING_QUANTITIES:
             f.append(("UNRATIFIED", "cycling_quantity %r is not one of %s"
                       % (cq, CYCLING_QUANTITIES)))
 
@@ -188,14 +198,26 @@ def validate(assignment, classes=None):
                       "term 0 by construction" % (method,)))
         if "joint" in a and "separate" in a:
             sep = a["separate"]
-            interaction = a["joint"] - sum(sep)
             if len(sep) < 2:
                 f.append(("INCOMPLETE", "RESONANT needs two or more parties"))
-            elif interaction <= 0:
-                f.append(("CONTRADICTS_CLASS",
-                          "interaction = %r <= 0; not RESONANT (the "
-                          "antagonistic case is OPEN, not assigned)"
-                          % (interaction,)))
+            elif a.get("tol") is None:
+                f.append(("INCOMPLETE", "tol undeclared; the interaction "
+                          "test needs a declared tolerance"))
+            else:
+                out = interaction_test(a["joint"], sep, a["tol"])
+                o = out["outcome"]
+                if o == "BOUNDARY_AMBIGUOUS":
+                    f.append(("BOUNDARY_AMBIGUOUS", "joint %r is within tol "
+                              "of a reference (S=%r, M=%r): %s"
+                              % (a["joint"], out["S"], out["M"],
+                                 out["between"])))
+                elif o == "ANTAGONISTIC":
+                    f.append(("CONTRADICTS_CLASS", "measured ANTAGONISTIC "
+                              "(joint < M); that class is OPEN, not assigned"))
+                elif o != "RESONANT":
+                    f.append(("CONTRADICTS_CLASS", "measured %s, not RESONANT "
+                              "(joint %r, S=%r, M=%r)"
+                              % (o, a["joint"], out["S"], out["M"])))
         elif a.get("interaction_status") == "UNMEASURED":
             f.append(("UNMEASURED", "interaction term not measured"))
         else:
@@ -215,6 +237,9 @@ def validate(assignment, classes=None):
         elif rt not in valid:
             f.append(("INCOMPLETE",
                       "referent_type %r is not one of %s" % (rt, valid)))
+        if "readability" in a and _absent(a, "reader"):
+            f.append(("INCOMPLETE", "readability is reader-relative; "
+                      "declare the reader and key"))
 
     if "switch" in a:
         f.extend(_check_switch_rule(a["switch"], classes))
@@ -247,6 +272,62 @@ def parse_threshold(threshold):
             continue
         out[rt] = bounds
     return out, f
+
+
+def interaction_test(joint, separate, tol):
+    """Two-reference interaction test. S = sum(separate), M = max(separate).
+
+    joint > S -> RESONANT; M < joint <= S -> ENHANCED_SUBADDITIVE;
+    |joint - M| <= tol -> REDUNDANT; joint < M -> ANTAGONISTIC (OPEN).
+    A joint value within tol of S cannot be told RESONANT from
+    ENHANCED_SUBADDITIVE, and one within tol of both S and M cannot be
+    placed either: BOUNDARY_AMBIGUOUS, with the candidates named.
+    tol is declared by the caller; it is never defaulted.
+    """
+    if isinstance(tol, bool) or not isinstance(tol, (int, float)) or tol < 0:
+        raise ValueError("tol must be a non-negative number, got %r" % (tol,))
+    S, M = sum(separate), max(separate)
+    near_m = abs(joint - M) <= tol
+    # At tol 0 the stated ranges decide exactly (joint == S is
+    # ENHANCED_SUBADDITIVE); the S band exists only for tol > 0.
+    near_s = tol > 0 and abs(joint - S) <= tol
+    between = None
+    if near_m and near_s:
+        outcome, between = "BOUNDARY_AMBIGUOUS", "REDUNDANT or above"
+    elif near_m:
+        outcome = "REDUNDANT"
+    elif near_s:
+        outcome, between = "BOUNDARY_AMBIGUOUS", \
+            "RESONANT or ENHANCED_SUBADDITIVE"
+    elif joint > S:
+        outcome = "RESONANT"
+    elif joint > M:
+        outcome = "ENHANCED_SUBADDITIVE"
+    else:
+        outcome = "ANTAGONISTIC"
+    return {"outcome": outcome, "S": S, "M": M, "interaction": joint - S,
+            "between": between}
+
+
+def env_change(before, after):
+    """Changed environment terms between two readings.
+
+    Returns a sorted list of term names that differ (added, removed or
+    changed); [] if both are declared and identical; None if either side
+    does not declare env_terms (the change cannot be read).
+    """
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return None
+    keys = set(before) | set(after)
+    return sorted(k for k in keys if before.get(k, _MISSING) !=
+                  after.get(k, _MISSING))
+
+
+_MISSING = object()
+
+# A switch rule that reads only these is driven by elapsed time alone. It is
+# annotated, not judged: the rule may belong to a frame other than this one.
+TIME_ONLY_READS = {"gap_length", "relation_type"}
 
 
 def _check_switch_rule(sw, classes):
@@ -320,7 +401,8 @@ def check_switch(history, declared_class=None, min_n=None):
     frames = {h.get("frame") for h in history}
     if len(frames) > 1:
         return {"verdict": "CONFLICT", "dropped": [], "per_reading": [],
-                "mismatch": None,
+                "mismatch": None, "transitions": [], "env_unread": 0,
+                "rules": {},
                 "findings": [("CONFLICT", "history spans frames %s; compare "
                               "within one frame" % sorted(map(str, frames)))]}
     findings, dropped, kept = [], [], []
@@ -336,7 +418,8 @@ def check_switch(history, declared_class=None, min_n=None):
             continue
         kept.append((sec, h))
 
-    rules = {}   # (from, to) -> {relation_type: seconds}
+    rules = {}   # (from, to) -> {relation_type: (mean, lo, hi) seconds}
+    rule_meta = {}
     for _, h in kept:
         sw = h.get("switch")
         if sw is None:
@@ -352,10 +435,24 @@ def check_switch(history, declared_class=None, min_n=None):
                              "disagree" % key))
             continue
         rules[key] = thr
+        reads = set(sw["condition"].get("reads") or [])
+        rule_meta[key] = {"time_only": not (reads - TIME_ONLY_READS)}
 
     kept.sort(key=lambda p: p[0])
+    transitions = []
     for (_, prev), (_, cur) in zip(kept, kept[1:]):
         a, b = prev.get("class"), cur.get("class")
+        changed = env_change(prev.get("env_terms"), cur.get("env_terms"))
+        if a != b:
+            transitions.append({"from": a, "to": b, "gap_from": prev.get("gap"),
+                                "gap_to": cur.get("gap"),
+                                "env_changed": changed})
+            if changed == []:
+                findings.append(("CONTRADICTS_CLASS",
+                                 "class %r -> %r between gap %s and %s with "
+                                 "every declared environment term unchanged; "
+                                 "time alone is not a decay driver"
+                                 % (a, b, prev.get("gap"), cur.get("gap"))))
         if a != b and (a, b) not in rules:
             findings.append(("UNDECLARED_THRESHOLD",
                              "class %r at gap %s -> %r at gap %s with no "
@@ -413,7 +510,10 @@ def check_switch(history, declared_class=None, min_n=None):
 
     return {"verdict": _worst([s for s, _ in findings]),
             "findings": findings, "dropped": dropped,
-            "per_reading": per_reading, "mismatch": summary}
+            "per_reading": per_reading, "mismatch": summary,
+            "transitions": transitions,
+            "env_unread": sum(1 for t in transitions if t["env_changed"] is None),
+            "rules": {"%s->%s" % k: v for k, v in rule_meta.items()}}
 
 
 def read_cyclical_absence(phase_state):

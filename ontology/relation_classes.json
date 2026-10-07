@@ -2,14 +2,18 @@
   "schema": "relation_class/1",
   "license": "CC0-1.0",
   "role": "SINGLE SOURCE OF TRUTH for the decay / relation-class enum. Every other copy (CLAUDE.md, glyph docs, sensor files) points here; none is hand-maintained.",
+  "frame_statement": {
+    "tag": "STATED",
+    "text": "This is a distinct relational ontology. Its classes exist and are relevant to the degree they are useful. It is declared as a frame, not asserted as the only frame. Every record declares its frame; class values are frame-indexed."
+  },
   "provenance": {
-    "definitions": "STATED by the operator in chat: COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE on 2026-09-22; CYCLICAL, RESONANT, IMMORTAL on 2026-10-06.",
+    "definitions": "STATED by the operator in chat: COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE on 2026-09-22; CYCLICAL, RESONANT, IMMORTAL on 2026-10-06. IMMORTAL as information and the environment-indexed coupling rule on 2026-10-07.",
     "formalizations": "DERIVED (measurand, fields, validator rules). Co-authored.",
     "tags": "Each text field carries its own tag: STATED / DERIVED / OPEN."
   },
   "frame_rule": {
     "tag": "STATED",
-    "text": "Rates are frame-indexed, not intrinsic. Every class assignment declares its frame. A missing frame is FRAME_UNDECLARED, never a default frame."
+    "text": "Rates are frame-indexed, not intrinsic. Every class assignment declares its frame. A missing frame is INCOMPLETE (field: frame), never a default frame."
   },
   "unknown_class_rule": {
     "tag": "STATED",
@@ -18,17 +22,44 @@
   "class_required_rule": {
     "tag": "STATED",
     "text": "In the operator's frame a relation is defined BY its class; there is no assumed decay rate. The class is the decay spec.",
-    "derived": {"tag": "DERIVED", "text": "The class field is REQUIRED. An absent or null class is UNCLASSED (not UNRATIFIED: nothing was asserted). No class is ever defaulted, REVISABLE included."}
+    "derived": {
+      "tag": "DERIVED",
+      "text": "The class field is REQUIRED. An absent or null class is UNCLASSED (not UNRATIFIED: nothing was asserted). No class is ever defaulted, REVISABLE included."
+    }
   },
   "class_switch_rule": {
-    "finding": {"tag": "DERIVED", "text": "Other frames already apply a HELD state (CYCLICAL-like) to close kin over short gaps (a workday). The switch to REVISABLE decay happens at a threshold that is never stated: some function of gap length and relation type."},
-    "spec": {"tag": "STATED", "text": "Any frame that switches a relation's class must declare the switch rule. An undeclared switch is flagged UNDECLARED_THRESHOLD."},
-    "shape": {"tag": "DERIVED", "text": "switch = {from, to, condition}. from and to are ratified classes and must differ (from == to is MALFORMED_RULE). condition = {reads: [...], threshold: {relation_type: {value, unit}}}, with value an ISO 8601 duration (PT8H, P3M) and unit 'iso8601_duration'. A bare number or untyped string is MALFORMED_RULE."},
-    "semantics": {"tag": "DERIVED", "text": "Below the threshold for the reading's relation_type the relation is 'from'; at or above it, 'to'."},
-    "duration_convention": {"tag": "DERIVED", "text": "Year and month components have no fixed length. A threshold with Y or M has a calendar band (each month 28-31 d, each year 365-366 d; P3M spans 84-93 d). A reading inside the band is BOUNDARY_AMBIGUOUS and gets no verdict. Outside the band the verdict does not depend on which month length is used. RECOMMENDED: declare thresholds as P{n}D (P90D, not P3M); a day-denominated threshold has no band."},
-    "aggregation": {"tag": "DERIVED", "text": "DECLARED_NOT_FOLLOWED is kept per reading (MATCH / MISMATCH / BOUNDARY_AMBIGUOUS). The relation-level verdict needs mismatches >= min_n, a parameter the caller DECLARES; nothing defaults it. Fewer than min_n -> INSUFFICIENT_READINGS. min_n undeclared with mismatches present -> INCOMPLETE. The report always carries mismatch count, tested denominator and rate."},
-    "pre_filter": {"tag": "DERIVED", "text": "Before detection, drop readings taken during a declared CYCLICAL off-phase, and readings taken through a declared IMMORTAL change of form. Without this, a seasonal gap reads as a decay switch. Dropped readings are reported, not hidden."},
-    "detection": {"tag": "DERIVED", "text": "One relation, one frame. A class change no declared rule covers -> UNDECLARED_THRESHOLD. A declared rule the readings do not obey -> DECLARED_NOT_FOLLOWED (the frame states a rule; its behavior diverges). A history spanning two frames -> CONFLICT, which is reserved for a frame clash."}
+    "finding": {
+      "tag": "DERIVED",
+      "text": "Other frames already apply a HELD state (CYCLICAL-like) to close kin over short gaps (a workday). The switch to REVISABLE decay happens at a threshold that is never stated: some function of gap length and relation type."
+    },
+    "spec": {
+      "tag": "STATED",
+      "text": "Any frame that switches a relation's class must declare the switch rule. An undeclared switch is flagged UNDECLARED_THRESHOLD."
+    },
+    "shape": {
+      "tag": "DERIVED",
+      "text": "switch = {from, to, condition}. from and to are ratified classes and must differ (from == to is MALFORMED_RULE). condition = {reads: [...], threshold: {relation_type: {value, unit}}}, with value an ISO 8601 duration (PT8H, P3M) and unit 'iso8601_duration'. A bare number or untyped string is MALFORMED_RULE."
+    },
+    "semantics": {
+      "tag": "DERIVED",
+      "text": "Below the threshold for the reading's relation_type the relation is 'from'; at or above it, 'to'."
+    },
+    "duration_convention": {
+      "tag": "DERIVED",
+      "text": "Year and month components have no fixed length. A threshold with Y or M has a calendar band (each month 28-31 d, each year 365-366 d; P3M spans 84-93 d). A reading inside the band is BOUNDARY_AMBIGUOUS and gets no verdict. Outside the band the verdict does not depend on which month length is used. RECOMMENDED: declare thresholds as P{n}D (P90D, not P3M); a day-denominated threshold has no band."
+    },
+    "aggregation": {
+      "tag": "DERIVED",
+      "text": "DECLARED_NOT_FOLLOWED is kept per reading (MATCH / MISMATCH / BOUNDARY_AMBIGUOUS). The relation-level verdict needs mismatches >= min_n, a parameter the caller DECLARES; nothing defaults it. Fewer than min_n -> INSUFFICIENT_READINGS. min_n undeclared with mismatches present -> INCOMPLETE. The report always carries mismatch count, tested denominator and rate."
+    },
+    "pre_filter": {
+      "tag": "DERIVED",
+      "text": "Before detection, drop readings taken during a declared CYCLICAL off-phase, and readings taken through a declared IMMORTAL change of form. Without this, a seasonal gap reads as a decay switch. Dropped readings are reported, not hidden."
+    },
+    "detection": {
+      "tag": "DERIVED",
+      "text": "One relation, one frame. A class change no declared rule covers -> UNDECLARED_THRESHOLD. A declared rule the readings do not obey -> DECLARED_NOT_FOLLOWED (the frame states a rule; its behavior diverges). A history spanning two frames -> CONFLICT, which is reserved for a frame clash."
+    }
   },
   "ungraded_term_note": {
     "tag": "DERIVED",
@@ -37,172 +68,619 @@
   "notation": {
     "tag": "DERIVED",
     "by": "operator, 2026-10-07",
-    "symbols": {"c(t)": "coupling strength of the relation over time", "lambda": "decay rate", "k": "contact rate", "F": "declared frame"}
+    "symbols": {
+      "c(t)": "coupling strength of the relation over time",
+      "lambda": "decay rate",
+      "k": "contact rate",
+      "F": "declared frame"
+    }
   },
   "literature": [
-    {"tag": "OPEN", "status": "UNVERIFIED, carried from memory; check before citing",
-     "text": "Roberts & Dunbar (~2011): friendship ties decay without contact, kin ties less affected. Read here as a frame-assigned lambda, not an intrinsic one."}
+    {
+      "tag": "OPEN",
+      "status": "UNVERIFIED, carried from memory; check before citing",
+      "text": "Roberts & Dunbar (~2011): friendship ties decay without contact, kin ties less affected. Read here as a frame-assigned lambda, not an intrinsic one."
+    }
   ],
   "result_states": {
-    "OK": "assignment passes every rule for its class",
-    "UNCLASSED": "no class declared; rejected, never defaulted",
-    "MALFORMED_RULE": "a switch rule is badly formed (from == to, untyped or non-ISO threshold, or two rules for one switch that disagree)",
-    "UNDECLARED_THRESHOLD": "a frame switches a relation's class without a declared switch rule, or the rule has no threshold for this relation_type",
-    "DECLARED_NOT_FOLLOWED": "the frame declares a switch rule and the observed readings diverge from it",
-    "UNRATIFIED": "class value is not a member of this set",
-    "OPEN_CLASS": "class is listed but not ratified (CONSTITUTIVE)",
-    "CATEGORY_ERROR": "the question is malformed for this referent or class; not 0 and not null",
-    "FRAME_UNDECLARED": "no frame declared alongside the class",
-    "INCOMPLETE": "a field the class requires is absent",
-    "UNMEASURED": "the class's measurand has not been taken; the class is carried, not established",
-    "CONTRADICTS_CLASS": "a supplied value contradicts the class definition",
-    "INSUFFICIENT_READINGS": "mismatches with a declared rule exist but are fewer than the declared min_n",
-    "BOUNDARY_AMBIGUOUS": "a reading falls inside the calendar band of a Y/M threshold (months 28-31 d, years 365-366 d); no verdict for that reading",
-    "CONFLICT": "frame clash only: one relation's history spans more than one frame"
+    "OK": {
+      "meaning": "assignment passes every rule for its class",
+      "next_action": "none"
+    },
+    "UNCLASSED": {
+      "meaning": "no class declared; rejected, never defaulted",
+      "next_action": "declare a class"
+    },
+    "UNRATIFIED": {
+      "meaning": "class value is not a member of this set",
+      "next_action": "use a member of the set, or bring the value to the operator for ratification"
+    },
+    "CATEGORY_ERROR": {
+      "meaning": "the question is malformed for this referent or class; not 0 and not null",
+      "next_action": "stop asking this question of this referent; re-pose it"
+    },
+    "CONTRADICTS_CLASS": {
+      "meaning": "a supplied value contradicts the class definition",
+      "next_action": "change the class, or correct the value that contradicts it"
+    },
+    "CONFLICT": {
+      "meaning": "frame clash only: one relation's history spans more than one frame",
+      "next_action": "split the history by frame and read each frame on its own"
+    },
+    "MALFORMED_RULE": {
+      "meaning": "a switch rule is badly formed (from == to, untyped or non-ISO threshold, or two rules for one switch that disagree)",
+      "next_action": "rewrite the switch rule in the required form"
+    },
+    "UNDECLARED_THRESHOLD": {
+      "meaning": "a frame switches a relation's class without a declared switch rule, or the rule has no threshold for this relation_type",
+      "next_action": "the frame that switched must state its switch rule and threshold"
+    },
+    "DECLARED_NOT_FOLLOWED": {
+      "meaning": "the frame declares a switch rule and the observed readings diverge from it",
+      "next_action": "report the divergence; the frame revises its rule or its behaviour"
+    },
+    "INSUFFICIENT_READINGS": {
+      "meaning": "mismatches with a declared rule exist but are fewer than the declared min_n",
+      "next_action": "collect more readings of the same relation before a relation-level call"
+    },
+    "BOUNDARY_AMBIGUOUS": {
+      "meaning": "a value falls inside an uncertainty band where two outcomes are both possible (the 28-31 d / 365-366 d calendar band of a Y/M threshold, or the declared tolerance around a reference in the interaction test); no verdict",
+      "next_action": "re-express the threshold in exact units, or tighten the measurement"
+    },
+    "OPEN_CLASS": {
+      "meaning": "class is listed but not ratified (CONSTITUTIVE)",
+      "next_action": "hold; nothing to fix until the operator ratifies or retires the class"
+    },
+    "INCOMPLETE": {
+      "meaning": "a field the class or check requires is absent (frame included)",
+      "next_action": "supply the named field"
+    },
+    "UNMEASURED": {
+      "meaning": "the class's measurand has not been taken; the class is carried, not established",
+      "next_action": "take the measurement, with a method that can see the quantity"
+    }
   },
   "classes": [
     {
       "id": "COUPLED",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Holds by construction; cannot decouple (water/environment). Re-administration is meaningless."},
-      "decay": {"tag": "STATED", "value": "none"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["dA/dt = f(A,B), with df/dB != 0 always", "c = c0, dc/dt = 0", "c = 0 is OUTSIDE the domain"],
-                "reads": "zero decay by construction; the relation cannot be cut"},
-      "valid_referents": {"tag": "DERIVED", "values": ["ANY"]},
-      "measurand": {"tag": "DERIVED", "text": "none; the relation is not re-measured because it cannot fail to hold"},
-      "required_fields": ["frame"],
+      "definition": {
+        "tag": "STATED",
+        "text": "Holds by construction; cannot decouple (water/environment). Re-administration is meaningless."
+      },
+      "decay": {
+        "tag": "STATED",
+        "value": "none"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "dA/dt = f(A,B), with df/dB != 0 always",
+          "c = c0, dc/dt = 0",
+          "c = 0 is OUTSIDE the domain"
+        ],
+        "reads": "zero decay by construction; the relation cannot be cut"
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "ANY"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "none; the relation is not re-measured because it cannot fail to hold"
+      },
+      "required_fields": [
+        "frame"
+      ],
       "validator": [
-        {"tag": "DERIVED", "rule": "a decay value other than 'none' -> CONTRADICTS_CLASS"}
+        {
+          "tag": "DERIVED",
+          "rule": "a decay value other than 'none' -> CONTRADICTS_CLASS"
+        }
       ]
     },
     {
       "id": "CONTINUOUS",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Persists across elapsed time WITHOUT CONTACT. Decay is 0 by STANDING, not by construction. Absence of contact is not evidence of change. Frame-indexed: another frame may assign decay to the same relation."},
-      "decay": {"tag": "STATED", "value": 0, "basis": "standing"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["dc/dt = 0", "dc/dk = 0 (contact rate does not matter)", "lambda_F = 0 in this frame; another frame may write c(t) = c0*exp(-lambda*t) for the same relation"],
-                "reads": "differs from COUPLED: c = 0 is reachable, just not by elapsed time",
-                "gap": {"tag": "OPEN", "text": "what DOES reach c = 0 (an event, a cut) is not specified; the model says only that time does not."}},
-      "valid_referents": {"tag": "DERIVED", "values": ["ANY"]},
-      "measurand": {"tag": "DERIVED", "text": "none from contact frequency; elapsed time without contact is not a reading"},
-      "required_fields": ["frame"],
-      "validator": [
-        {"tag": "STATED", "rule": "frame required (load-bearing for this class: the 0 belongs to a frame)"},
-        {"tag": "DERIVED", "rule": "a non-zero decay value -> CONTRADICTS_CLASS within the declared frame"}
+      "definition": {
+        "tag": "STATED",
+        "text": "Persists across elapsed time WITHOUT CONTACT. Decay is 0 by STANDING, not by construction. Absence of contact is not evidence of change. Frame-indexed: another frame may assign decay to the same relation."
+      },
+      "decay": {
+        "tag": "STATED",
+        "value": 0,
+        "basis": "standing"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "dc/dt = 0",
+          "dc/dk = 0 (contact rate does not matter) while E holds",
+          "lambda_F = 0 in this frame; another frame may write c(t) = c0*exp(-lambda*t) for the same relation"
+        ],
+        "reads": "differs from COUPLED: c = 0 is reachable, just not by elapsed time",
+        "gap": {
+          "tag": "OPEN",
+          "text": "what DOES reach c = 0 (an event, a cut) is not specified; the model says only that time does not."
+        },
+        "note": {
+          "tag": "DERIVED",
+          "text": "the dc/dk = 0 statement is conditional on the environment: a change in E can move c even with no change in contact"
+        }
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "ANY"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "none from contact frequency; elapsed time without contact is not a reading"
+      },
+      "required_fields": [
+        "frame"
       ],
-      "contrast": {"tag": "DERIVED", "text": "vs IMMORTAL: CONTINUOUS persists across time without contact; IMMORTAL persists across change of form."}
+      "validator": [
+        {
+          "tag": "STATED",
+          "rule": "frame required (load-bearing for this class: the 0 belongs to a frame)"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "a non-zero decay value -> CONTRADICTS_CLASS within the declared frame"
+        }
+      ],
+      "contrast": {
+        "tag": "DERIVED",
+        "text": "vs IMMORTAL: CONTINUOUS persists across time without contact; IMMORTAL persists across change of form."
+      }
     },
     {
       "id": "REVISABLE",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Underlying facts can change or update (psychology, humanities, archaeology). Re-administer; status is re-checked, never inherited."},
-      "decay": {"tag": "STATED", "value": "> 0"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["c(t) = c0*exp(-lambda*t), lambda > 0", "t_half = ln2 / lambda", "t_cross = ln(c0/c_min) / lambda"],
-                "reads": "t_cross is when c falls to c_min; the re-check must happen at or before t_cross, so it is a deadline, not a schedule",
-                "note": {"tag": "DERIVED", "text": "same shape as Simulators/claim-record's derived clock (shelf_life = time_constant / coupling): the date is computed from lambda at read time and never stored"}},
-      "valid_referents": {"tag": "DERIVED", "values": ["ANY"]},
-      "measurand": {"tag": "DERIVED", "text": "status at last check, with the check date; a status carried from a prior check without re-administration is not a reading"},
-      "required_fields": ["frame", "last_checked"],
+      "definition": {
+        "tag": "STATED",
+        "text": "Underlying facts can change or update (psychology, humanities, archaeology). Re-administer; status is re-checked, never inherited."
+      },
+      "decay": {
+        "tag": "STATED",
+        "value": "> 0"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "c(E(t)) with lambda = lambda(E) > 0",
+          "dc/dt = (dc/dE)*(dE/dt): decay follows environment change",
+          "while E changes at a steady rate: c(t) = c0*exp(-lambda*t)",
+          "t_half = ln2 / lambda",
+          "t_cross = ln(c0/c_min) / lambda"
+        ],
+        "reads": "t_cross is when c falls to c_min; the re-check must happen at or before t_cross, so it is a deadline, not a schedule",
+        "note": {
+          "tag": "DERIVED",
+          "text": "same shape as Simulators/claim-record's derived clock (shelf_life = time_constant / coupling): the date is computed from lambda at read time and never stored"
+        }
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "ANY"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "status at last check, with the check date; a status carried from a prior check without re-administration is not a reading; the environment terms read at each check, since lambda depends on them"
+      },
+      "required_fields": [
+        "frame",
+        "last_checked"
+      ],
       "validator": [
-        {"tag": "DERIVED", "rule": "decay value <= 0 -> CONTRADICTS_CLASS"},
-        {"tag": "STATED", "rule": "status_inherited = true -> CONTRADICTS_CLASS (re-checked, never inherited)"},
-        {"tag": "DERIVED", "rule": "last_checked absent -> INCOMPLETE"}
+        {
+          "tag": "DERIVED",
+          "rule": "decay value <= 0 -> CONTRADICTS_CLASS"
+        },
+        {
+          "tag": "STATED",
+          "rule": "status_inherited = true -> CONTRADICTS_CLASS (re-checked, never inherited)"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "last_checked absent -> INCOMPLETE"
+        }
       ]
     },
     {
       "id": "CONSTITUTIVE",
       "status": "OPEN",
-      "definition": {"tag": "OPEN", "text": "The relata do not exist prior to the relation; 'does it hold' is malformed. Not ratified."},
-      "decay": {"tag": "OPEN", "value": "CATEGORY_ERROR", "note": "not 0"},
-      "model": {"tag": "OPEN", "by": "operator, 2026-10-07",
-                "equations": ["A = A(R), B = B(R)", "R -> 0 implies A, B undefined"],
-                "reads": "no decay equation exists; asking for one is malformed"},
-      "valid_referents": {"tag": "OPEN", "values": []},
-      "measurand": {"tag": "OPEN", "text": "not defined"},
+      "definition": {
+        "tag": "OPEN",
+        "text": "The relata do not exist prior to the relation; 'does it hold' is malformed. Not ratified."
+      },
+      "decay": {
+        "tag": "OPEN",
+        "value": "CATEGORY_ERROR",
+        "note": "not 0"
+      },
+      "model": {
+        "tag": "OPEN",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "A = A(R), B = B(R)",
+          "R -> 0 implies A, B undefined"
+        ],
+        "reads": "no decay equation exists; asking for one is malformed"
+      },
+      "valid_referents": {
+        "tag": "OPEN",
+        "values": []
+      },
+      "measurand": {
+        "tag": "OPEN",
+        "text": "not defined"
+      },
       "required_fields": [],
       "validator": [
-        {"tag": "STATED", "rule": "any decay value -> CATEGORY_ERROR"},
-        {"tag": "DERIVED", "rule": "any assignment -> OPEN_CLASS (listed, not ratified)"}
+        {
+          "tag": "STATED",
+          "rule": "any decay value -> CATEGORY_ERROR"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "any assignment -> OPEN_CLASS (listed, not ratified)"
+        }
       ]
     },
     {
       "id": "CYCLICAL",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Environmentally coupled; present or absent on intervals the ENVIRONMENT sets (seasons, migration, runs, blooms)."},
-      "decay": {"tag": "DERIVED", "value": "none; absence in off-phase is expected, not decay"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["c(t) = c_bar + a*cos(2*pi*t/T_env + phi)", "presence: P(t + T) = P(t)", "signal = observed - expected, read at ON-phase only", "drift: dT_env/dt != 0 is recorded as a reading"],
-                "principle": {"tag": "STATED", "text": "Moon in Earth's shadow: the orbit (state) is continuous; visibility (contact) is geometric. A scheduled loss of observation is not evidence of a state change."},
-                "conflict": {"tag": "DERIVED", "text": "The cosine is written on c(t), the coupling. The moon principle puts the cycle on OBSERVABILITY with the state held constant. These are two different models. If c itself cycles, an off-phase low IS lower coupling, and 'infer nothing from off-phase nulls' no longer follows from the model. Both cases exist (a salmon run's presence really varies; the moon's orbit does not), so the assignment must declare which quantity cycles: cycling_quantity = 'observability' (c constant at c_bar, the cosine on o(t)) or 'coupling' (the cosine on c(t)). Under 'observability' the strength of the relation is c_bar, never c(t)."},
-                "note": {"tag": "DERIVED", "text": "with drift, the phase is 2*pi*integral(dt/T_env(t)) + phi, not 2*pi*t/T_env + phi; the written form holds for constant T_env only"}},
-      "valid_referents": {"tag": "DERIVED", "values": ["ANY"]},
-      "measurand": {"tag": "DERIVED", "text": "presence against phase: off-phase absence -> EXPECTED; on-phase absence -> SIGNAL; period drift is recorded as a reading, not noise"},
-      "required_fields": ["frame", "period", "phase", "env_index", "cycling_quantity"],
-      "validator": [
-        {"tag": "STATED", "rule": "period and phase required -> else INCOMPLETE"},
-        {"tag": "DERIVED", "rule": "env_index required -> else INCOMPLETE (what environmental quantity sets the interval)"},
-        {"tag": "STATED", "rule": "an off-phase null is never scored as decay"},
-        {"tag": "STATED", "rule": "scheduled loss of observation is not evidence of state change; infer nothing from off-phase nulls"},
-        {"tag": "DERIVED", "rule": "cycling_quantity must be 'observability' or 'coupling'; absent -> INCOMPLETE, other -> UNRATIFIED"}
+      "definition": {
+        "tag": "STATED",
+        "text": "Environmentally coupled; present or absent on intervals the ENVIRONMENT sets (seasons, migration, runs, blooms).",
+        "held_state": {
+          "tag": "STATED",
+          "text": "Held state: contact cycles; the state does not."
+        }
+      },
+      "decay": {
+        "tag": "DERIVED",
+        "value": "none; absence in off-phase is expected, not decay"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "contact: P(t + T_env) = P(t)",
+          "state: c(t_return) = c(t_leave)",
+          "gap cost: M_gap = 0",
+          "signal = observed - expected, read at ON-phase only",
+          "drift: dT_env/dt != 0 is recorded as a reading"
+        ],
+        "principle": {
+          "tag": "STATED",
+          "text": "Moon in Earth's shadow: the orbit (state) is continuous; visibility (contact) is geometric. A scheduled loss of observation is not evidence of a state change."
+        },
+        "note": {
+          "tag": "DERIVED",
+          "text": "with drift, the return time is set by integral(dt/T_env(t)), not t/T_env; the written form holds for constant T_env only"
+        },
+        "superseded": {
+          "tag": "DERIVED",
+          "text": "Replaces c(t) = c_bar + a*cos(2*pi*t/T_env + phi), which put the cycle on the coupling and contradicted the moon principle. A coupling that really cycles is environment-indexed (coupling_rule.absorbs), not CYCLICAL."
+        }
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "ANY"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "presence against phase: off-phase absence -> EXPECTED; on-phase absence -> SIGNAL; the state is read at return, not during the gap"
+      },
+      "required_fields": [
+        "frame",
+        "period",
+        "phase",
+        "env_index"
       ],
-      "links": ["seasonal / movement glyphs"]
+      "validator": [
+        {
+          "tag": "STATED",
+          "rule": "period and phase required -> else INCOMPLETE"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "env_index required -> else INCOMPLETE (what environmental quantity sets the interval)"
+        },
+        {
+          "tag": "STATED",
+          "rule": "an off-phase null is never scored as decay"
+        },
+        {
+          "tag": "STATED",
+          "rule": "scheduled loss of observation is not evidence of state change; infer nothing from off-phase nulls"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "cycling_quantity is optional. 'observability' -> OK. 'coupling' -> CONTRADICTS_CLASS (a cycling coupling is environment-indexed, not a held state). Any other value -> UNRATIFIED."
+        }
+      ],
+      "links": [
+        "seasonal / movement glyphs"
+      ]
     },
     {
       "id": "RESONANT",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Coupled AND gives more than the sum of each (superadditive)."},
-      "decay": {"tag": "DERIVED", "value": "not assessable one party at a time"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["I = F(A,B) - [F(A) + F(B)]", "RESONANT iff I > 0; antagonistic iff I < 0 (OPEN)"],
-                "special_case": {"text": "driven damped oscillator: amp(w) = (F0/m) / sqrt((w0^2 - w^2)^2 + (gamma*w)^2), peaking near w0 (surplus from frequency matching)",
-                                 "note": {"tag": "DERIVED", "text": "the amplitude peak sits at w = sqrt(w0^2 - gamma^2/2), which is approximately w0 only for light damping"},
-                                 "gap": {"tag": "OPEN", "text": "the oscillator is not yet written in the I form: F(A) and F(B) separately (driver alone, oscillator alone) are not defined, so it is an analogy for 'surplus from matching', not an instance of I > 0 until they are"}}},
-      "valid_referents": {"tag": "DERIVED", "values": ["PAIR_OR_MORE"]},
-      "measurand": {"tag": "DERIVED", "text": "interaction = joint - sum(separate); RESONANT iff interaction > 0. A cut cost must include the interaction term."},
-      "required_fields": ["frame", "joint+separate OR interaction_status=UNMEASURED"],
-      "validator": [
-        {"tag": "STATED", "rule": "requires an interaction-term measurement or status UNMEASURED; never defaults to additive"},
-        {"tag": "DERIVED", "rule": "interaction <= 0 -> CONTRADICTS_CLASS (does not meet RESONANT); the antagonistic case is OPEN and is not assigned"},
-        {"tag": "DERIVED", "rule": "method in ADDITIVE_METHODS -> flag FALSE_ZERO_RISK: the method scores interaction 0 by construction"}
+      "definition": {
+        "tag": "STATED",
+        "text": "Coupled AND gives more than the sum of each (superadditive)."
+      },
+      "decay": {
+        "tag": "DERIVED",
+        "value": "not assessable one party at a time"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "I = F(A,B) - [F(A) + F(B)]",
+          "RESONANT iff I > 0; antagonistic iff I < 0 (OPEN)"
+        ],
+        "special_case": {
+          "text": "driven damped oscillator: amp(w) = (F0/m) / sqrt((w0^2 - w^2)^2 + (gamma*w)^2), peaking near w0 (surplus from frequency matching)",
+          "note": {
+            "tag": "DERIVED",
+            "text": "the amplitude peak sits at w = sqrt(w0^2 - gamma^2/2), which is approximately w0 only for light damping"
+          },
+          "gap": {
+            "tag": "OPEN",
+            "text": "the oscillator is not yet written in the I form: F(A) and F(B) separately (driver alone, oscillator alone) are not defined, so it is an analogy for 'surplus from matching', not an instance of I > 0 until they are"
+          }
+        }
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "PAIR_OR_MORE"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "interaction = joint - sum(separate); RESONANT iff interaction > 0. A cut cost must include the interaction term."
+      },
+      "required_fields": [
+        "frame",
+        "joint+separate+tol OR interaction_status=UNMEASURED"
       ],
-      "additive_methods": ["sum_of_parts", "one_at_a_time", "additive_variance_partition"],
-      "contrast": {"tag": "DERIVED", "text": "vs COUPLED: COUPLED = cannot decouple; RESONANT = coupled AND produces surplus."},
-      "open": [{"tag": "OPEN", "text": "Antagonistic counterpart (joint < sum): not yet defined. Do not invent."}]
+      "validator": [
+        {
+          "tag": "STATED",
+          "rule": "requires an interaction-term measurement or status UNMEASURED; never defaults to additive"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "interaction_test outcome other than RESONANT -> CONTRADICTS_CLASS, naming the measured outcome; ANTAGONISTIC is reported as OPEN, not assigned; inside a tolerance band -> BOUNDARY_AMBIGUOUS; tol absent -> INCOMPLETE"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "method in ADDITIVE_METHODS -> flag FALSE_ZERO_RISK: the method scores interaction 0 by construction"
+        }
+      ],
+      "additive_methods": [
+        "sum_of_parts",
+        "one_at_a_time",
+        "additive_variance_partition"
+      ],
+      "contrast": {
+        "tag": "DERIVED",
+        "text": "vs COUPLED: COUPLED = cannot decouple; RESONANT = coupled AND produces surplus."
+      },
+      "open": [
+        {
+          "tag": "OPEN",
+          "text": "ANTAGONISTIC (joint < M): boundary proposed, class not defined. Do not invent."
+        }
+      ],
+      "interaction_test": {
+        "tag": "STATED",
+        "by": "operator, 2026-10-07",
+        "references": {
+          "S": "sum of separate values",
+          "M": "max single value"
+        },
+        "outcomes": [
+          {
+            "id": "RESONANT",
+            "when": "joint > S"
+          },
+          {
+            "id": "ENHANCED_SUBADDITIVE",
+            "when": "M < joint <= S"
+          },
+          {
+            "id": "REDUNDANT",
+            "when": "|joint - M| <= tol"
+          },
+          {
+            "id": "ANTAGONISTIC",
+            "when": "joint < M",
+            "status": "OPEN: boundary proposed, class not defined"
+          }
+        ],
+        "derived": {
+          "tag": "DERIVED",
+          "text": "tol is declared with the measurement, never defaulted. A joint value within tol of S cannot be told RESONANT from ENHANCED_SUBADDITIVE; one within tol of M cannot be told REDUNDANT from either neighbour unless the bands are disjoint. Both are BOUNDARY_AMBIGUOUS. The outcomes are readings of an interaction, not decay classes."
+        }
+      }
     },
     {
       "id": "IMMORTAL",
       "status": "STATED",
-      "definition": {"tag": "STATED", "text": "Applies to ENERGY; nothing material applies. Conservation: the quantity is neither created nor destroyed, it transforms only. Also used for immortal friendship/love, derived from the energy sense (derivation tentative)."},
-      "decay": {"tag": "DERIVED", "value": "0 for QUANTITY only; usable form and gradient still degrade"},
-      "model": {"tag": "DERIVED", "by": "operator, 2026-10-07",
-                "equations": ["dE_total/dt = 0 (quantity conserved)", "dS/dt >= 0 (form degrades)", "usable: X = E - T0*S, dX/dt <= 0", "relation-as-energy: sum(E_i) constant, distribution changes (transforms, not lost)"],
-                "scope": {"tag": "DERIVED", "text": "dE/dt = 0 and dS/dt >= 0 hold for an isolated system. X = E - T0*S is the simplified exergy; the full form adds p0*(V - V0) and is taken relative to the environment state. dX/dt <= 0 is the statement that holds for a system exchanging only with an environment at T0."}},
-      "valid_referents": {"tag": "DERIVED", "values": ["ENERGY", "RELATION_AS_ENERGY"]},
-      "measurand": {"tag": "DERIVED", "text": "quantity conserved across transformation; says nothing about usable form"},
-      "required_fields": ["frame", "referent_type"],
-      "validator": [
-        {"tag": "STATED", "rule": "referent_type = MATERIAL -> CATEGORY_ERROR (not 0, not null)"},
-        {"tag": "DERIVED", "rule": "referent_type absent -> INCOMPLETE"},
-        {"tag": "DERIVED", "rule": "referent_type outside {ENERGY, RELATION_AS_ENERGY, MATERIAL} -> INCOMPLETE (undeclared kind)"}
+      "definition": {
+        "tag": "STATED",
+        "text": "Applies to ENERGY; nothing material applies. Conservation: the quantity is neither created nor destroyed, it transforms only. Also used for immortal friendship/love, derived from the energy sense (derivation tentative).",
+        "information": {
+          "tag": "STATED",
+          "text": "Immortal is the teaching remembered in the physical aspects of anything (information theory)."
+        }
+      },
+      "decay": {
+        "tag": "DERIVED",
+        "value": "0 for QUANTITY only; usable form and gradient still degrade"
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "dE_total/dt = 0 (quantity conserved)",
+          "dS/dt >= 0 (form degrades)",
+          "usable: X = E - T0*S, dX/dt <= 0",
+          "relation-as-energy: sum(E_i) constant, distribution changes (transforms, not lost)"
+        ],
+        "scope": {
+          "tag": "DERIVED",
+          "text": "dE/dt = 0 and dS/dt >= 0 hold for an isolated system. X = E - T0*S is the simplified exergy; the full form adds p0*(V - V0) and is taken relative to the environment state. dX/dt <= 0 is the statement that holds for a system exchanging only with an environment at T0."
+        }
+      },
+      "valid_referents": {
+        "tag": "DERIVED",
+        "values": [
+          "ENERGY",
+          "RELATION_AS_ENERGY",
+          "RELATION_AS_INFORMATION"
+        ]
+      },
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "quantity conserved across transformation (energy, or information in the global total); says nothing about usable form or local readability"
+      },
+      "required_fields": [
+        "frame",
+        "referent_type"
       ],
-      "contrast": {"tag": "STATED", "text": "CONTINUOUS confirmed as the closest English form; CONTINUOUS persists across time without contact, IMMORTAL across change of form."},
-      "links": ["conservation-of-energy base glyph"]
+      "validator": [
+        {
+          "tag": "STATED",
+          "rule": "referent_type = MATERIAL (a material object as bare referent) -> CATEGORY_ERROR (not 0, not null)"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "referent_type absent -> INCOMPLETE"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "referent_type outside the valid set and not MATERIAL -> INCOMPLETE (undeclared kind)"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "a readability value without a declared reader -> INCOMPLETE (readability is reader-relative)"
+        }
+      ],
+      "contrast": {
+        "tag": "STATED",
+        "text": "CONTINUOUS confirmed as the closest English form; CONTINUOUS persists across time without contact, IMMORTAL across change of form."
+      },
+      "links": [
+        "conservation-of-energy base glyph",
+        "information / teaching-remembered glyph"
+      ],
+      "invariant": {
+        "tag": "DERIVED",
+        "conserved": "INFORMATION (global total)",
+        "basis": [
+          "Unitarity (quantum) and Liouville's theorem (classical Hamiltonian): evolution preserves the information in the state.",
+          "Landauer: erasing a bit dissipates at least kT ln2 into the environment; the information is relocated there, not destroyed."
+        ],
+        "record": "The record lives in the physical state of the participants and their environment, and persists through change of form.",
+        "edge": "The global total is conserved; LOCAL readability decays. I(past; present) for a given subsystem can fall. Reading needs a keyed reader.",
+        "measurand_candidate": {
+          "status": "PROPOSED",
+          "text": "I(relation-period state ; current physical state), with the reader and key declared"
+        },
+        "correction": {
+          "tag": "DERIVED",
+          "text": "Stated as 'the same symmetry root as energy conservation'. Not quite: energy conservation follows from time-translation symmetry (Noether). Information conservation follows from unitary / Hamiltonian evolution, and holds even when the Hamiltonian depends on time and energy is NOT conserved. The two coincide for isolated systems with a time-independent Hamiltonian, which is why they read as one root; they are two invariants that co-occur there."
+        }
+      }
     }
   ],
   "proposed_tests": [
     {
       "id": "MEASURAND_INVERSION",
       "status": "PROPOSED",
-      "stated": {"tag": "STATED", "text": "Some of the operator's strongest friend and family relations are CYCLICAL or IMMORTAL."},
-      "claim": {"tag": "DERIVED", "text": "Contact-frequency and recency proxies for tie strength score CYCLICAL ties off-phase, and IMMORTAL ties after a change of form, as weak or ended. That produces an INVERTED ranking, not mere noise."},
-      "design": {"tag": "DERIVED", "text": "Rank ties by declared class-aware strength and by a contact-frequency proxy. Compute the rank correlation separately within each class. Never pool across classes: pooling lets the REVISABLE rows mask the inversion."},
-      "prediction": {"CYCLICAL": "negative or ~0", "IMMORTAL": "negative or ~0", "REVISABLE": "positive"},
-      "falsifier": {"tag": "DERIVED", "text": "CYCLICAL and IMMORTAL rows correlate positively, at a size comparable to the REVISABLE rows. The proxy would then track declared strength regardless of class, and the inversion claim fails."},
-      "gap": {"tag": "OPEN", "text": "No rows exist. The class-aware strength is the declarer's own rating, so the test checks the proxy against the declarer, not against an outside measure."},
-      "instrument": "ontology/relation_class.py: inversion_test()"
+      "stated": {
+        "tag": "STATED",
+        "text": "Some of the operator's strongest friend and family relations are CYCLICAL or IMMORTAL."
+      },
+      "claim": {
+        "tag": "DERIVED",
+        "text": "Contact-frequency and recency proxies for tie strength score CYCLICAL ties off-phase, and IMMORTAL ties after a change of form, as weak or ended. That produces an INVERTED ranking, not mere noise."
+      },
+      "design": {
+        "tag": "DERIVED",
+        "text": "Rank ties by declared class-aware strength and by a contact-frequency proxy. Compute the rank correlation separately within each class. Never pool across classes: pooling lets the REVISABLE rows mask the inversion."
+      },
+      "prediction": {
+        "CYCLICAL": "negative or ~0",
+        "IMMORTAL": "negative or ~0",
+        "REVISABLE": "positive"
+      },
+      "falsifier": {
+        "tag": "DERIVED",
+        "text": "CYCLICAL and IMMORTAL rows correlate positively, at a size comparable to the REVISABLE rows. The proxy would then track declared strength regardless of class, and the inversion claim fails."
+      },
+      "gap": {
+        "tag": "OPEN",
+        "text": "No rows exist. The class-aware strength is the declarer's own rating, so the test checks the proxy against the declarer, not against an outside measure."
+      },
+      "instrument": "ontology/relation_class.py: inversion_test()",
+      "runnable_on": {
+        "tag": "DERIVED",
+        "text": "Existing social-network data with contact logs, once ties carry a declared class. Not run."
+      }
     }
-  ]
+  ],
+  "coupling_rule": {
+    "stated": {
+      "tag": "STATED",
+      "text": "Coupling strength depends on the environment: its constraints, its interactions, what is present."
+    },
+    "derived": {
+      "tag": "DERIVED",
+      "text": "c = c(E(t)), not c(t). Time alone is not a decay driver: dc/dt = (dc/dE) * (dE/dt). If E does not change, c does not change, however much time passes."
+    },
+    "measurement": {
+      "tag": "DERIVED",
+      "text": "Read the environment terms (constraints, interactions, present entities). c is not read directly."
+    },
+    "schema": {
+      "tag": "DERIVED",
+      "text": "Readings carry env_terms (a dict). A class change between two readings whose env_terms are both declared and identical is CONTRADICTS_CLASS: the change was driven by elapsed time alone. If either side does not declare env_terms, the change is recorded as env_unread, not judged."
+    },
+    "precedent": {
+      "tag": "DERIVED",
+      "text": "Medium screening: the force between two charges in a medium is divided by its permittivity, so the same pair couples differently in different media. Running couplings in field theory depend on the energy scale of the interaction. A fixed coupling constant is the vacuum, single-scale case."
+    },
+    "absorbs": {
+      "tag": "DERIVED",
+      "text": "A coupling that cycles with a periodic environment (a salmon run's real presence) is c(E(t)) with E periodic. It belongs here, not under CYCLICAL, which is a held state."
+    },
+    "open": {
+      "tag": "OPEN",
+      "text": "Which environment terms index c for a given relation type is not specified. Do not invent."
+    }
+  },
+  "verdict_audit": {
+    "tag": "DERIVED",
+    "text": "Each verdict maps to a distinct next action. FRAME_UNDECLARED and INCOMPLETE shared one (supply the missing field), so FRAME_UNDECLARED is merged into INCOMPLETE; the finding names the field. BOUNDARY_AMBIGUOUS covers both uncertainty bands because both have the same next action."
+  }
 }

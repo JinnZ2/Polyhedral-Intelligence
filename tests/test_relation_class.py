@@ -58,9 +58,12 @@ class TestUnknown(unittest.TestCase):
 
 class TestFrame(unittest.TestCase):
     def test_frame_required_everywhere_but_constitutive(self):
-        self.assertEqual(v(**{"class": "CONTINUOUS"}), "FRAME_UNDECLARED")
-        self.assertEqual(v(**{"class": "COUPLED"}), "FRAME_UNDECLARED")
+        for cls in ("CONTINUOUS", "COUPLED"):
+            out = rc.validate({"class": cls})
+            self.assertEqual(out["verdict"], "INCOMPLETE")
+            self.assertTrue(any("frame" in m for _, m in out["findings"]))
         self.assertEqual(v(**dict(F, **{"class": "CONTINUOUS"})), "OK")
+        self.assertNotIn("FRAME_UNDECLARED", rc.PRECEDENCE)
 
 
 class TestClasses(unittest.TestCase):
@@ -89,21 +92,27 @@ class TestClasses(unittest.TestCase):
                           "phase": "spring", "env_index": "day length",
                           "cycling_quantity": "observability"})
         self.assertEqual(v(**full), "OK")
-        self.assertEqual(v(**dict(full, cycling_quantity="coupling")), "OK")
+        # held state: a cycling coupling is environment-indexed, not CYCLICAL
+        self.assertEqual(v(**dict(full, cycling_quantity="coupling")),
+                         "CONTRADICTS_CLASS")
         self.assertEqual(v(**dict(full, cycling_quantity="phase")), "UNRATIFIED")
         no_cq = dict(full)
         del no_cq["cycling_quantity"]
-        self.assertEqual(v(**no_cq), "INCOMPLETE")
+        self.assertEqual(v(**no_cq), "OK")   # optional now
         self.assertEqual(v(**dict(F, **{"class": "CYCLICAL"})), "INCOMPLETE")
         self.assertEqual(rc.read_cyclical_absence("off"), "EXPECTED")
         self.assertEqual(rc.read_cyclical_absence("on"), "SIGNAL")
         self.assertEqual(rc.read_cyclical_absence(None), "INCOMPLETE")
 
     def test_resonant_needs_interaction_term(self):
-        r = dict(F, **{"class": "RESONANT"})
+        r = dict(F, **{"class": "RESONANT", "tol": 0.5})
         self.assertEqual(v(**dict(r, joint=10, separate=[3, 4])), "OK")
-        self.assertEqual(v(**dict(r, joint=7, separate=[3, 4])),
+        self.assertEqual(v(**dict(F, **{"class": "RESONANT", "joint": 10,
+                                        "separate": [3, 4]})), "INCOMPLETE")
+        self.assertEqual(v(**dict(r, joint=6, separate=[3, 4])),
                          "CONTRADICTS_CLASS")
+        self.assertEqual(v(**dict(r, joint=7, separate=[3, 4])),
+                         "BOUNDARY_AMBIGUOUS")   # joint == S, inside tol
         self.assertEqual(v(**dict(r, joint=5, separate=[3, 4])),
                          "CONTRADICTS_CLASS")
         self.assertEqual(v(**dict(r, interaction_status="UNMEASURED")), "UNMEASURED")
@@ -116,7 +125,7 @@ class TestClasses(unittest.TestCase):
             {"class": "CONTINUOUS", "decay": 0.2},
             {"class": "REVISABLE", "decay": -1, "status_inherited": True},
             {"class": "CYCLICAL", "cycling_quantity": "x"},
-            {"class": "RESONANT", "joint": 1, "separate": [3, 4]},
+            {"class": "RESONANT", "joint": 1, "separate": [3, 4], "tol": 0.1},
         ]
         for c in cases:
             states = [s for s, _ in rc.validate(dict(F, **c))["findings"]]
@@ -390,6 +399,137 @@ class TestSwitch(unittest.TestCase):
         out = rc.check_switch([self._r("CYCLICAL", "PT1H"),
                                dict(self._r("REVISABLE", "PT2H"), frame="F2")])
         self.assertEqual(out["verdict"], "CONFLICT")
+
+
+class TestFrameStatement(unittest.TestCase):
+    def test_doc_opens_with_the_stated_frame(self):
+        with open(rc.SOURCE, encoding="utf-8") as fh:
+            data = json.load(fh)
+        fs = data["frame_statement"]
+        self.assertEqual(fs["tag"], "STATED")
+        self.assertEqual(list(data)[3], "frame_statement")
+        doc = open(os.path.join(ROOT, "ontology", "relation_classes.md"),
+                   encoding="utf-8").read()
+        body = doc.split("\n## ")[0]       # text before the first section
+        self.assertIn(fs["text"], " ".join(body.split()))
+
+
+class TestVerdictAudit(unittest.TestCase):
+    def test_every_verdict_has_a_distinct_next_action(self):
+        with open(rc.SOURCE, encoding="utf-8") as fh:
+            states = json.load(fh)["result_states"]
+        self.assertEqual(set(states), set(rc.PRECEDENCE))
+        actions = [s["next_action"] for s in states.values()]
+        self.assertEqual(len(actions), len(set(actions)))
+
+
+class TestInteraction(unittest.TestCase):
+    T = 0.5
+
+    def o(self, joint, sep=(3, 4)):
+        return rc.interaction_test(joint, list(sep), self.T)["outcome"]
+
+    def test_four_outcomes(self):
+        self.assertEqual(self.o(10), "RESONANT")              # > S = 7
+        self.assertEqual(self.o(6), "ENHANCED_SUBADDITIVE")   # M=4 < 6 <= 7
+        self.assertEqual(self.o(4.2), "REDUNDANT")            # |4.2-4| <= .5
+        self.assertEqual(self.o(2), "ANTAGONISTIC")           # < M
+
+    def test_bands_are_ambiguous(self):
+        out = rc.interaction_test(7.3, [3, 4], self.T)       # near S
+        self.assertEqual(out["outcome"], "BOUNDARY_AMBIGUOUS")
+        self.assertIn("RESONANT", out["between"])
+        # one party ~0: S ~ M, so near both references
+        self.assertEqual(self.o(4.1, (4, 0.2)), "BOUNDARY_AMBIGUOUS")
+
+    def test_exact_additive_is_subadditive_side_without_band(self):
+        self.assertEqual(rc.interaction_test(7, [3, 4], 0)["outcome"],
+                         "ENHANCED_SUBADDITIVE")
+        self.assertEqual(rc.interaction_test(4, [3, 4], 0)["outcome"],
+                         "REDUNDANT")
+
+    def test_tol_never_defaulted(self):
+        for bad in (None, -1, "0.5", True):
+            with self.assertRaises(ValueError, msg=repr(bad)):
+                rc.interaction_test(7, [3, 4], bad)
+
+    def test_validate_maps_outcomes(self):
+        r = dict(F, **{"class": "RESONANT", "tol": self.T, "separate": [3, 4]})
+        self.assertEqual(v(**dict(r, joint=10)), "OK")
+        for joint in (6, 4.2, 2):
+            out = rc.validate(dict(r, joint=joint))
+            self.assertEqual(out["verdict"], "CONTRADICTS_CLASS", joint)
+        self.assertEqual(v(**dict(r, joint=7.3)), "BOUNDARY_AMBIGUOUS")
+        anta = rc.validate(dict(r, joint=2))["findings"]
+        self.assertTrue(any("OPEN" in m for _, m in anta))
+
+
+class TestImmortalInformation(unittest.TestCase):
+    def test_information_referent_valid(self):
+        i = dict(F, **{"class": "IMMORTAL"})
+        self.assertEqual(v(**dict(i, referent_type="RELATION_AS_INFORMATION")),
+                         "OK")
+        self.assertEqual(v(**dict(i, referent_type="MATERIAL")),
+                         "CATEGORY_ERROR")
+
+    def test_readability_needs_reader(self):
+        i = dict(F, **{"class": "IMMORTAL",
+                       "referent_type": "RELATION_AS_INFORMATION",
+                       "readability": 0.4})
+        self.assertEqual(v(**i), "INCOMPLETE")
+        self.assertEqual(v(**dict(i, reader="kin, keyed by shared practice")),
+                         "OK")
+
+    def test_invariant_recorded_with_correction(self):
+        inv = rc.CLASSES["IMMORTAL"]["invariant"]
+        self.assertEqual(inv["conserved"], "INFORMATION (global total)")
+        self.assertIn("Noether", inv["correction"]["text"])
+        self.assertEqual(inv["measurand_candidate"]["status"], "PROPOSED")
+
+
+class TestEnvironmentIndexed(unittest.TestCase):
+    def test_env_change(self):
+        self.assertEqual(rc.env_change({"a": 1}, {"a": 1}), [])
+        self.assertEqual(rc.env_change({"a": 1}, {"a": 2, "b": 0}), ["a", "b"])
+        self.assertEqual(rc.env_change({"a": None}, {}), ["a"])
+        self.assertIsNone(rc.env_change(None, {"a": 1}))
+
+    def _r(self, cls, gap, env=None):
+        d = {"frame": "F1", "class": cls, "gap": gap, "relation_type": "kin"}
+        if env is not None:
+            d["env_terms"] = env
+        return d
+
+    def test_time_only_class_change_contradicts(self):
+        env = {"shared_work": True, "household": "same"}
+        out = rc.check_switch([self._r("CYCLICAL", "PT8H", env),
+                               self._r("REVISABLE", "P200D", dict(env))])
+        self.assertEqual(out["verdict"], "CONTRADICTS_CLASS")
+        self.assertEqual(out["transitions"][0]["env_changed"], [])
+
+    def test_env_driven_change_not_contradiction(self):
+        out = rc.check_switch([self._r("CYCLICAL", "PT8H", {"household": "same"}),
+                               self._r("REVISABLE", "P200D", {"household": "moved"})])
+        self.assertEqual(out["verdict"], "UNDECLARED_THRESHOLD")  # rule still owed
+        self.assertEqual(out["transitions"][0]["env_changed"], ["household"])
+
+    def test_unread_env_is_counted_not_judged(self):
+        out = rc.check_switch([self._r("CYCLICAL", "PT8H"),
+                               self._r("REVISABLE", "P200D")])
+        self.assertEqual(out["env_unread"], 1)
+        self.assertNotIn("CONTRADICTS_CLASS", [s for s, _ in out["findings"]])
+
+    def test_time_only_rule_annotated(self):
+        rule = {"from": "CYCLICAL", "to": "REVISABLE",
+                "condition": {"reads": ["gap_length", "relation_type"],
+                              "threshold": {"kin": {"value": "P90D",
+                                                    "unit": "iso8601_duration"}}}}
+        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H"), switch=rule)])
+        self.assertTrue(out["rules"]["CYCLICAL->REVISABLE"]["time_only"])
+        env_rule = dict(rule, condition=dict(rule["condition"],
+                                             reads=["gap_length", "household"]))
+        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H"), switch=env_rule)])
+        self.assertFalse(out["rules"]["CYCLICAL->REVISABLE"]["time_only"])
 
 
 class TestCLI(unittest.TestCase):
