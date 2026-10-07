@@ -91,6 +91,10 @@
       "meaning": "no class declared; rejected, never defaulted",
       "next_action": "declare a class"
     },
+    "UNRATED": {
+      "meaning": "the reference (env_terms, precedence, custody) was not written before the outcome, or the order is not documented",
+      "next_action": "do not rate this record; write the reference first on the next one"
+    },
     "UNRATIFIED": {
       "meaning": "class value is not a member of this set",
       "next_action": "use a member of the set, or bring the value to the operator for ratification"
@@ -180,7 +184,11 @@
           "tag": "DERIVED",
           "rule": "a decay value other than 'none' -> CONTRADICTS_CLASS"
         }
-      ]
+      ],
+      "prediction": {
+        "tag": "DERIVED",
+        "text": "No cut is ever observed: c = 0 is outside the domain. Falsified by one observed decoupling."
+      }
     },
     {
       "id": "CONTINUOUS",
@@ -238,6 +246,10 @@
       "contrast": {
         "tag": "DERIVED",
         "text": "vs IMMORTAL: CONTINUOUS persists across time without contact; IMMORTAL persists across change of form."
+      },
+      "prediction": {
+        "tag": "STATED",
+        "text": "No repair needed after a gap. Falsified by a gap after which the relation needed repair with the reference unchanged."
       }
     },
     {
@@ -294,7 +306,11 @@
           "tag": "DERIVED",
           "rule": "last_checked absent -> INCOMPLETE"
         }
-      ]
+      ],
+      "prediction": {
+        "tag": "DERIVED",
+        "text": "At re-check, c has moved in step with the reference change, at rate lambda(R). Falsified by decay with the reference unchanged, or no decay through a reference change."
+      }
     },
     {
       "id": "CONSTITUTIVE",
@@ -335,7 +351,11 @@
           "tag": "DERIVED",
           "rule": "any assignment -> OPEN_CLASS (listed, not ratified)"
         }
-      ]
+      ],
+      "prediction": {
+        "tag": "OPEN",
+        "text": "No prediction: the class is not ratified."
+      }
     },
     {
       "id": "CYCLICAL",
@@ -415,7 +435,11 @@
       ],
       "links": [
         "seasonal / movement glyphs"
-      ]
+      ],
+      "prediction": {
+        "tag": "STATED",
+        "text": "Return at the same state: c(t_return) = c(t_leave). Falsified by a changed state at return with the reference unchanged."
+      }
     },
     {
       "id": "RESONANT",
@@ -520,6 +544,10 @@
           "tag": "DERIVED",
           "text": "tol is declared with the measurement, never defaulted. A joint value within tol of S cannot be told RESONANT from ENHANCED_SUBADDITIVE; one within tol of M cannot be told REDUNDANT from either neighbour unless the bands are disjoint. Both are BOUNDARY_AMBIGUOUS. The outcomes are readings of an interaction, not decay classes."
         }
+      },
+      "prediction": {
+        "tag": "STATED",
+        "text": "Cut cost > sum of parts. Falsified by a cut whose cost is at or below the summed separate costs (interaction_test outside RESONANT)."
       }
     },
     {
@@ -582,7 +610,7 @@
         },
         {
           "tag": "DERIVED",
-          "rule": "a readability value without a declared reader -> INCOMPLETE (readability is reader-relative)"
+          "rule": "a readability (recognition) value without a declared reader -> INCOMPLETE; causal activity needs no reader"
         }
       ],
       "contrast": {
@@ -601,15 +629,23 @@
           "Landauer: erasing a bit dissipates at least kT ln2 into the environment; the information is relocated there, not destroyed."
         ],
         "record": "The record lives in the physical state of the participants and their environment, and persists through change of form.",
-        "edge": "The global total is conserved; LOCAL readability decays. I(past; present) for a given subsystem can fall. Reading needs a keyed reader.",
+        "edge": "The global total is conserved; LOCAL readability decays (I(past; present) for a given subsystem can fall). The record is causally active whether or not anyone reads it: it shapes state and behaviour unread.",
         "measurand_candidate": {
           "status": "PROPOSED",
-          "text": "I(relation-period state ; current physical state), with the reader and key declared"
+          "text": "I(relation-period state ; current physical state); the reader and key are declared for recognition"
         },
         "correction": {
           "tag": "DERIVED",
           "text": "Stated as 'the same symmetry root as energy conservation'. Not quite: energy conservation follows from time-translation symmetry (Noether). Information conservation follows from unitary / Hamiltonian evolution, and holds even when the Hamiltonian depends on time and energy is NOT conserved. The two coincide for isolated systems with a time-independent Hamiltonian, which is why they read as one root; they are two invariants that co-occur there."
+        },
+        "reader": {
+          "tag": "STATED",
+          "text": "A reader is needed for RECOGNITION only, not for the record to act."
         }
+      },
+      "prediction": {
+        "tag": "DERIVED",
+        "text": "After a change of form, the record still shapes state and behaviour. Falsified by no detectable effect of the relation-period state on current state, with a reader able to recognise it."
       }
     }
   ],
@@ -656,15 +692,15 @@
     },
     "derived": {
       "tag": "DERIVED",
-      "text": "c = c(E(t)), not c(t). Time alone is not a decay driver: dc/dt = (dc/dE) * (dE/dt). If E does not change, c does not change, however much time passes."
+      "text": "c = c(R(t)), R = (environment, precedence, custody), not c(t). Time alone is not a decay driver: dc/dt = (dc/dR) * (dR/dt). If the reference does not change, c does not change, however much time passes."
     },
     "measurement": {
       "tag": "DERIVED",
-      "text": "Read the environment terms (constraints, interactions, present entities). c is not read directly."
+      "text": "Read the reference chain (environment terms, precedence, custody). c is not read directly."
     },
     "schema": {
       "tag": "DERIVED",
-      "text": "Readings carry env_terms (a dict). A class change between two readings whose env_terms are both declared and identical is CONTRADICTS_CLASS: the change was driven by elapsed time alone. If either side does not declare env_terms, the change is recorded as env_unread, not judged."
+      "text": "Readings carry reference = {env_terms, precedence, custody, written}. A class change between two ratable readings whose references are identical is CONTRADICTS_CLASS: the change was driven by elapsed time alone."
     },
     "precedent": {
       "tag": "DERIVED",
@@ -676,11 +712,87 @@
     },
     "open": {
       "tag": "OPEN",
-      "text": "Which environment terms index c for a given relation type is not specified. Do not invent."
+      "text": "Which reference terms index c for a given relation type is not specified. Do not invent."
+    },
+    "reference": {
+      "tag": "STATED",
+      "text": "Coupling is indexed by REFERENCE = environment + precedence + chain of custody. Read the reference chain, not c."
     }
   },
   "verdict_audit": {
     "tag": "DERIVED",
     "text": "Each verdict maps to a distinct next action. FRAME_UNDECLARED and INCOMPLETE shared one (supply the missing field), so FRAME_UNDECLARED is merged into INCOMPLETE; the finding names the field. BOUNDARY_AMBIGUOUS covers both uncertainty bands because both have the same next action."
+  },
+  "reference_parts": [
+    "env_terms",
+    "precedence",
+    "custody"
+  ],
+  "class_sources": {
+    "participant": {
+      "tag": "OBSERVED",
+      "limits": "self-report: the same limits as self-report of feeling in the default frame (recall, framing, audience)"
+    },
+    "observer": {
+      "tag": "OBSERVED",
+      "limits": "the observer's frame, declared"
+    },
+    "inferred": {
+      "tag": "DERIVED",
+      "limits": "inference from other readings"
+    }
+  },
+  "limits": {
+    "note": {
+      "tag": "DERIVED",
+      "text": "Replaces an earlier L1-L7 list, delivered in chat and never committed to this repository. That list applied default-frame standards asymmetrically; this one is revised for parity."
+    },
+    "L1": {
+      "kind": "REQUIREMENT",
+      "tag": "STATED",
+      "text": "env_terms and the reference chain are written BEFORE the outcome (frame practice). Undocumented -> UNRATED.",
+      "enforced_by": "reference_gate"
+    },
+    "L2": {
+      "kind": "RESOLVED",
+      "tag": "STATED",
+      "text": "c is indexed by REFERENCE = environment + precedence + chain of custody. Read the reference chain, not c.",
+      "enforced_by": "reference_change"
+    },
+    "L3": {
+      "kind": "INTEROP_COST",
+      "tag": "STATED",
+      "text": "Default-frame datasets lack these fields. That is a cost of interoperation, not a limit on usefulness; in-frame collection is the route."
+    },
+    "L4": {
+      "kind": "PARITY_RULE",
+      "tag": "STATED",
+      "text": "A participant-declared class is OBSERVED, with the same standing and limits as self-report of feeling in the default frame. Cross-frame disagreement is a limit on both frames.",
+      "enforced_by": "class_sources, compare_frames"
+    },
+    "L5": {
+      "kind": "CORRECTED",
+      "tag": "STATED",
+      "text": "The IMMORTAL record is causally active (shapes state and behaviour) unread. A reader is needed for RECOGNITION only."
+    },
+    "L6": {
+      "kind": "CORRECTED",
+      "tag": "STATED",
+      "text": "A glyph is an exact relation (cf. phi defined by phi^2 = phi + 1): no truncation error, no drift. A default or approximate frame (cf. 1.618) accumulates error under iteration, so IT carries the recalibration burden. The burden of re-correction sits with the approximating frame.",
+      "derived": {
+        "tag": "DERIVED",
+        "text": "Two checks. (1) 1.618^n drifts from phi^n: the relative error grows with n (power_drift). (2) Iterating the defining relation x -> 1 + 1/x pulls a perturbed start back to phi, because phi is an attracting fixed point (relation_recovery). The exact relation does not just avoid drift; it corrects toward itself."
+      },
+      "mechanism": {
+        "tag": "DERIVED",
+        "by": "operator",
+        "text": "Whichever frame is the ruler gets its own approximations made invisible, because they are the measuring stick. Anything measured against that ruler shows its differences as deficits, even where it is the more exact one. That is not a judgment either frame earned. It comes from which one got to be the reference first."
+      }
+    },
+    "L7": {
+      "kind": "CORRECTED",
+      "tag": "STATED",
+      "text": "Each class equation is a testable prediction (classes[].prediction), plus the measurand-inversion test."
+    }
   }
 }

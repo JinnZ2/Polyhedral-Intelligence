@@ -40,6 +40,7 @@ its class is CONTRADICTS_CLASS. A rule with from == to is MALFORMED_RULE.
 Stdlib only. Python >= 3.8. CC0.
 """
 
+import datetime
 import json
 import os
 import re
@@ -48,7 +49,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCE = os.path.join(HERE, "relation_classes.json")
 
-PRECEDENCE = ("UNCLASSED", "UNRATIFIED", "CATEGORY_ERROR",
+PRECEDENCE = ("UNCLASSED", "UNRATED", "UNRATIFIED", "CATEGORY_ERROR",
               "CONTRADICTS_CLASS", "CONFLICT",
               "MALFORMED_RULE", "UNDECLARED_THRESHOLD",
               "DECLARED_NOT_FOLLOWED", "INSUFFICIENT_READINGS",
@@ -106,6 +107,8 @@ def load(path=SOURCE):
 
 
 CLASSES = load()
+with open(SOURCE, encoding="utf-8") as _fh:
+    _RAW = json.load(_fh)
 
 # CYCLICAL must say which quantity cycles: the coupling itself, or only
 # whether it can be observed (the moon in Earth's shadow).
@@ -143,6 +146,19 @@ def validate(assignment, classes=None):
         return {"class": cid, "verdict": "UNRATIFIED", "findings": f}
 
     spec = classes[cid]
+
+    if "observed" in a:
+        why = reference_gate(a)
+        if why:
+            f.append(("UNRATED", why))
+            return {"class": cid, "verdict": "UNRATED", "findings": f}
+
+    evidence = None
+    if "class_source" in a:
+        evidence = CLASS_SOURCES.get(a["class_source"])
+        if evidence is None:
+            f.append(("UNRATIFIED", "class_source %r is not one of %s"
+                      % (a["class_source"], sorted(CLASS_SOURCES))))
 
     if cid == "CONSTITUTIVE":
         f.append(("OPEN_CLASS", "CONSTITUTIVE is listed, not ratified"))
@@ -244,8 +260,10 @@ def validate(assignment, classes=None):
     if "switch" in a:
         f.extend(_check_switch_rule(a["switch"], classes))
 
-    return {"class": cid, "verdict": _worst([s for s, _ in f]),
-            "findings": f}
+    out = {"class": cid, "verdict": _worst([s for s, _ in f]), "findings": f}
+    if evidence is not None:
+        out["evidence"] = evidence
+    return out
 
 
 def parse_threshold(threshold):
@@ -325,6 +343,94 @@ def env_change(before, after):
 
 _MISSING = object()
 
+# L2: coupling is indexed by REFERENCE = environment + precedence + chain of
+# custody. The reference is read; c is not.
+REFERENCE_PARTS = tuple(_RAW["reference_parts"])
+
+# L4 parity: a participant's declared class is an observation, with the same
+# standing and the same limits as self-report of feeling in the default frame.
+CLASS_SOURCES = _RAW["class_sources"]
+
+
+def _when(text):
+    """ISO 8601 date or date-time -> aware datetime (UTC if no offset)."""
+    if not isinstance(text, str) or not text:
+        return None
+    try:
+        if "T" not in text:
+            d = datetime.date.fromisoformat(text)
+            t = datetime.datetime(d.year, d.month, d.day)
+        else:
+            t = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=datetime.timezone.utc)
+    return t
+
+
+def reference_gate(record):
+    """L1: the reference (env_terms, precedence, custody) must be written
+    BEFORE the outcome. Returns None when the record is ratable, else the
+    reason it is UNRATED. Undocumented order is UNRATED, not assumed fine."""
+    ref = record.get("reference")
+    if not isinstance(ref, dict):
+        return "no reference recorded before the outcome"
+    missing = [p for p in REFERENCE_PARTS if p not in ref]
+    if missing:
+        return "reference lacks %s" % ", ".join(missing)
+    written, observed = _when(ref.get("written")), _when(record.get("observed"))
+    if written is None or observed is None:
+        return ("order not documented: reference.written and observed must "
+                "both be ISO 8601 dates")
+    if written >= observed:
+        return "reference written %s, not before the outcome %s" % (
+            ref.get("written"), record.get("observed"))
+    return None
+
+
+def reference_change(before, after):
+    """Changed reference parts between two readings ([] if identical, None
+    if either side has no reference). env_terms is compared term by term."""
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        return None
+    out = []
+    for part in REFERENCE_PARTS:
+        if part == "env_terms":
+            sub = env_change(before.get(part, {}), after.get(part, {}))
+            out.extend("env_terms.%s" % k for k in (sub or []))
+        elif before.get(part, _MISSING) != after.get(part, _MISSING):
+            out.append(part)
+    return out
+
+
+def compare_frames(class_by_frame):
+    """L4: cross-frame disagreement is a limit on BOTH frames. Symmetric:
+    nothing here names a frame as the correct one."""
+    classes = {f: c for f, c in class_by_frame.items()}
+    agree = len(set(classes.values())) <= 1
+    return {"agree": agree, "classes": classes,
+            "limit_on": [] if agree else sorted(classes)}
+
+
+PHI = (1 + 5 ** 0.5) / 2
+
+
+def power_drift(approx, n):
+    """L6: relative error of approx**n against PHI**n. A stored truncation
+    compounds under iteration."""
+    return abs(approx ** n / PHI ** n - 1)
+
+
+def relation_recovery(x0, n):
+    """L6: iterate the defining relation x -> 1 + 1/x (phi^2 = phi + 1).
+    PHI is an attracting fixed point, so the relation pulls a perturbed
+    start back; returns |x_n - PHI|."""
+    x = x0
+    for _ in range(n):
+        x = 1 + 1 / x
+    return abs(x - PHI)
+
 # A switch rule that reads only these is driven by elapsed time alone. It is
 # annotated, not judged: the rule may belong to a frame other than this one.
 TIME_ONLY_READS = {"gap_length", "relation_type"}
@@ -401,15 +507,19 @@ def check_switch(history, declared_class=None, min_n=None):
     frames = {h.get("frame") for h in history}
     if len(frames) > 1:
         return {"verdict": "CONFLICT", "dropped": [], "per_reading": [],
-                "mismatch": None, "transitions": [], "env_unread": 0,
+                "mismatch": None, "transitions": [], "unrated": [],
                 "rules": {},
                 "findings": [("CONFLICT", "history spans frames %s; compare "
                               "within one frame" % sorted(map(str, frames)))]}
-    findings, dropped, kept = [], [], []
+    findings, dropped, kept, unrated = [], [], [], []
     for h in history:
         why = _drop_reason(h, declared_class)
         if why:
             dropped.append((h.get("gap"), why))
+            continue
+        not_ratable = reference_gate(h)
+        if not_ratable:
+            unrated.append((h.get("gap"), not_ratable))
             continue
         sec = iso_seconds(h.get("gap"))
         if sec is None:
@@ -442,16 +552,18 @@ def check_switch(history, declared_class=None, min_n=None):
     transitions = []
     for (_, prev), (_, cur) in zip(kept, kept[1:]):
         a, b = prev.get("class"), cur.get("class")
-        changed = env_change(prev.get("env_terms"), cur.get("env_terms"))
+        changed = reference_change(prev.get("reference"),
+                                   cur.get("reference"))
         if a != b:
             transitions.append({"from": a, "to": b, "gap_from": prev.get("gap"),
                                 "gap_to": cur.get("gap"),
-                                "env_changed": changed})
+                                "reference_changed": changed})
             if changed == []:
                 findings.append(("CONTRADICTS_CLASS",
                                  "class %r -> %r between gap %s and %s with "
-                                 "every declared environment term unchanged; "
-                                 "time alone is not a decay driver"
+                                 "the reference (environment, precedence, "
+                                 "custody) unchanged; time alone is not a "
+                                 "decay driver"
                                  % (a, b, prev.get("gap"), cur.get("gap"))))
         if a != b and (a, b) not in rules:
             findings.append(("UNDECLARED_THRESHOLD",
@@ -508,11 +620,14 @@ def check_switch(history, declared_class=None, min_n=None):
                              "readings diverge, below min_n %d"
                              % (mism, tested, min_n)))
 
+    if unrated and not kept:
+        findings.append(("UNRATED", "no reading is ratable: %d lack a "
+                         "reference written before the outcome" % len(unrated)))
     return {"verdict": _worst([s for s, _ in findings]),
             "findings": findings, "dropped": dropped,
             "per_reading": per_reading, "mismatch": summary,
             "transitions": transitions,
-            "env_unread": sum(1 for t in transitions if t["env_changed"] is None),
+            "unrated": unrated,
             "rules": {"%s->%s" % k: v for k, v in rule_meta.items()}}
 
 
@@ -600,8 +715,30 @@ def inversion_test(rows, min_n=3):
     return {"per_class": out, "unclassed_excluded": unclassed, "pooled": None}
 
 
+def render_limits(data=None):
+    """The doc's Limits section, rendered from the JSON (single source)."""
+    if data is None:
+        data = _RAW
+    lim = data["limits"]
+    lines = ["## Limits", "", "<!-- generated by relation_class.render_limits;"
+             " edit relation_classes.json -->", ""]
+    for key in sorted(k for k in lim if k.startswith("L")):
+        e = lim[key]
+        lines.append("**%s %s** [%s]  %s" % (key, e["kind"], e["tag"], e["text"]))
+        for sub in ("derived", "mechanism"):
+            if sub in e:
+                lines.append("")
+                lines.append("> %s [%s]  %s" % (sub, e[sub]["tag"], e[sub]["text"]))
+        lines.append("")
+    lines.append("*Note* [%s]  %s" % (lim["note"]["tag"], lim["note"]["text"]))
+    return "\n".join(lines) + "\n"
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
+    if "--limits" in argv:
+        sys.stdout.write(render_limits())
+        return 0
     if "--selftest" in argv:
         print("library module; run tests/test_relation_class.py",
               file=sys.stderr)

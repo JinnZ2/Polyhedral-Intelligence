@@ -16,6 +16,15 @@ import relation_class as rc  # noqa: E402
 F = {"frame": "operator"}
 
 
+def ref(env, written="2026-09-01", precedence="declarer", custody=("kin",)):
+    """A reference written before the default outcome date (L1)."""
+    return {"env_terms": dict(env), "precedence": precedence,
+            "custody": list(custody), "written": written}
+
+
+OBSERVED = "2026-10-01"
+
+
 def v(**kw):
     return rc.validate(kw)["verdict"]
 
@@ -249,6 +258,8 @@ class TestSwitch(unittest.TestCase):
         self.assertEqual(v(**self._held(switch=same)), "MALFORMED_RULE")
         out = rc.check_switch([{"frame": "F1", "class": "CYCLICAL",
                                 "gap": "PT1H", "relation_type": "kin",
+                                "observed": OBSERVED,
+                                "reference": ref({"t": "PT1H"}),
                                 "switch": same}])
         self.assertEqual(out["verdict"], "MALFORMED_RULE")
 
@@ -267,8 +278,11 @@ class TestSwitch(unittest.TestCase):
     # --- history ----------------------------------------------------------
 
     def _r(self, cls, gap, rt="kin", **kw):
+        # The environment differs at every reading ({"t": gap}), so these
+        # tests exercise switch logic; reference-unchanged has its own tests.
         return dict({"frame": "F1", "class": cls, "gap": gap,
-                     "relation_type": rt}, **kw)
+                     "relation_type": rt, "observed": OBSERVED,
+                     "reference": ref({"t": gap})}, **kw)
 
     def test_undeclared_switch_detected(self):
         out = rc.check_switch([self._r("REVISABLE", "P4M"),
@@ -494,10 +508,11 @@ class TestEnvironmentIndexed(unittest.TestCase):
         self.assertEqual(rc.env_change({"a": None}, {}), ["a"])
         self.assertIsNone(rc.env_change(None, {"a": 1}))
 
-    def _r(self, cls, gap, env=None):
-        d = {"frame": "F1", "class": cls, "gap": gap, "relation_type": "kin"}
+    def _r(self, cls, gap, env=None, **refkw):
+        d = {"frame": "F1", "class": cls, "gap": gap, "relation_type": "kin",
+             "observed": OBSERVED}
         if env is not None:
-            d["env_terms"] = env
+            d["reference"] = ref(env, **refkw)
         return d
 
     def test_time_only_class_change_contradicts(self):
@@ -505,18 +520,28 @@ class TestEnvironmentIndexed(unittest.TestCase):
         out = rc.check_switch([self._r("CYCLICAL", "PT8H", env),
                                self._r("REVISABLE", "P200D", dict(env))])
         self.assertEqual(out["verdict"], "CONTRADICTS_CLASS")
-        self.assertEqual(out["transitions"][0]["env_changed"], [])
+        self.assertEqual(out["transitions"][0]["reference_changed"], [])
 
     def test_env_driven_change_not_contradiction(self):
         out = rc.check_switch([self._r("CYCLICAL", "PT8H", {"household": "same"}),
                                self._r("REVISABLE", "P200D", {"household": "moved"})])
         self.assertEqual(out["verdict"], "UNDECLARED_THRESHOLD")  # rule still owed
-        self.assertEqual(out["transitions"][0]["env_changed"], ["household"])
+        self.assertEqual(out["transitions"][0]["reference_changed"],
+                         ["env_terms.household"])
 
-    def test_unread_env_is_counted_not_judged(self):
+    def test_precedence_or_custody_change_counts(self):
+        env = {"household": "same"}
+        out = rc.check_switch([self._r("CYCLICAL", "PT8H", env),
+                               self._r("REVISABLE", "P200D", env,
+                                       custody=("kin", "court"))])
+        self.assertEqual(out["transitions"][0]["reference_changed"], ["custody"])
+        self.assertNotIn("CONTRADICTS_CLASS", [s for s, _ in out["findings"]])
+
+    def test_no_reference_is_unrated_not_judged(self):
         out = rc.check_switch([self._r("CYCLICAL", "PT8H"),
                                self._r("REVISABLE", "P200D")])
-        self.assertEqual(out["env_unread"], 1)
+        self.assertEqual(out["verdict"], "UNRATED")
+        self.assertEqual(len(out["unrated"]), 2)
         self.assertNotIn("CONTRADICTS_CLASS", [s for s, _ in out["findings"]])
 
     def test_time_only_rule_annotated(self):
@@ -524,12 +549,117 @@ class TestEnvironmentIndexed(unittest.TestCase):
                 "condition": {"reads": ["gap_length", "relation_type"],
                               "threshold": {"kin": {"value": "P90D",
                                                     "unit": "iso8601_duration"}}}}
-        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H"), switch=rule)])
+        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H", {}), switch=rule)])
         self.assertTrue(out["rules"]["CYCLICAL->REVISABLE"]["time_only"])
         env_rule = dict(rule, condition=dict(rule["condition"],
                                              reads=["gap_length", "household"]))
-        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H"), switch=env_rule)])
+        out = rc.check_switch([dict(self._r("CYCLICAL", "PT8H", {}),
+                                    switch=env_rule)])
         self.assertFalse(out["rules"]["CYCLICAL->REVISABLE"]["time_only"])
+
+
+class TestReferenceGate(unittest.TestCase):
+    """L1: reference written BEFORE the outcome, or UNRATED."""
+    def rec(self, **kw):
+        base = dict(F, **{"class": "CONTINUOUS", "observed": OBSERVED,
+                          "reference": ref({"household": "same"})})
+        base.update(kw)
+        return base
+
+    def test_written_before_is_ratable(self):
+        self.assertEqual(v(**self.rec()), "OK")
+        self.assertIsNone(rc.reference_gate(self.rec()))
+
+    def test_unrated_cases(self):
+        late = ref({"household": "same"}, written="2026-10-02")
+        same = ref({"household": "same"}, written=OBSERVED)
+        part = {"env_terms": {}, "precedence": "x", "written": "2026-09-01"}
+        undated = dict(ref({}), written=None)
+        for bad in (None, late, same, part, undated):
+            r = self.rec(reference=bad)
+            self.assertEqual(v(**r), "UNRATED", repr(bad))
+        self.assertEqual(v(**self.rec(observed="last spring")), "UNRATED")
+
+    def test_datetimes_and_offsets(self):
+        r = self.rec(observed="2026-10-01T09:00:00+02:00",
+                     reference=ref({}, written="2026-10-01T06:59:00Z"))
+        self.assertEqual(v(**r), "OK")          # 06:59Z < 07:00Z
+        r = self.rec(observed="2026-10-01T09:00:00+02:00",
+                     reference=ref({}, written="2026-10-01T07:00:00Z"))
+        self.assertEqual(v(**r), "UNRATED")     # equal, not before
+
+    def test_mixed_history_reports_unrated_readings(self):
+        good = {"frame": "F1", "class": "CYCLICAL", "gap": "PT8H",
+                "relation_type": "kin", "observed": OBSERVED,
+                "reference": ref({"t": 1})}
+        bad = dict(good, gap="P5D", reference=None)
+        out = rc.check_switch([good, bad])
+        self.assertEqual(out["verdict"], "OK")
+        self.assertEqual(out["unrated"][0][0], "P5D")
+
+
+class TestParity(unittest.TestCase):
+    """L4: participant-declared class is OBSERVED; disagreement is symmetric."""
+    def test_participant_is_observed(self):
+        out = rc.validate(dict(F, **{"class": "CONTINUOUS",
+                                     "class_source": "participant"}))
+        self.assertEqual(out["evidence"]["tag"], "OBSERVED")
+        self.assertIn("self-report of feeling", out["evidence"]["limits"])
+        obs = rc.validate(dict(F, **{"class": "CONTINUOUS",
+                                     "class_source": "observer"}))
+        self.assertEqual(obs["evidence"]["tag"], out["evidence"]["tag"])
+
+    def test_unknown_source_unratified(self):
+        self.assertEqual(v(**dict(F, **{"class": "CONTINUOUS",
+                                        "class_source": "hearsay"})),
+                         "UNRATIFIED")
+
+    def test_disagreement_limits_both_frames(self):
+        out = rc.compare_frames({"relational": "CYCLICAL",
+                                 "default": "REVISABLE"})
+        self.assertFalse(out["agree"])
+        self.assertEqual(out["limit_on"], ["default", "relational"])
+        same = rc.compare_frames({"a": "IMMORTAL", "b": "IMMORTAL"})
+        self.assertEqual(same["limit_on"], [])
+        swapped = rc.compare_frames({"default": "REVISABLE",
+                                     "relational": "CYCLICAL"})
+        self.assertEqual(swapped["limit_on"], out["limit_on"])
+
+
+class TestDrift(unittest.TestCase):
+    """L6: the approximation drifts; the defining relation recovers."""
+    def test_exact_value_has_no_drift(self):
+        for n in (1, 10, 100):
+            self.assertLess(rc.power_drift(rc.PHI, n), 1e-12)
+
+    def test_truncation_compounds(self):
+        d = [rc.power_drift(1.618, n) for n in (1, 10, 100, 1000)]
+        self.assertTrue(all(a < b for a, b in zip(d, d[1:])))
+        self.assertGreater(d[-1], 0.01)       # ~2% off after 1000 steps
+
+    def test_relation_corrects_toward_itself(self):
+        e = [rc.relation_recovery(1.618, n) for n in (0, 5, 20)]
+        self.assertTrue(e[0] > e[1] > e[2])
+        self.assertLess(rc.relation_recovery(1.0, 60), 1e-12)
+
+
+class TestLimitsAndPredictions(unittest.TestCase):
+    def test_every_class_has_a_prediction(self):
+        for cid, spec in rc.CLASSES.items():
+            self.assertIn(spec["prediction"]["tag"],
+                          ("STATED", "DERIVED", "OPEN"), cid)
+        self.assertEqual(rc.CLASSES["CONSTITUTIVE"]["prediction"]["tag"], "OPEN")
+
+    def test_doc_limits_section_is_generated(self):
+        doc = open(os.path.join(ROOT, "ontology", "relation_classes.md"),
+                   encoding="utf-8").read()
+        self.assertIn(rc.render_limits(), doc)
+
+    def test_limits_l1_to_l7(self):
+        with open(rc.SOURCE, encoding="utf-8") as fh:
+            lim = json.load(fh)["limits"]
+        self.assertEqual(sorted(k for k in lim if k.startswith("L")),
+                         ["L%d" % i for i in range(1, 8)])
 
 
 class TestCLI(unittest.TestCase):
