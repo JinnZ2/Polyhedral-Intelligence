@@ -190,27 +190,58 @@ where an instruction was written. The switch is reader-dependent in the
 same way depth is (2.1); a weak reader fails twice, once on depth and
 once on mode.
 
-Measurand for "high information" (PROPOSED). Score a pair against its
-corpus co-occurrence base rate. One number then serves two jobs: it
-sizes the information in the join AND it is the instruction-vs-scene
-flag. A pair that rarely co-occurs carries high bits and reads as an
-instruction.
+Measurand for "high information" (PROPOSED). Score a pair against a
+co-occurrence base rate. One number then serves two jobs: it sizes the
+information in the join AND it is the instruction-vs-scene flag.
 
 ```
-   raw pair surprisal   S(A,B)   = -log2 p(A,B)
-   pair beyond margins  PMI(A,B) =  log2 [ p(A,B) / (p(A) p(B)) ]
+   raw pair surprisal   S(A,B)    = -log2 p(A,B)
+   pair beyond margins  PMI(A,B)  =  log2 [ p(A,B) / (p(A) p(B)) ]
+   normalized           NPMI(A,B) =  PMI(A,B) / -log2 p(A,B)   in [-1, 1]
 ```
 
-Take the second one as the flag. Raw surprisal also fires on any pair
-that contains one rare glyph, because the pair inherits that glyph's
-rarity. PMI asks whether the PAIRING is rarer than its two glyphs
-predict, which is the mismatch-from-the-world 2.2 is about. Strongly
-negative PMI means instruction; near zero means scene.
+Take PMI, not raw surprisal, as the flag. Raw surprisal also fires on
+any pair that contains one rare glyph, because the pair inherits that
+glyph's rarity. PMI asks whether the PAIRING is rarer than its two
+glyphs predict. Small counts make PMI unstable (one co-occurrence of two
+rare glyphs scores very high), so report NPMI, or report PMI only above
+a declared minimum count. `[CHOICE]` min count 5 if PMI is used; none
+needed for NPMI, which is bounded.
+
+**Two base rates, kept apart.** [DERIVED] An earlier version of this file
+used one PMI for two different things, and the signs disagreed (2.2 said
+"strongly negative means instruction"; 4 tested whether negative-PMI pairs
+"recur above a shuffle", which a below-chance pair cannot do). The
+resolution is that the two sections read against different base rates:
+
+```
+   base rate      source                          what its sign means
+   ----------------------------------------------------------------------
+   WORLD          reader's knowledge of the       negative: the pair does
+                  referents (where goats live,    not co-occur in the world
+                  which trees grow where)          -> the INSTRUCTION flag
+   CORPUS         how often the writing system    positive: the writer pairs
+                  itself pairs the two marks       them more than chance
+                                                   -> a REUSED join
+```
+
+A constructed join that works as notation should show BOTH: negative
+world-PMI (it is a mismatch) and positive corpus-PMI (the writers reuse
+it). A rare join in the world that is also rare in the corpus is not
+evidence of an instruction; it may be a one-off. 2.2 is the world
+column; section 4 is the corpus column.
 
 `[GAP]` A pair with a co-occurrence count of zero has no finite value
 (-log2 0). Record it as its own state, NEVER_OBSERVED_TOGETHER, carrying
-the corpus size. It is not a large number: a zero in a 50-sign corpus
-and a zero in a 50,000-sign corpus are different findings.
+the corpus size AND the expected count under the null (from the shuffle
+in 4). It is not a large number. A zero against an expected count of 0.02
+says nothing; a zero against an expected count of 40 is a strong
+negative.
+
+`[DERIVED, tentative]` The join measure has the same shape as the RESONANT
+relation class (`ontology/relation_classes.json`): meaning that is
+assessable only jointly, and that an additive one-glyph-at-a-time reading
+scores as zero.
 
 `[GAP]` Both quantities are only as good as the corpus. A corpus
 selected on what someone thought belonged together sets the base rate
@@ -284,10 +315,32 @@ needs. VERIFY EACH BEFORE CITING. None was opened in this session.
    Upper Paleolithic       von Petzinger, geometric-sign set
 ```
 
-Test (PROPOSED, not run): compute PMI over sign pairs that share an
-inscription or panel. The reframe predicts that strongly negative-PMI
-pairs (rare joins) are not noise; they recur at a rate above a
-shuffled-position null. If they do not, 4 breaks on that corpus.
+Test (PROPOSED, not run). This reads against the CORPUS base rate (see
+2.2, "Two base rates"). The reframe predicts that particular joins are
+REUSED: some sign pairs recur above what a null predicts, reported as
+NPMI or as PMI above the minimum count. If no pair beats the null, 4
+breaks on that corpus.
+
+The null is a shuffle that preserves glyph frequencies. How it is built
+depends on how a pair is defined, and the two definitions need different
+shuffles:
+
+```
+   pair defined as        null that keeps glyph frequencies
+   ----------------------------------------------------------------------
+   ADJACENT in a panel    permute positions WITHIN each panel; each
+                          panel keeps its own glyph multiset
+   SAME PANEL (anywhere)  within-panel permutation changes nothing (the
+                          panel's glyph set is fixed), so it is not a
+                          null; swap glyphs ACROSS panels instead,
+                          keeping every panel's size and every glyph's
+                          total count
+```
+
+`[CHOICE]` Adjacency, with the within-panel shuffle, as the dispatch
+specified. The panel-membership variant is stated so that nobody runs a
+within-panel shuffle on panel-level pairs and gets a null identical to
+the data.
 
 `[GAP]` Three of the four are undeciphered or non-linguistic. The test
 measures co-occurrence structure, not meaning. A result supports "the
@@ -330,7 +383,13 @@ Cross-links:
   `immortal` in the file and `persistent` in the table, and pride is
   `resonant` against `linear`). The file also uses decay values
   (`cyclical`, `resonant`, `immortal`) that the table does not carry.
-  Cite the file, not the `CLAUDE.md` table.
+  Resolved here by removing the Decay column from `CLAUDE.md`. The decay
+  / relation-class enum now has one source of truth,
+  `ontology/relation_classes.json`. Upstream `exponential` is not in that
+  set and validates as UNRATIFIED. `[GAP]` The upstream per-sensor
+  values have not been re-coded against the set. That is the
+  Emotions-as-Sensors repository's call; nothing here assigns a class
+  to an emotion.
 
 ---
 

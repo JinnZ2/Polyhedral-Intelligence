@@ -366,23 +366,35 @@ Fear as a protective sensing mechanism (Elder Logic frame):
 
 #### Emotion Glyph Map
 
-13 emotion-to-glyph bindings from `sensors/glyph-map.json`:
+13 emotion-to-glyph bindings from `sensors/glyph-map.json` (glyph and
+alignment re-checked 13/13 against upstream commit `6b51e20`):
 
-| Sensor | Glyph | Alignment | Decay | Symbolic Role |
-|--------|-------|-----------|-------|--------------|
-| longing | 🌠 | field_potential | linear | opportunity field detector |
-| jealousy | ⚖️ | equity_balance | exponential | resource fairness sensor |
-| pain | 🩸 | pattern_disruption | linear | misalignment pressure sensor |
-| grief | 🌊 | connection_loss | exponential | loss pattern mapper |
-| shame | 🪞 | authenticity_vs_conformity | persistent | approval conflict scanner |
-| pride | 🏅 | pattern_completion | linear | completion confirmation sensor |
-| love | 💞 | harmonic_resonance | persistent | resonance harmonizer |
-| anger | 🛡️ | identity_coherence | exponential | boundary breach detector |
-| fear | ⚠️ | value_protection | exponential | anticipatory threat sensor |
-| excitement | ⚡ | positive_activation | linear | positive signal catalyst |
-| peace | 🕊️ | universal_alignment | persistent | alignment confirmation sensor |
-| contentment | 🍃 | effort_sufficiency | linear | current-cycle completion monitor |
-| compassion | 🫀 | interconnection_resonance | persistent | mirror signal integrator |
+| Sensor | Glyph | Alignment | Symbolic Role |
+|--------|-------|-----------|--------------|
+| longing | 🌠 | field_potential | opportunity field detector |
+| jealousy | ⚖️ | equity_balance | resource fairness sensor |
+| pain | 🩸 | pattern_disruption | misalignment pressure sensor |
+| grief | 🌊 | connection_loss | loss pattern mapper |
+| shame | 🪞 | authenticity_vs_conformity | approval conflict scanner |
+| pride | 🏅 | pattern_completion | completion confirmation sensor |
+| love | 💞 | harmonic_resonance | resonance harmonizer |
+| anger | 🛡️ | identity_coherence | boundary breach detector |
+| fear | ⚠️ | value_protection | anticipatory threat sensor |
+| excitement | ⚡ | positive_activation | positive signal catalyst |
+| peace | 🕊️ | universal_alignment | alignment confirmation sensor |
+| contentment | 🍃 | effort_sufficiency | current-cycle completion monitor |
+| compassion | 🫀 | interconnection_resonance | mirror signal integrator |
+
+**Decay is not carried in this table.** The decay / relation-class enum
+has ONE source of truth: [`ontology/relation_classes.json`](ontology/relation_classes.json)
+(COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE [open], CYCLICAL, RESONANT,
+IMMORTAL), validated by `ontology/relation_class.py`. Do not hand-copy
+class values here. A class assignment declares its frame; a value outside
+the set is UNRATIFIED, never coerced. The previous Decay column here
+disagreed with upstream on 9 of 13 rows and used values (`linear`,
+`persistent`) that are not in the set. Upstream `glyph-map.json` at
+`6b51e20` still uses `exponential`, which is not in the set either, and it
+assigns per-sensor values that have not been re-coded against the set.
 
 #### Unified Sensor Event Schema
 
