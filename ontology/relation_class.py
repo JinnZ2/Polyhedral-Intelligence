@@ -459,13 +459,27 @@ PROJECTION_KEEPS = ("gap", "observed", "relation_type")
 
 def project_to_default(record, lam):
     """this frame -> default frame. lam is the default frame's constant
-    decay rate, a parameter of the projection, not read from the record."""
+    decay rate, a parameter of the projection, not read from the record.
+
+    Field by field (translation_map.fields):
+      frame      -> absent (undeclared: a privileged-frame claim in data form)
+      class      -> absent (implicit REVISABLE for every row)
+      reference  -> citation: a claim pointer only (reference["source"]);
+                    custody, precedence and environment are lost
+      env_terms  -> covariates: kept as values, role inverted (nuisance to
+                    remove, not the index of coupling)
+    """
     out = {k: record[k] for k in PROJECTION_KEEPS if k in record}
-    out.update({"frame": "default", "class": "REVISABLE", "decay": lam,
-                "driver": "t"})
-    lost = sorted(k for k in record
-                  if k not in PROJECTION_KEEPS and k != "frame")
-    return {"record": out, "lost": lost}
+    out.update({"decay": lam, "driver": "t"})
+    ref_ = record.get("reference")
+    if isinstance(ref_, dict):
+        out["citation"] = ref_.get("source")
+        if isinstance(ref_.get("env_terms"), dict):
+            out["covariates"] = dict(ref_["env_terms"])
+    lost = sorted(k for k in record if k not in PROJECTION_KEEPS)
+    return {"record": out, "lost": lost,
+            "implicit": {"class": "REVISABLE", "frame": None},
+            "roles": {"covariates": "nuisance (removed before analysis)"}}
 
 
 def lift_to_frame(default_record, cls=None, reference=None, frame=None):
@@ -537,6 +551,78 @@ def interpret_fitted_lambda(cls, lam, tol, e_range=None, query_e=None):
                     "range %r; lambda does not extrapolate" % (query_e, e_range)}
         return {"flag": "VALID_IN_RANGE", "e_range": [lo, hi]}
     return {"flag": "UNRATIFIED", "why": "class %r not in the set" % (cls,)}
+
+
+def ols(X, y):
+    """Least squares by normal equations (stdlib). Raises on a singular
+    design."""
+    k = len(X[0])
+    A = [[sum(r[i] * r[j] for r in X) for j in range(k)] for i in range(k)]
+    b = [sum(r[i] * v for r, v in zip(X, y)) for i in range(k)]
+    for i in range(k):
+        piv = max(range(i, k), key=lambda r: abs(A[r][i]))
+        A[i], A[piv] = A[piv], A[i]
+        b[i], b[piv] = b[piv], b[i]
+        if abs(A[i][i]) < 1e-12:
+            raise ValueError("singular design")
+        for r in range(k):
+            if r != i:
+                f = A[r][i] / A[i][i]
+                A[r] = [x - f * z for x, z in zip(A[r], A[i])]
+                b[r] -= f * b[i]
+    return [b[i] / A[i][i] for i in range(k)]
+
+
+def apparent_decay(rows, control=None):
+    """Fitted lambda under the default frame's treatment of env_terms.
+
+    rows: dicts {t, c, E, E0} (E the environment term at t, E0 its value at
+    baseline). Model ln c = a - lam*t [+ g*ln(control)].
+      control=None          env_terms dropped
+      control="E_baseline"  covariate measured once, at baseline
+      control="E"           covariate measured at every reading
+    Returns lam. In this frame the coupling is modelled directly: see
+    coupling_fit.
+    """
+    key = {None: None, "E": "E", "E_baseline": "E0"}[control]
+    y = [math.log(r["c"]) for r in rows]
+    X = [[1.0, r["t"]] + ([math.log(r[key])] if key else []) for r in rows]
+    return -ols(X, y)[1]
+
+
+def coupling_fit(rows):
+    """This frame: model c(E) directly, ln c = a + k*ln E, no time term.
+    Returns (a, k, max |residual|)."""
+    y = [math.log(r["c"]) for r in rows]
+    X = [[1.0, math.log(r["E"])] for r in rows]
+    a, k = ols(X, y)
+    res = max(abs(v - (a + k * x[1])) for v, x in zip(y, X))
+    return a, k, res
+
+
+def step_position_sensitivity(delta, n, positions):
+    """Fitted lambda for one environment step of fixed size, placed at
+    different points of an n-point schedule. Same step, different lambda:
+    the fit weights the schedule (LS), so lambda is a property of the
+    design as well as of the change."""
+    out = {}
+    for p in positions:
+        rows = [(t, 1.0 if t < p else math.exp(-delta)) for t in range(n)]
+        out[p] = fit_lambda(rows)
+    return out
+
+
+def compare_lambdas(a, b):
+    """Cross-study lambda comparison. Each of a, b is {lam, schedule} with
+    schedule the sampling times. Comparable only on a matched design;
+    otherwise UNRATED."""
+    sa, sb = a.get("schedule"), b.get("schedule")
+    if not sa or not sb:
+        return {"status": "UNRATED", "why": "sampling schedule undeclared"}
+    if sorted(sa) != sorted(sb):
+        return {"status": "UNRATED", "why": "designs differ; a fitted lambda "
+                "depends on the sampling schedule"}
+    return {"status": "COMPARABLE", "difference": a["lam"] - b["lam"]}
 
 
 PHI = (1 + 5 ** 0.5) / 2

@@ -696,13 +696,29 @@ class TestTranslation(unittest.TestCase):
                           "relation_type": "kin", "reference": ref(env)})
 
     def test_projection_is_lossy_many_to_one(self):
-        a = rc.project_to_default(self.rec("CYCLICAL", {"season": "on"}), 0.1)
-        b = rc.project_to_default(self.rec("IMMORTAL", {"household": "x"}), 0.1)
+        env = {"season": "on"}
+        a = rc.project_to_default(self.rec("CYCLICAL", env), 0.1)
+        b = rc.project_to_default(
+            dict(self.rec("IMMORTAL", env),
+                 reference=ref(env, custody=("kin", "court"))), 0.1)
         self.assertEqual(a["record"], b["record"])          # not injective
-        self.assertEqual(a["record"]["class"], "REVISABLE")
         self.assertEqual(a["record"]["driver"], "t")
         self.assertIn("reference", a["lost"])
         self.assertIn("class", a["lost"])
+
+    def test_field_map(self):
+        r = self.rec("CYCLICAL", {"season": "on"})
+        r["reference"]["source"] = "elder account, 2026"
+        out = rc.project_to_default(r, 0.1)
+        rec = out["record"]
+        self.assertNotIn("frame", rec)                 # undeclared
+        self.assertNotIn("class", rec)                 # implicit REVISABLE
+        self.assertEqual(out["implicit"]["class"], "REVISABLE")
+        self.assertIsNone(out["implicit"]["frame"])
+        self.assertEqual(rec["citation"], "elder account, 2026")
+        self.assertNotIn("custody", rec)               # pointer only
+        self.assertEqual(rec["covariates"], {"season": "on"})
+        self.assertIn("nuisance", out["roles"]["covariates"])
 
     def test_not_recoverable_from_default_data(self):
         d = rc.project_to_default(self.rec("CYCLICAL", {}), 0.1)["record"]
@@ -728,7 +744,7 @@ class TestTranslation(unittest.TestCase):
     def test_map_recorded_as_partial_and_asymmetric(self):
         with open(rc.SOURCE, encoding="utf-8") as fh:
             tm = json.load(fh)["translation_map"]
-        self.assertEqual(tm["status"], "PARTIAL")
+        self.assertTrue(tm["status"].startswith("PARTIAL"))
         self.assertIn("ASYMMETRIC", tm["cost"])
 
 
@@ -778,6 +794,50 @@ class TestFittedLambda(unittest.TestCase):
         self.assertEqual(f("friend", 0.2, 0.01)["flag"], "UNRATIFIED")
         with self.assertRaises(ValueError):
             f("CONTINUOUS", 0.2, None)
+
+
+class TestRoleInversion(unittest.TestCase):
+    """env_terms as covariates: where the 'decay' comes from."""
+    @staticmethod
+    def rows():
+        out = []
+        for e0 in (1.0, 2.0, 3.0, 4.0):              # four units
+            for t in range(100):
+                e = e0 if t < 50 else e0 * 0.5        # E stepped mid-series
+                out.append({"t": t, "E0": e0, "E": e, "c": e})   # c = c(E)
+        return out
+
+    def test_dropped_and_baseline_controls_show_decay(self):
+        r = self.rows()
+        self.assertGreater(rc.apparent_decay(r), 1e-3)
+        self.assertGreater(rc.apparent_decay(r, "E_baseline"), 1e-3)
+
+    def test_time_varying_control_shows_none(self):
+        self.assertLess(abs(rc.apparent_decay(self.rows(), "E")), 1e-9)
+
+    def test_direct_coupling_model(self):
+        a, k, res = rc.coupling_fit(self.rows())
+        self.assertAlmostEqual(k, 1.0)
+        self.assertLess(res, 1e-9)
+
+
+class TestLambdaComparability(unittest.TestCase):
+    def test_step_position_changes_lambda(self):
+        out = rc.step_position_sensitivity(math.log(2), 100, [10, 50, 90])
+        self.assertGreater(out[50], 2 * out[10])
+        self.assertAlmostEqual(out[10], out[90])     # symmetric
+
+    def test_matched_design_required(self):
+        sched = list(range(100))
+        ok = rc.compare_lambdas({"lam": 0.01, "schedule": sched},
+                                {"lam": 0.004, "schedule": sched})
+        self.assertEqual(ok["status"], "COMPARABLE")
+        self.assertAlmostEqual(ok["difference"], 0.006)
+        bad = rc.compare_lambdas({"lam": 0.01, "schedule": sched},
+                                 {"lam": 0.01, "schedule": list(range(0, 200, 2))})
+        self.assertEqual(bad["status"], "UNRATED")
+        self.assertEqual(rc.compare_lambdas({"lam": 0.01}, {"lam": 0.01})["status"],
+                         "UNRATED")
 
 
 class TestCLI(unittest.TestCase):

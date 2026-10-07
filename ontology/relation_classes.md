@@ -95,8 +95,18 @@ return direction carries the whole cost. A default-frame fitted λ reads per cla
 a nonzero fit on COUPLED, CONTINUOUS or IMMORTAL rows is
 ENV_DRIFT_IN_SAMPLE (the sample's environment moved), on CYCLICAL rows it
 is CONTACT_CHANNEL_ARTIFACT, on REVISABLE rows it holds only inside the
-sample's environment range (`interpret_fitted_lambda`). Detail: `translation_map` in the
-JSON. The per-class λ correspondence is in; the rest of the map is OPEN.
+sample's environment range (`interpret_fitted_lambda`).
+
+Field by field: `frame` and `class` are absent in default data (the frame
+undeclared, every row implicitly REVISABLE); `reference` becomes a
+citation, a pointer with no custody, precedence or environment;
+`env_terms` become covariates, with the role inverted from index to
+nuisance. That inversion produces apparent decay when the covariate is
+dropped or measured only at baseline. Measured at every reading in the
+right form, it does not (`apparent_decay`, `coupling_fit`). A fitted λ
+also depends on the sampling schedule, so cross-study comparison needs a
+matched design (`compare_lambdas`); otherwise UNRATED. Detail: `translation_map` in the
+JSON. λ and the four record fields are mapped; completeness is OPEN.
 
 ---
 
@@ -134,4 +144,4 @@ JSON. The per-class λ correspondence is in; the rest of the map is OPEN.
   proposed; the class is not defined.
 - CONSTITUTIVE: listed, not ratified.
 - Which reference terms index coupling for a given relation type.
-- The rest of the translation map, beyond lambda (L3; the partial map is above).
+- Whether the translation map is complete (L3; the partial map is above).

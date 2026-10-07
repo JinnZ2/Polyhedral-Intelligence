@@ -804,7 +804,7 @@
     }
   },
   "translation_map": {
-    "status": "PARTIAL",
+    "status": "PARTIAL: lambda and the four record fields mapped",
     "tag": "DERIVED",
     "by": "operator, 2026-10-07",
     "state": "PROPOSED",
@@ -827,7 +827,7 @@
     ],
     "open": {
       "tag": "OPEN",
-      "text": "The full map, per class, beyond lambda: what each of this frame's other fields corresponds to in the default frame."
+      "text": "Whether the field map is complete: any field of this frame not yet mapped, and the default-frame practices beyond baseline-only controls that drop the coupling index."
     },
     "per_class_lambda": {
       "tag": "DERIVED",
@@ -851,6 +851,31 @@
         "fit_lambda",
         "interpret_fitted_lambda"
       ]
+    },
+    "fields": {
+      "tag": "DERIVED",
+      "state": "PROPOSED",
+      "by": "operator, 2026-10-07",
+      "frame": "absent: the default frame is undeclared, a privileged-frame claim in data form",
+      "class": "absent: implicit REVISABLE for all rows",
+      "reference": "citation (LOSSY): a claim pointer, with no custody chain, precedence or environment",
+      "env_terms": "covariates / controls, ROLE INVERTED: here the index of coupling; in the default frame a nuisance removed before analysis, with the residual read as time-decay"
+    },
+    "role_inversion_test": {
+      "tag": "DERIVED",
+      "stated_as": "regress with E as a control -> the residual shows decay; model c(E) directly -> no decay",
+      "result": "Run on synthetic rows (c = E, E stepped mid-series, four units with different baselines). Env dropped: lambda 0.0104 (apparent decay). E controlled at BASELINE only: lambda 0.0104 (decay survives). E controlled at EVERY reading, in the right form (ln E): lambda 0. c(E) modelled directly: slope 1, residual 0, no time term needed.",
+      "correction": "The stated version holds when the control is measured once (baseline) or dropped, which is the common default-frame practice. It does NOT hold when E is controlled as a time-varying covariate in the right functional form: that recovers lambda = 0. So the role inversion produces 'decay' through how the covariate is collected and specified, not through controlling for it as such.",
+      "instruments": [
+        "apparent_decay",
+        "coupling_fit"
+      ]
+    },
+    "lambda_comparability": {
+      "tag": "DERIVED",
+      "state": "PROPOSED",
+      "text": "A fitted lambda depends on the sampling schedule (least-squares weighting). A cross-study comparison needs a matched design; otherwise UNRATED (compare_lambdas). Step-position sensitivity is reported by step_position_sensitivity.",
+      "observed": "One step of fixed size (c halves) on a 100-point schedule fits lambda 0.0037 at position 10, 0.0078 at 25, 0.0104 at 50, symmetric toward the end: a 2.8x spread for the same change."
     }
   }
 }
