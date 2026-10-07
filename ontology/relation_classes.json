@@ -804,7 +804,7 @@
     }
   },
   "translation_map": {
-    "status": "PARTIAL: lambda and the four record fields mapped",
+    "status": "PARTIAL: lambda, the four record fields and the completeness fields mapped; coupling-index-dropping practices registered",
     "tag": "DERIVED",
     "by": "operator, 2026-10-07",
     "state": "PROPOSED",
@@ -827,7 +827,7 @@
     ],
     "open": {
       "tag": "OPEN",
-      "text": "Whether the field map is complete: any field of this frame not yet mapped, and the default-frame practices beyond baseline-only controls that drop the coupling index."
+      "text": "Whether the field map is complete: any field of this frame not yet mapped. The practice register below is not claimed exhaustive."
     },
     "per_class_lambda": {
       "tag": "DERIVED",
@@ -859,7 +859,11 @@
       "frame": "absent: the default frame is undeclared, a privileged-frame claim in data form",
       "class": "absent: implicit REVISABLE for all rows",
       "reference": "citation (LOSSY): a claim pointer, with no custody chain, precedence or environment",
-      "env_terms": "covariates / controls, ROLE INVERTED: here the index of coupling; in the default frame a nuisance removed before analysis, with the residual read as time-decay"
+      "env_terms": "covariates / controls, ROLE INVERTED: here the index of coupling; in the default frame a nuisance removed before analysis, with the residual read as time-decay",
+      "period_phase": "seasonal component: REMOVED by seasonal adjustment (P2)",
+      "reader_key": "absent. Inter-rater reliability is not a key: it measures agreement between readers, not which reader can recognise the record (L5)",
+      "switch_rule": "absent: undeclared by construction (the default frame has one class, so no switch to declare)",
+      "tol": "NON-EQUIVALENT to alpha: tol is a resolution (the band inside which an outcome cannot be placed); alpha is a false-positive rate. DO NOT MAP"
     },
     "role_inversion_test": {
       "tag": "DERIVED",
@@ -876,6 +880,93 @@
       "state": "PROPOSED",
       "text": "A fitted lambda depends on the sampling schedule (least-squares weighting). A cross-study comparison needs a matched design; otherwise UNRATED (compare_lambdas). Step-position sensitivity is reported by step_position_sensitivity.",
       "observed": "One step of fixed size (c halves) on a 100-point schedule fits lambda 0.0037 at position 10, 0.0078 at 25, 0.0104 at 50, symmetric toward the end: a 2.8x spread for the same change."
+    },
+    "do_not_map": [
+      {
+        "this": "tol",
+        "default": "alpha",
+        "why": "resolution is not a false-positive rate; a mapping would read a band width as an error probability"
+      }
+    ],
+    "coupling_index_dropping_register": {
+      "tag": "DERIVED",
+      "state": "PROPOSED",
+      "by": "operator, 2026-10-07",
+      "columns": [
+        "practice",
+        "field_dropped",
+        "class_affected",
+        "test"
+      ],
+      "rows": [
+        {
+          "id": "P1",
+          "practice": "covariate control (env as nuisance)",
+          "field_dropped": "env_terms (index role)",
+          "class_affected": "COUPLED, CONTINUOUS, REVISABLE",
+          "test": "apparent_decay: env dropped or baseline-only -> lambda 0.0104; time-varying ln E -> lambda 0 (recorded in role_inversion_test)"
+        },
+        {
+          "id": "P2",
+          "practice": "seasonal adjustment / detrending",
+          "field_dropped": "period / phase",
+          "class_affected": "CYCLICAL (deleted)",
+          "test": "p2_seasonal_adjust: phase-mean peak-to-peak 0.8 before, 0.0 after; the return signal is the removed component"
+        },
+        {
+          "id": "P3",
+          "practice": "pooling across environments",
+          "field_dropped": "c(E) -> scalar",
+          "class_affected": "COUPLED, REVISABLE",
+          "test": "p3_pool: c = E sampled at two E mixes gives 'intrinsic' 1.333 and 1.667 for one relation"
+        },
+        {
+          "id": "P4",
+          "practice": "standardized lab conditions",
+          "field_dropped": "E (fixed at one value)",
+          "class_affected": "COUPLED, REVISABLE",
+          "test": "p4_lab_value: c = E^2, lab E 1 reports 1; field E 3 is 9 (ratio 9)"
+        },
+        {
+          "id": "P5",
+          "practice": "independence assumption",
+          "field_dropped": "inter-unit coupling := 0",
+          "class_affected": "COUPLED, RESONANT",
+          "test": "p5_independence: assumed var 2.5, measured 4.5; the 2.0 dropped is 2*cov"
+        },
+        {
+          "id": "P6",
+          "practice": "one-factor-at-a-time",
+          "field_dropped": "interaction := 0",
+          "class_affected": "RESONANT (false 0)",
+          "test": "p6_one_at_a_time: f = x1 + x2 + 2*x1*x2; OFAT joint 2, interaction 0; measured joint 4, RESONANT, interaction 2"
+        },
+        {
+          "id": "P7",
+          "practice": "gaps as missing-at-random",
+          "field_dropped": "phase state of the gap",
+          "class_affected": "CYCLICAL",
+          "test": "p7_impute_gaps: held state, contact off-phase; lambda 0.0151 with off-phase kept (window ending off-phase), 0 with the pre-filter. The default lambda also depends on where the window ends: 0 at 45 and 55 points"
+        },
+        {
+          "id": "P8",
+          "practice": "outlier removal",
+          "field_dropped": "rare-E states",
+          "class_affected": "REVISABLE, COUPLED (regime)",
+          "test": "p8_outlier_removal: one rare-E row (E 50, c 10) dropped at z 2; E range 1-50 -> 1-19, the regime beyond is UNRATED, not absent"
+        },
+        {
+          "id": "P9",
+          "practice": "cross-sectional snapshot",
+          "field_dropped": "E path within a unit",
+          "class_affected": "all classes with c(E)",
+          "test": "p9_snapshot: a panel with c = E within units and one with c independent of E give identical snapshots"
+        }
+      ],
+      "note": {
+        "tag": "DERIVED",
+        "text": "Each test runs on synthetic rows; it shows the practice CAN drop the field, not that any study did. P7's artifact is phase-dependent: on whole cycles the default lambda is 0, so the drop shows as a window-dependent lambda rather than a fixed one."
+      }
     }
   }
 }

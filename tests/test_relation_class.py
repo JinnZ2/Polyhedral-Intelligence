@@ -840,6 +840,94 @@ class TestLambdaComparability(unittest.TestCase):
                          "UNRATED")
 
 
+class TestTranslationCompleteness(unittest.TestCase):
+    def setUp(self):
+        self.t = rc._RAW["translation_map"]
+
+    def test_completeness_fields_and_status_partial(self):
+        f = self.t["fields"]
+        for k in ("period_phase", "reader_key", "switch_rule", "tol"):
+            self.assertIn(k, f)
+        self.assertIn("NON-EQUIVALENT", f["tol"])
+        self.assertTrue(self.t["status"].startswith("PARTIAL"))
+
+    def test_tol_alpha_do_not_map(self):
+        dnm = self.t["do_not_map"]
+        self.assertEqual([(r["this"], r["default"]) for r in dnm],
+                         [("tol", "alpha")])
+
+
+class TestDroppingRegister(unittest.TestCase):
+    def test_register_rows_complete(self):
+        reg = rc._RAW["translation_map"]["coupling_index_dropping_register"]
+        self.assertEqual(reg["state"], "PROPOSED")
+        self.assertEqual([r["id"] for r in reg["rows"]],
+                         ["P%d" % i for i in range(1, 10)])
+        for r in reg["rows"]:
+            for c in reg["columns"]:
+                self.assertTrue(r[c], (r["id"], c))
+            fn = r["test"].split(":")[0]
+            self.assertTrue(callable(getattr(rc, fn)), fn)
+
+    def test_p2_seasonal_adjustment_deletes_cycle(self):
+        s = [1.0 if (t // 5) % 2 == 0 else 0.2 for t in range(40)]
+        r = rc.p2_seasonal_adjust(s, 10)
+        self.assertAlmostEqual(r["before"], 0.8)
+        self.assertEqual(r["after"], 0.0)
+
+    def test_p3_pooled_scalar_tracks_sample_mix(self):
+        lo = [(1, 1.0), (1, 1.0), (2, 2.0)]
+        hi = [(1, 1.0), (2, 2.0), (2, 2.0)]
+        self.assertNotAlmostEqual(rc.p3_pool(lo), rc.p3_pool(hi))
+
+    def test_p4_lab_value_not_intrinsic(self):
+        r = rc.p4_lab_value(lambda e: e ** 2, 1, 3)
+        self.assertEqual(r["ratio"], 9)
+        self.assertEqual(rc.p4_lab_value(lambda e: 5.0, 1, 3)["ratio"], 1)
+
+    def test_p5_independence_drops_covariance(self):
+        x1 = [1, -1, 1, -1, 2, -2]
+        x2 = [0.5 * a for a in x1]
+        r = rc.p5_independence(x1, x2)
+        self.assertAlmostEqual(r["measured"] - r["assumed"],
+                               r["coupling_dropped"])
+        self.assertAlmostEqual(r["coupling_dropped"], 2.0)
+        z = rc.p5_independence(x1, [1, 1, -1, -1, 0, 0])
+        self.assertAlmostEqual(z["coupling_dropped"], 0.0)
+
+    def test_p6_ofat_scores_resonant_as_zero(self):
+        r = rc.p6_one_at_a_time(lambda a, b: a + b + 2 * a * b, 0)
+        self.assertEqual(r["ofat_interaction"], 0)
+        self.assertEqual(r["measured"]["outcome"], "RESONANT")
+        self.assertEqual(r["measured"]["interaction"], 2)
+        with self.assertRaises(ValueError):
+            rc.p6_one_at_a_time(lambda a, b: a + b, None)
+
+    def test_p7_off_phase_reads_as_decay_window_dependent(self):
+        def off(t):
+            return (t // 5) % 2 == 1
+        for n, decays in ((40, True), (45, False)):
+            rows = [(t, 0.2 if off(t) else 1.0) for t in range(n)]
+            r = rc.p7_impute_gaps(rows, off)
+            self.assertEqual(r["default"] > 1e-9, decays, n)
+            self.assertAlmostEqual(r["this_frame"], 0.0)
+
+    def test_p8_outlier_removal_drops_regime(self):
+        rows = [(e, 1.0) for e in range(1, 20)] + [(50, 10.0)]
+        r = rc.p8_outlier_removal(rows, 2)
+        self.assertEqual(r["dropped"], 1)
+        self.assertEqual(r["e_range_after"], (1, 19))
+        lam = rc.interpret_fitted_lambda("REVISABLE", 0.0, 0,
+                                         r["e_range_after"], 50)
+        self.assertEqual(lam["flag"], "UNRATED")
+
+    def test_p9_snapshot_cannot_identify_path(self):
+        a = {"u1": [(0, 1, 1), (1, 2, 2)], "u2": [(0, 3, 3), (1, 4, 4)]}
+        b = {"u1": [(0, 4, 2), (1, 2, 2)], "u2": [(0, 1, 4), (1, 4, 4)]}
+        self.assertEqual(rc.p9_snapshot(a), rc.p9_snapshot(b))
+        self.assertNotEqual(a, b)
+
+
 class TestCLI(unittest.TestCase):
     def test_selftest_refused(self):
         self.assertEqual(rc.main(["--selftest"]), 2)

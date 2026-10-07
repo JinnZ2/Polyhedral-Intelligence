@@ -625,6 +625,111 @@ def compare_lambdas(a, b):
     return {"status": "COMPARABLE", "difference": a["lam"] - b["lam"]}
 
 
+# Coupling-index-dropping practices (PROPOSED register P1-P9 in the JSON).
+# Each function below is the synthetic test for one row: it runs the
+# default-frame practice and this frame's reading on the same rows and
+# returns what the practice dropped. P1 is apparent_decay.
+
+def p2_seasonal_adjust(series, period):
+    """P2 seasonal adjustment: subtract the per-phase mean. Returns the
+    peak-to-peak of the phase means before and after. After is 0 exactly:
+    the CYCLICAL return signal (period, phase) is the removed component."""
+    if period < 2 or len(series) < 2 * period:
+        raise ValueError("need period >= 2 and at least two cycles")
+
+    def phase_means(xs):
+        means = []
+        for p in range(period):
+            vals = xs[p::period]
+            means.append(sum(vals) / len(vals))
+        return means
+
+    before = phase_means(series)
+    adjusted = [x - before[i % period] for i, x in enumerate(series)]
+    after = phase_means(adjusted)
+    return {"before": max(before) - min(before),
+            "after": max(after) - min(after), "adjusted": adjusted}
+
+
+def p3_pool(rows):
+    """P3 pooling across environments: report c as one scalar (the mean).
+    rows: [(E, c)]. Returns the scalar; it is a function of the sample's E
+    mix, so two samples of one relation give two 'intrinsic' values."""
+    return sum(c for _, c in rows) / len(rows)
+
+
+def p4_lab_value(c_of_e, e_lab, e_field):
+    """P4 standardized lab conditions: c measured at E_lab and reported as
+    intrinsic. Returns the reported value, the field value, and the ratio
+    (1 only if c does not depend on E)."""
+    lab, field = c_of_e(e_lab), c_of_e(e_field)
+    return {"reported": lab, "field": field, "ratio": field / lab}
+
+
+def p5_independence(x1, x2):
+    """P5 independence assumption: inter-unit coupling := 0. Returns the
+    variance of x1 + x2 assumed (var1 + var2) and measured. The difference
+    is 2*cov, the coupling the assumption sets to zero."""
+    n = len(x1)
+
+    def mean(xs):
+        return sum(xs) / n
+
+    def var(xs):
+        m = mean(xs)
+        return sum((x - m) ** 2 for x in xs) / n
+
+    m1, m2 = mean(x1), mean(x2)
+    cov = sum((a - m1) * (b - m2) for a, b in zip(x1, x2)) / n
+    return {"assumed": var(x1) + var(x2),
+            "measured": var([a + b for a, b in zip(x1, x2)]),
+            "coupling_dropped": 2 * cov}
+
+
+def p6_one_at_a_time(f, tol):
+    """P6 one-factor-at-a-time: vary each factor alone from baseline (0, 0)
+    and predict the joint effect as the sum. f(x1, x2) is the response.
+    Returns the OFAT interaction (0 by construction) and the measured one
+    from interaction_test. tol declared, never defaulted."""
+    base = f(0, 0)
+    e1, e2 = f(1, 0) - base, f(0, 1) - base
+    joint = f(1, 1) - base
+    return {"ofat_joint": e1 + e2, "ofat_interaction": 0,
+            "measured": interaction_test(joint, [e1, e2], tol)}
+
+
+def p7_impute_gaps(rows, is_off):
+    """P7 gaps as missing-at-random: off-phase readings (contact channel
+    closed) are kept in the fit as if they were decay or noise. rows:
+    [(t, c)]. Returns fitted lambda with them kept and with them dropped
+    (this frame's pre-filter)."""
+    kept = [(t, c) for t, c in rows if not is_off(t)]
+    return {"default": fit_lambda(rows), "this_frame": fit_lambda(kept)}
+
+
+def p8_outlier_removal(rows, z):
+    """P8 outlier removal: drop rows with |c - mean| > z * sd. rows:
+    [(E, c)]. Returns the rows kept and the environment range before and
+    after. A rare-E state is dropped with its regime, so c(E) beyond the
+    kept range is UNRATED, not known."""
+    cs = [c for _, c in rows]
+    m = sum(cs) / len(cs)
+    sd = (sum((c - m) ** 2 for c in cs) / len(cs)) ** 0.5
+    kept = [(e, c) for e, c in rows if sd == 0 or abs(c - m) <= z * sd]
+    es, ek = [e for e, _ in rows], [e for e, _ in kept]
+    return {"kept": kept, "dropped": len(rows) - len(kept),
+            "e_range_before": (min(es), max(es)),
+            "e_range_after": (min(ek), max(ek))}
+
+
+def p9_snapshot(panel):
+    """P9 cross-sectional snapshot: keep one reading per unit (the last).
+    panel: {unit: [(t, E, c)]}. Returns the snapshot rows (unit, E, c).
+    Two panels with different within-unit c(E) can give the same
+    snapshot; the E path is not in it."""
+    return sorted((u, rs[-1][1], rs[-1][2]) for u, rs in panel.items())
+
+
 PHI = (1 + 5 ** 0.5) / 2
 
 

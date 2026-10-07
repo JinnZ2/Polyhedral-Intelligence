@@ -105,8 +105,31 @@ nuisance. That inversion produces apparent decay when the covariate is
 dropped or measured only at baseline. Measured at every reading in the
 right form, it does not (`apparent_decay`, `coupling_fit`). A fitted λ
 also depends on the sampling schedule, so cross-study comparison needs a
-matched design (`compare_lambdas`); otherwise UNRATED. Detail: `translation_map` in the
-JSON. λ and the four record fields are mapped; completeness is OPEN.
+matched design (`compare_lambdas`); otherwise UNRATED.
+
+Further fields: period and phase become the seasonal component, which
+seasonal adjustment removes; the reader or key has no counterpart
+(inter-rater reliability measures agreement, not recognition); the switch
+rule has none either (one class, nothing to declare). `tol` does not map
+to α: a resolution is not a false-positive rate (`do_not_map`).
+
+Practices that drop the coupling index (PROPOSED register, each with a
+synthetic test in `relation_class.py`):
+
+```
+   P1 covariate control ........ env_terms as nuisance  apparent_decay
+   P2 seasonal adjustment ...... period / phase         p2_seasonal_adjust
+   P3 pooling across E ......... c(E) -> scalar         p3_pool
+   P4 standardized lab ......... c at one E             p4_lab_value
+   P5 independence ............. inter-unit c := 0      p5_independence
+   P6 one-factor-at-a-time ..... interaction := 0       p6_one_at_a_time
+   P7 gaps missing-at-random ... gap phase state        p7_impute_gaps
+   P8 outlier removal .......... rare-E states          p8_outlier_removal
+   P9 cross-sectional snapshot . E path in a unit       p9_snapshot
+```
+
+A test shows a practice can drop the field, not that a given study did.
+Detail: `translation_map` in the JSON. The map is still PARTIAL.
 
 ---
 
