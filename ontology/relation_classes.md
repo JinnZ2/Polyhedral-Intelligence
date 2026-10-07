@@ -84,9 +84,11 @@ type is OPEN.
 
 **L2 RESOLVED** [STATED]  c is indexed by REFERENCE = environment + precedence + chain of custody. Read the reference chain, not c.
 
-**L3 INTEROP_COST** [STATED]  Default-frame datasets lack these fields. That is a cost of interoperation, not a limit on usefulness; in-frame collection is the route.
+**L3 INVARIANTS_BY_TRANSLATION** [STATED]  REMOVED: 'must universalize / be inherited by other frames'. That is a privileged-frame claim, and physics rejects privileged frames: the laws hold in all frames, and measurements are translated between frames, not imposed. Universality in physics means INVARIANTS found by translating across frames, not adoption of one frame. This ontology: the frame is declared; translation is the boundary cost; the carried quantities are the invariants (for example IMMORTAL information / energy).
 
-**L4 PARITY_RULE** [STATED]  A participant-declared class is OBSERVED, with the same standing and limits as self-report of feeling in the default frame. Cross-frame disagreement is a limit on both frames.
+> derived [DERIVED]  Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. In physics the translation map between frames is known (Lorentz, general coordinate transformations); here it is not yet written, which is why translation is the boundary cost. OPEN: the translation map between this frame and the default frame.
+
+**L4 PARITY_RULE** [STATED]  A participant-declared class is OBSERVED, with the same standing and limits as self-report of feeling in the default frame. REMOVED: 'no adjudicator between frames (symmetric)' (false balance). An adjudicator EXISTS: physical outcome and mathematics. Exact vs approximate is settled by measurable drift (phi^2 = phi + 1 vs 1.618). Class predictions are settled by observation (return-state, the inversion test). The coupling default is settled by physics practice, where isolation is a declared idealization. The cost that remains at the boundary is TRANSLATION only.
 
 **L5 CORRECTED** [STATED]  The IMMORTAL record is causally active (shapes state and behaviour) unread. A reader is needed for RECOGNITION only.
 
@@ -98,7 +100,7 @@ type is OPEN.
 
 **L7 CORRECTED** [STATED]  Each class equation is a testable prediction (classes[].prediction), plus the measurand-inversion test.
 
-*Note* [DERIVED]  Replaces an earlier L1-L7 list, delivered in chat and never committed to this repository. That list applied default-frame standards asymmetrically; this one is revised for parity.
+*Note* [DERIVED]  Replaces an earlier L1-L7 list, delivered in chat and never committed to this repository. That list applied default-frame standards asymmetrically; this one is revised for parity. Later revisions: L3 replaced (privileged-frame claim removed); L4's symmetric-limit clause removed (adjudication by physical outcome).
 
 ---
 
@@ -108,3 +110,4 @@ type is OPEN.
   proposed; the class is not defined.
 - CONSTITUTIVE: listed, not ratified.
 - Which reference terms index coupling for a given relation type.
+- The translation map between this frame and the default frame (L3).

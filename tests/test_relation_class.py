@@ -614,16 +614,43 @@ class TestParity(unittest.TestCase):
                                         "class_source": "hearsay"})),
                          "UNRATIFIED")
 
-    def test_disagreement_limits_both_frames(self):
-        out = rc.compare_frames({"relational": "CYCLICAL",
-                                 "default": "REVISABLE"})
-        self.assertFalse(out["agree"])
-        self.assertEqual(out["limit_on"], ["default", "relational"])
-        same = rc.compare_frames({"a": "IMMORTAL", "b": "IMMORTAL"})
-        self.assertEqual(same["limit_on"], [])
-        swapped = rc.compare_frames({"default": "REVISABLE",
-                                     "relational": "CYCLICAL"})
-        self.assertEqual(swapped["limit_on"], out["limit_on"])
+    def test_disagreement_is_adjudicated_by_outcome(self):
+        frames = {"relational": "CYCLICAL", "default": "REVISABLE"}
+        pending = rc.compare_frames(frames)
+        self.assertEqual(pending["status"], "UNADJUDICATED")
+        self.assertIn("prediction test", pending["next_step"])
+        # return at the same state after the gap: CYCLICAL's prediction held
+        held = {"consistent_with": ["CYCLICAL"],
+                "basis": "state at return equal to state at leave"}
+        out = rc.compare_frames(frames, held)
+        self.assertEqual(out["status"], "ADJUDICATED")
+        self.assertEqual(out["supported"], ["relational"])
+        self.assertEqual(out["not_supported"], ["default"])
+        self.assertEqual(out["remaining_cost"], "translation")
+        # the adjudicator is the outcome, not the frame: flip the outcome
+        decayed = {"consistent_with": ["REVISABLE"],
+                   "basis": "lower state at return, reference changed"}
+        self.assertEqual(rc.compare_frames(frames, decayed)["supported"],
+                         ["default"])
+
+    def test_outcome_edge_cases(self):
+        frames = {"a": "CYCLICAL", "b": "REVISABLE"}
+        both = {"consistent_with": ["CYCLICAL", "REVISABLE"], "basis": "x"}
+        self.assertEqual(rc.compare_frames(frames, both)["status"],
+                         "OUTCOME_DOES_NOT_SEPARATE")
+        none = {"consistent_with": ["IMMORTAL"], "basis": "x"}
+        self.assertEqual(rc.compare_frames(frames, none)["status"],
+                         "NEITHER_SUPPORTED")
+        nobasis = {"consistent_with": ["CYCLICAL"]}
+        self.assertEqual(rc.compare_frames(frames, nobasis)["status"],
+                         "UNADJUDICATED")
+        self.assertEqual(rc.compare_frames({"a": "IMMORTAL",
+                                            "b": "IMMORTAL"})["status"],
+                         "AGREE")
+
+    def test_no_symmetric_limit_field(self):
+        out = rc.compare_frames({"a": "CYCLICAL", "b": "REVISABLE"})
+        self.assertNotIn("limit_on", out)
 
 
 class TestDrift(unittest.TestCase):

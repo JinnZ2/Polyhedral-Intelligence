@@ -404,13 +404,48 @@ def reference_change(before, after):
     return out
 
 
-def compare_frames(class_by_frame):
-    """L4: cross-frame disagreement is a limit on BOTH frames. Symmetric:
-    nothing here names a frame as the correct one."""
-    classes = {f: c for f, c in class_by_frame.items()}
-    agree = len(set(classes.values())) <= 1
-    return {"agree": agree, "classes": classes,
-            "limit_on": [] if agree else sorted(classes)}
+def compare_frames(class_by_frame, outcome=None):
+    """L4: frames that disagree are adjudicated by physical outcome or
+    mathematics, not balanced against each other.
+
+    class_by_frame: {frame: class}.
+    outcome: the result of a class prediction test (observed return-state,
+    the measurand-inversion test, measured drift), as
+    {"consistent_with": [classes], "basis": "what was measured"}.
+
+    AGREE                     the frames assign one class
+    UNADJUDICATED             they disagree and no outcome is supplied yet;
+                              the next step is a prediction test
+    ADJUDICATED               the outcome supports some frames' classes and
+                              not others
+    OUTCOME_DOES_NOT_SEPARATE the outcome fits every assigned class
+    NEITHER_SUPPORTED         the outcome fits none of them
+    The cost that remains across a frame boundary is translation.
+    """
+    classes = dict(sorted(class_by_frame.items()))
+    base = {"classes": classes, "remaining_cost": "translation",
+            "supported": [], "not_supported": []}
+    if len(set(classes.values())) <= 1:
+        return dict(base, status="AGREE")
+    if outcome is None:
+        return dict(base, status="UNADJUDICATED",
+                    next_step="run a class prediction test: return-state, "
+                              "inversion test, or measured drift")
+    fits = set(outcome.get("consistent_with") or [])
+    if not outcome.get("basis"):
+        return dict(base, status="UNADJUDICATED",
+                    next_step="the outcome must state its basis (what was "
+                              "measured)")
+    sup = sorted(f for f, c in classes.items() if c in fits)
+    nsup = sorted(f for f, c in classes.items() if c not in fits)
+    if not sup:
+        status = "NEITHER_SUPPORTED"
+    elif not nsup:
+        status = "OUTCOME_DOES_NOT_SEPARATE"
+    else:
+        status = "ADJUDICATED"
+    return dict(base, status=status, supported=sup, not_supported=nsup,
+                adjudicated_by=outcome["basis"])
 
 
 PHI = (1 + 5 ** 0.5) / 2
