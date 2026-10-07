@@ -749,7 +749,7 @@
   "limits": {
     "note": {
       "tag": "DERIVED",
-      "text": "Replaces an earlier L1-L7 list, delivered in chat and never committed to this repository. That list applied default-frame standards asymmetrically; this one is revised for parity. Later revisions: L3 replaced (privileged-frame claim removed); L4's symmetric-limit clause removed (adjudication by physical outcome)."
+      "text": "Replaces an earlier L1-L7 list, delivered in chat and never committed to this repository. That list applied default-frame standards asymmetrically; this one is revised for parity. Later revisions: L3 replaced (privileged-frame claim removed); L4's symmetric-limit clause removed (adjudication by physical outcome). L3's derived note updated with the partial translation map (asymmetric cost)."
     },
     "L1": {
       "kind": "REQUIREMENT",
@@ -769,7 +769,7 @@
       "text": "REMOVED: 'must universalize / be inherited by other frames'. That is a privileged-frame claim, and physics rejects privileged frames: the laws hold in all frames, and measurements are translated between frames, not imposed. Universality in physics means INVARIANTS found by translating across frames, not adoption of one frame. This ontology: the frame is declared; translation is the boundary cost; the carried quantities are the invariants (for example IMMORTAL information / energy).",
       "derived": {
         "tag": "DERIVED",
-        "text": "Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. In physics the translation map between frames is known (Lorentz, general coordinate transformations); here it is not yet written, which is why translation is the boundary cost. OPEN: the translation map between this frame and the default frame."
+        "text": "Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. Physics translation maps (Lorentz, general coordinate transformations) are invertible. The map here is not: the default frame is a projection of this one (translation_map, PARTIAL), so the translation cost is ASYMMETRIC, not mutual. The full per-class map is OPEN."
       }
     },
     "L4": {
@@ -801,6 +801,33 @@
       "kind": "CORRECTED",
       "tag": "STATED",
       "text": "Each class equation is a testable prediction (classes[].prediction), plus the measurand-inversion test."
+    }
+  },
+  "translation_map": {
+    "status": "PARTIAL",
+    "tag": "DERIVED",
+    "by": "operator, 2026-10-07",
+    "state": "PROPOSED",
+    "default_is_projection": {
+      "class": "REVISABLE (all rows)",
+      "lambda": "lambda(E) -> constant lambda",
+      "driver": "t (not E, not the reference)",
+      "dropped": [
+        "env_terms",
+        "reference"
+      ]
+    },
+    "this_to_default": "well-defined, LOSSY (a projection: many records of this frame map to one default record)",
+    "default_to_this": "NOT recoverable from default data. Needs the class, env_terms and reference SUPPLIED (cf. 1.618 -> phi needs the defining relation phi^2 = phi + 1). Supplying them is new information, a re-measurement, not an inverse.",
+    "contrast": "Lorentz maps are invertible; this map is not.",
+    "cost": "ASYMMETRIC, not mutual: the projection costs nothing to compute and loses the reference; the reverse direction carries the whole cost.",
+    "instruments": [
+      "project_to_default",
+      "lift_to_frame"
+    ],
+    "open": {
+      "tag": "OPEN",
+      "text": "The full map, per class. What a default-frame constant lambda corresponds to for each class here."
     }
   }
 }

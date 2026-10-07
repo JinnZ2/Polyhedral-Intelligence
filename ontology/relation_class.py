@@ -448,6 +448,41 @@ def compare_frames(class_by_frame, outcome=None):
                 adjudicated_by=outcome["basis"])
 
 
+# Translation (L3), partial. The default frame is a PROJECTION of this one:
+# every row becomes REVISABLE with one constant lambda, driven by elapsed
+# time, and the reference is dropped. The map is well-defined and lossy.
+# The reverse is not recoverable from default data: it needs the class and
+# the reference supplied (cf. 1.618 -> phi needs the relation phi^2 = phi+1).
+PROJECTION_KEEPS = ("gap", "observed", "relation_type")
+
+
+def project_to_default(record, lam):
+    """this frame -> default frame. lam is the default frame's constant
+    decay rate, a parameter of the projection, not read from the record."""
+    out = {k: record[k] for k in PROJECTION_KEEPS if k in record}
+    out.update({"frame": "default", "class": "REVISABLE", "decay": lam,
+                "driver": "t"})
+    lost = sorted(k for k in record
+                  if k not in PROJECTION_KEEPS and k != "frame")
+    return {"record": out, "lost": lost}
+
+
+def lift_to_frame(default_record, cls=None, reference=None, frame=None):
+    """default frame -> this frame. Not an inverse: the default record does
+    not carry what this frame needs, so the class, the reference and the
+    frame must be SUPPLIED (new information), and the result is validated
+    like any record."""
+    missing = [n for n, v in (("class", cls), ("reference", reference),
+                              ("frame", frame)) if v in (None, "")]
+    if missing:
+        return {"status": "NOT_RECOVERABLE", "missing": missing,
+                "why": "the default record does not carry these; supply them"}
+    rec = {k: default_record[k] for k in PROJECTION_KEEPS
+           if k in default_record}
+    rec.update({"class": cls, "reference": reference, "frame": frame})
+    return {"status": "LIFTED", "record": rec, "validation": validate(rec)}
+
+
 PHI = (1 + 5 ** 0.5) / 2
 
 

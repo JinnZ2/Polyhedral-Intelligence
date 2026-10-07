@@ -689,6 +689,48 @@ class TestLimitsAndPredictions(unittest.TestCase):
                          ["L%d" % i for i in range(1, 8)])
 
 
+class TestTranslation(unittest.TestCase):
+    def rec(self, cls, env):
+        return dict(F, **{"class": cls, "observed": OBSERVED, "gap": "P30D",
+                          "relation_type": "kin", "reference": ref(env)})
+
+    def test_projection_is_lossy_many_to_one(self):
+        a = rc.project_to_default(self.rec("CYCLICAL", {"season": "on"}), 0.1)
+        b = rc.project_to_default(self.rec("IMMORTAL", {"household": "x"}), 0.1)
+        self.assertEqual(a["record"], b["record"])          # not injective
+        self.assertEqual(a["record"]["class"], "REVISABLE")
+        self.assertEqual(a["record"]["driver"], "t")
+        self.assertIn("reference", a["lost"])
+        self.assertIn("class", a["lost"])
+
+    def test_not_recoverable_from_default_data(self):
+        d = rc.project_to_default(self.rec("CYCLICAL", {}), 0.1)["record"]
+        out = rc.lift_to_frame(d)
+        self.assertEqual(out["status"], "NOT_RECOVERABLE")
+        self.assertEqual(out["missing"], ["class", "reference", "frame"])
+        partial = rc.lift_to_frame(d, cls="CONTINUOUS")
+        self.assertEqual(partial["missing"], ["reference", "frame"])
+
+    def test_lift_with_supplied_information_validates(self):
+        d = rc.project_to_default(self.rec("CONTINUOUS", {}), 0.1)["record"]
+        out = rc.lift_to_frame(d, cls="CONTINUOUS",
+                               reference=ref({"household": "same"}),
+                               frame="relational")
+        self.assertEqual(out["status"], "LIFTED")
+        self.assertEqual(out["validation"]["verdict"], "OK")
+        # a reference written after the outcome is still refused (L1)
+        late = rc.lift_to_frame(d, cls="CONTINUOUS",
+                                reference=ref({}, written="2026-11-01"),
+                                frame="relational")
+        self.assertEqual(late["validation"]["verdict"], "UNRATED")
+
+    def test_map_recorded_as_partial_and_asymmetric(self):
+        with open(rc.SOURCE, encoding="utf-8") as fh:
+            tm = json.load(fh)["translation_map"]
+        self.assertEqual(tm["status"], "PARTIAL")
+        self.assertIn("ASYMMETRIC", tm["cost"])
+
+
 class TestCLI(unittest.TestCase):
     def test_selftest_refused(self):
         self.assertEqual(rc.main(["--selftest"]), 2)
