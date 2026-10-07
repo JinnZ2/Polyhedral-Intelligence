@@ -42,6 +42,7 @@ Stdlib only. Python >= 3.8. CC0.
 
 import datetime
 import json
+import math
 import os
 import re
 import sys
@@ -481,6 +482,61 @@ def lift_to_frame(default_record, cls=None, reference=None, frame=None):
            if k in default_record}
     rec.update({"class": cls, "reference": reference, "frame": frame})
     return {"status": "LIFTED", "record": rec, "validation": validate(rec)}
+
+
+def fit_lambda(rows):
+    """Default-frame fit: least squares of ln c on t, c = c0*exp(-lam*t).
+    rows: [(t, c)] with c > 0. Returns lam (positive = apparent decay)."""
+    pts = [(float(t), math.log(c)) for t, c in rows if c > 0]
+    if len(pts) < 2:
+        raise ValueError("need at least two rows with c > 0")
+    n = len(pts)
+    mt = sum(t for t, _ in pts) / n
+    my = sum(y for _, y in pts) / n
+    stt = sum((t - mt) ** 2 for t, _ in pts)
+    if stt == 0:
+        raise ValueError("all rows at one time")
+    return -sum((t - mt) * (y - my) for t, y in pts) / stt
+
+
+ZERO_DECAY = ("COUPLED", "CONTINUOUS", "IMMORTAL")
+
+
+def interpret_fitted_lambda(cls, lam, tol, e_range=None, query_e=None):
+    """Read a default-frame fitted lambda per class (translation map).
+
+    The fitted constant approximates -<(1/c)(dc/dE)(dE/dt)> over the
+    sample's environment trajectory: a property of the SAMPLE CONDITIONS,
+    not of the relation. tol is declared, never defaulted.
+    """
+    if isinstance(tol, bool) or not isinstance(tol, (int, float)) or tol < 0:
+        raise ValueError("tol must be a non-negative number, got %r" % (tol,))
+    nonzero = abs(lam) > tol
+    if cls == "CONSTITUTIVE":
+        return {"flag": "CATEGORY_ERROR", "why": "lambda undefined for "
+                "CONSTITUTIVE"}
+    if cls in ZERO_DECAY:
+        if nonzero:
+            return {"flag": "ENV_DRIFT_IN_SAMPLE", "why": "true decay is 0 "
+                    "for %s; a fitted lambda reports the sample's "
+                    "environment drift (confound detector), not decay" % cls}
+        return {"flag": "CONSISTENT", "why": "fitted lambda ~ 0, as the class "
+                "predicts"}
+    if cls == "CYCLICAL":
+        if nonzero:
+            return {"flag": "CONTACT_CHANNEL_ARTIFACT", "why": "the fit "
+                    "includes off-phase contact gaps; the state is held"}
+        return {"flag": "CONSISTENT", "why": "fitted lambda ~ 0"}
+    if cls == "REVISABLE":
+        if not e_range:
+            return {"flag": "INCOMPLETE", "why": "lambda is lambda(E); declare "
+                    "the sample's environment range"}
+        lo, hi = e_range
+        if query_e is not None and not lo <= query_e <= hi:
+            return {"flag": "UNRATED", "why": "E = %r is outside the sample's "
+                    "range %r; lambda does not extrapolate" % (query_e, e_range)}
+        return {"flag": "VALID_IN_RANGE", "e_range": [lo, hi]}
+    return {"flag": "UNRATIFIED", "why": "class %r not in the set" % (cls,)}
 
 
 PHI = (1 + 5 ** 0.5) / 2

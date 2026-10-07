@@ -769,7 +769,7 @@
       "text": "REMOVED: 'must universalize / be inherited by other frames'. That is a privileged-frame claim, and physics rejects privileged frames: the laws hold in all frames, and measurements are translated between frames, not imposed. Universality in physics means INVARIANTS found by translating across frames, not adoption of one frame. This ontology: the frame is declared; translation is the boundary cost; the carried quantities are the invariants (for example IMMORTAL information / energy).",
       "derived": {
         "tag": "DERIVED",
-        "text": "Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. Physics translation maps (Lorentz, general coordinate transformations) are invertible. The map here is not: the default frame is a projection of this one (translation_map, PARTIAL), so the translation cost is ASYMMETRIC, not mutual. The full per-class map is OPEN."
+        "text": "Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. Physics translation maps (Lorentz, general coordinate transformations) are invertible. The map here is not: the default frame is a projection of this one (translation_map, PARTIAL), so the translation cost is ASYMMETRIC, not mutual. The per-class lambda correspondence is in (translation_map.per_class_lambda); the rest of the map is OPEN."
       }
     },
     "L4": {
@@ -827,7 +827,30 @@
     ],
     "open": {
       "tag": "OPEN",
-      "text": "The full map, per class. What a default-frame constant lambda corresponds to for each class here."
+      "text": "The full map, per class, beyond lambda: what each of this frame's other fields corresponds to in the default frame."
+    },
+    "per_class_lambda": {
+      "tag": "DERIVED",
+      "state": "PROPOSED",
+      "by": "operator, 2026-10-07",
+      "fitted": "lambda_default (fitted constant) ~ -<(1/c)(dc/dE)(dE/dt)> over the sample's environment trajectory: a property of SAMPLE CONDITIONS, not of the relation",
+      "precision": {
+        "tag": "DERIVED",
+        "text": "The exact time average of -d(ln c)/dt is (ln c_start - ln c_end)/T. A least-squares fit of ln c on t weights the middle of the series more, so the fitted value is that average re-weighted, not equal to it; both are zero exactly when c does not move."
+      },
+      "classes": {
+        "COUPLED": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
+        "CONTINUOUS": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
+        "IMMORTAL": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
+        "CYCLICAL": "fitted lambda includes off-phase contact gaps -> CONTACT_CHANNEL_ARTIFACT",
+        "REVISABLE": "lambda meaningful only as lambda(E); valid within the sample's E range; extrapolation outside -> UNRATED",
+        "CONSTITUTIVE": "lambda undefined (CATEGORY_ERROR, unchanged)"
+      },
+      "test": "Synthetic CONTINUOUS rows with E stepped mid-series: the fitted lambda != 0 reproduces 'decay'. The same rows with E held constant: lambda ~ 0. The fitted lambda tracks E, not time.",
+      "instruments": [
+        "fit_lambda",
+        "interpret_fitted_lambda"
+      ]
     }
   }
 }

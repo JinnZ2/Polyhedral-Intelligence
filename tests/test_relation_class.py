@@ -4,6 +4,7 @@
 """
 
 import json
+import math
 import os
 import sys
 import unittest
@@ -729,6 +730,54 @@ class TestTranslation(unittest.TestCase):
             tm = json.load(fh)["translation_map"]
         self.assertEqual(tm["status"], "PARTIAL")
         self.assertIn("ASYMMETRIC", tm["cost"])
+
+
+class TestFittedLambda(unittest.TestCase):
+    """Translation map: a fitted default-frame lambda tracks E, not time."""
+    @staticmethod
+    def continuous_rows(e_of_t, n=100):
+        # CONTINUOUS: c depends on the environment only, c = c(E) = E
+        return [(t, e_of_t(t)) for t in range(n)]
+
+    def test_known_answer(self):
+        rows = [(t, 2.0 * math.exp(-0.3 * t)) for t in range(10)]
+        self.assertAlmostEqual(rc.fit_lambda(rows), 0.3)
+
+    def test_env_step_reproduces_decay_constant_env_does_not(self):
+        stepped = self.continuous_rows(lambda t: 1.0 if t < 50 else 0.5)
+        held = self.continuous_rows(lambda t: 1.0)
+        lam_step = rc.fit_lambda(stepped)
+        lam_held = rc.fit_lambda(held)
+        self.assertGreater(lam_step, 1e-3)          # looks like decay
+        self.assertLess(abs(lam_held), 1e-12)       # no decay, same time span
+        self.assertEqual(rc.interpret_fitted_lambda("CONTINUOUS", lam_step,
+                                                    1e-4)["flag"],
+                         "ENV_DRIFT_IN_SAMPLE")
+        self.assertEqual(rc.interpret_fitted_lambda("CONTINUOUS", lam_held,
+                                                    1e-4)["flag"],
+                         "CONSISTENT")
+
+    def test_same_time_span_different_lambda(self):
+        # time is identical in both series; only E differs
+        a = rc.fit_lambda(self.continuous_rows(lambda t: 1.0 if t < 50 else 0.5))
+        b = rc.fit_lambda(self.continuous_rows(lambda t: 1.0 if t < 50 else 0.25))
+        self.assertGreater(b, a)
+
+    def test_per_class_flags(self):
+        f = rc.interpret_fitted_lambda
+        for cls in ("COUPLED", "IMMORTAL"):
+            self.assertEqual(f(cls, 0.2, 0.01)["flag"], "ENV_DRIFT_IN_SAMPLE")
+        self.assertEqual(f("CYCLICAL", 0.2, 0.01)["flag"],
+                         "CONTACT_CHANNEL_ARTIFACT")
+        self.assertEqual(f("CONSTITUTIVE", 0.2, 0.01)["flag"], "CATEGORY_ERROR")
+        self.assertEqual(f("REVISABLE", 0.2, 0.01)["flag"], "INCOMPLETE")
+        self.assertEqual(f("REVISABLE", 0.2, 0.01, e_range=(0, 1))["flag"],
+                         "VALID_IN_RANGE")
+        self.assertEqual(f("REVISABLE", 0.2, 0.01, e_range=(0, 1),
+                           query_e=3)["flag"], "UNRATED")
+        self.assertEqual(f("friend", 0.2, 0.01)["flag"], "UNRATIFIED")
+        with self.assertRaises(ValueError):
+            f("CONTINUOUS", 0.2, None)
 
 
 class TestCLI(unittest.TestCase):

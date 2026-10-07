@@ -91,8 +91,12 @@ type is OPEN.
 
 Lorentz maps are invertible; this one is not, so the cost is asymmetric:
 the projection is free to compute and loses the reference, and the
-return direction carries the whole cost. Detail: `translation_map` in the
-JSON. The full per-class map is OPEN.
+return direction carries the whole cost. A default-frame fitted λ reads per class:
+a nonzero fit on COUPLED, CONTINUOUS or IMMORTAL rows is
+ENV_DRIFT_IN_SAMPLE (the sample's environment moved), on CYCLICAL rows it
+is CONTACT_CHANNEL_ARTIFACT, on REVISABLE rows it holds only inside the
+sample's environment range (`interpret_fitted_lambda`). Detail: `translation_map` in the
+JSON. The per-class λ correspondence is in; the rest of the map is OPEN.
 
 ---
 
@@ -106,7 +110,7 @@ JSON. The full per-class map is OPEN.
 
 **L3 INVARIANTS_BY_TRANSLATION** [STATED]  REMOVED: 'must universalize / be inherited by other frames'. That is a privileged-frame claim, and physics rejects privileged frames: the laws hold in all frames, and measurements are translated between frames, not imposed. Universality in physics means INVARIANTS found by translating across frames, not adoption of one frame. This ontology: the frame is declared; translation is the boundary cost; the carried quantities are the invariants (for example IMMORTAL information / energy).
 
-> derived [DERIVED]  Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. Physics translation maps (Lorentz, general coordinate transformations) are invertible. The map here is not: the default frame is a projection of this one (translation_map, PARTIAL), so the translation cost is ASYMMETRIC, not mutual. The full per-class map is OPEN.
+> derived [DERIVED]  Precision on the physics: the principle holds for inertial frames in special relativity and for all frames in general relativity (general covariance). Invariants such as the spacetime interval, proper time and rest mass are what every frame agrees on after translation. Physics translation maps (Lorentz, general coordinate transformations) are invertible. The map here is not: the default frame is a projection of this one (translation_map, PARTIAL), so the translation cost is ASYMMETRIC, not mutual. The per-class lambda correspondence is in (translation_map.per_class_lambda); the rest of the map is OPEN.
 
 **L4 PARITY_RULE** [STATED]  A participant-declared class is OBSERVED, with the same standing and limits as self-report of feeling in the default frame. REMOVED: 'no adjudicator between frames (symmetric)' (false balance). An adjudicator EXISTS: physical outcome and mathematics. Exact vs approximate is settled by measurable drift (phi^2 = phi + 1 vs 1.618). Class predictions are settled by observation (return-state, the inversion test). The coupling default is settled by physics practice, where isolation is a declared idealization. The cost that remains at the boundary is TRANSLATION only.
 
@@ -130,4 +134,4 @@ JSON. The full per-class map is OPEN.
   proposed; the class is not defined.
 - CONSTITUTIVE: listed, not ratified.
 - Which reference terms index coupling for a given relation type.
-- The full translation map, per class (L3; the partial map is above).
+- The rest of the translation map, beyond lambda (L3; the partial map is above).
