@@ -1,18 +1,29 @@
 """
-relation_class.py -- validator for the decay / relation-class enum.
+relation_class.py -- validator for the relation ontology's two axes.
 
-The class set, referent sets and additive-method list are READ from
-relation_classes.json beside this file. Nothing here retypes them, so the
-JSON stays the single source of truth.
+Schema relation_class/2 (operator, 2026-10-07): one relation carries a
+STATE class (what it is; persistence / decay) and one or more CONTACT
+patterns (how contact recurs; the observation channel). Schema 1 merged
+them into one "class" field; CYCLICAL is now a contact pattern.
 
-validate(assignment) -> {"verdict": STATE, "findings": [...], "class": id}
+The state set, contact set, referent sets and additive-method list are READ
+from relation_classes.json beside this file. Nothing here retypes them, so
+the JSON stays the single source of truth.
 
-    assignment keys (all optional except "class"):
-        class          one of the ids in relation_classes.json
-        frame          the frame the class is asserted in
+validate(assignment) -> {"verdict": STATE, "findings": [...],
+                         "state_class": id, "contact_pattern": [ids],
+                         "flags": [...]}
+
+    assignment keys (state_class and contact_pattern are REQUIRED; neither
+    has a default):
+        state_class    one of state_classes in relation_classes.json
+        contact_pattern  a list of patterns, each {"pattern": id, ...} or a
+                       bare id: CYCLICAL {period, phase, env_index},
+                       IRREGULAR {interval_set_by: self|other|mutual|
+                       environment}, CONSTANT, NONE
+        frame          the frame the state is asserted in
         decay          a decay value, if one is claimed
         referent_type  ENERGY | RELATION_AS_ENERGY | MATERIAL | ...
-        period, phase, env_index         (CYCLICAL)
         joint, separate (list), tol      (RESONANT: two-reference test)
         interaction_status               (RESONANT: "UNMEASURED")
         method                           (RESONANT: how it was scored)
@@ -24,9 +35,13 @@ validate(assignment) -> {"verdict": STATE, "findings": [...], "class": id}
                        {reads: [...], threshold: {relation_type:
                         {value: "P3M", unit: "iso8601_duration"}}}
 
+migrate(record) -> schema-1 record to schema 2. class CYCLICAL becomes
+    contact_pattern CYCLICAL with state_class UNCLASSED (never inferred);
+    any other class becomes state_class, contact_pattern left to declare.
 read_cyclical_absence(phase_state) -> "EXPECTED" | "SIGNAL" | "INCOMPLETE"
-check_switch(history, declared_class=None) -> switch verdict for ONE relation
-    in ONE frame; readings carry class, gap (ISO 8601 duration),
+check_switch(history, declared_state=None, contact_patterns=None) -> switch
+    verdict for ONE relation in ONE frame; readings carry state_class, gap
+    (ISO 8601 duration),
     relation_type, and optionally env_terms / phase_state / form_change /
     switch. A class change with env_terms declared and identical on both
     sides is CONTRADICTS_CLASS: coupling is c(E(t)), and time alone does
@@ -101,19 +116,23 @@ def iso_bounds(text):
     return (iso_seconds(text), lo, hi)
 
 
-def load(path=SOURCE):
+def load(path=SOURCE, axis="state_classes"):
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
-    return {c["id"]: c for c in data["classes"]}
+    return {c["id"]: c for c in data[axis]}
 
 
-CLASSES = load()
+CLASSES = load()                                  # the state axis
+CONTACT_PATTERNS = load(axis="contact_patterns")  # the contact axis
 with open(SOURCE, encoding="utf-8") as _fh:
     _RAW = json.load(_fh)
 
-# CYCLICAL must say which quantity cycles: the coupling itself, or only
-# whether it can be observed (the moon in Earth's shadow).
+# A CYCLICAL contact pattern may say which quantity cycles: the coupling
+# itself, or only whether it can be observed (the moon in Earth's shadow).
 CYCLING_QUANTITIES = ("observability", "coupling")
+INTERVAL_SET_BY = tuple(CONTACT_PATTERNS["IRREGULAR"]["interval_set_by"])
+# Schema 1 carried these as one "class"; schema 2 splits them.
+SCHEMA1_KEY = "class"
 
 
 def _absent(a, key):
@@ -128,31 +147,106 @@ def _worst(states):
     return "OK"
 
 
+def contact_ids(contact_pattern):
+    """The pattern ids of a contact_pattern value, in order; None when the
+    value is absent or not a list / dict / string."""
+    if contact_pattern is None or contact_pattern == "":
+        return None
+    items = contact_pattern if isinstance(contact_pattern, list) else [contact_pattern]
+    out = []
+    for item in items:
+        if isinstance(item, dict):
+            out.append(item.get("pattern"))
+        elif isinstance(item, str):
+            out.append(item)
+        else:
+            out.append(None)
+    return out
+
+
+def check_contact(contact_pattern):
+    """Findings for a contact_pattern value. Required; no default."""
+    ids = contact_ids(contact_pattern)
+    if not ids:
+        return [("INCOMPLETE", "contact_pattern undeclared; it is required "
+                 "and has no default (field: contact_pattern)")]
+    items = contact_pattern if isinstance(contact_pattern, list) else [contact_pattern]
+    f = []
+    for item, pid in zip(items, ids):
+        if pid not in CONTACT_PATTERNS:
+            f.append(("UNRATIFIED", "contact_pattern %r is not in "
+                      "relation_classes.json; not coerced" % (pid,)))
+            continue
+        fields = item if isinstance(item, dict) else {}
+        for key in CONTACT_PATTERNS[pid]["required_fields"]:
+            if _absent(fields, key):
+                f.append(("INCOMPLETE", "%s required for contact_pattern %s"
+                          % (key, pid)))
+        if pid == "CYCLICAL":
+            cq = fields.get("cycling_quantity")
+            if cq == "coupling":
+                f.append(("CONTRADICTS_CLASS",
+                          "a CYCLICAL contact pattern describes when contact "
+                          "recurs over a held state; a cycling coupling is "
+                          "environment-indexed c(E(t))"))
+            elif not _absent(fields, "cycling_quantity") and \
+                    cq not in CYCLING_QUANTITIES:
+                f.append(("UNRATIFIED", "cycling_quantity %r is not one of %s"
+                          % (cq, CYCLING_QUANTITIES)))
+        if pid == "IRREGULAR" and not _absent(fields, "interval_set_by") and \
+                fields["interval_set_by"] not in INTERVAL_SET_BY:
+            f.append(("UNRATIFIED", "interval_set_by %r is not one of %s"
+                      % (fields["interval_set_by"], INTERVAL_SET_BY)))
+    if "NONE" in ids and any(i != "NONE" for i in ids):
+        f.append(("CONTRADICTS_CLASS", "contact_pattern NONE (contact not "
+                  "possible) listed beside a pattern that has contact"))
+    return f
+
+
 def validate(assignment, classes=None):
     classes = CLASSES if classes is None else classes
     a = dict(assignment)
-    cid = a.get("class")
+    cid = a.get("state_class")
     f = []   # (state, message)
+    flags = []
+    cp_ids = contact_ids(a.get("contact_pattern"))
+
+    def done(verdict=None):
+        out = {"state_class": cid, "contact_pattern": cp_ids,
+               "verdict": verdict or _worst([s for s, _ in f]),
+               "findings": f, "flags": flags}
+        return out
 
     if cid is None or cid == "":
-        f.append(("UNCLASSED",
-                  "no class declared; the class is the decay spec, and none "
-                  "is defaulted (REVISABLE included)"))
-        return {"class": cid, "verdict": "UNCLASSED", "findings": f}
+        why = ("no state_class declared; the state is the decay spec, and "
+               "none is defaulted (REVISABLE included) or inferred from "
+               "contact")
+        if a.get(SCHEMA1_KEY) not in (None, ""):
+            why += ("; this record carries the schema-1 key 'class' (%r): "
+                    "run migrate()" % (a[SCHEMA1_KEY],))
+        f.append(("UNCLASSED", why))
+        f.extend(check_contact(a.get("contact_pattern")))
+        return done("UNCLASSED")
 
     if cid not in classes:
-        f.append(("UNRATIFIED",
-                  "class %r is not in relation_classes.json; not coerced "
-                  "to the nearest member" % (cid,)))
-        return {"class": cid, "verdict": "UNRATIFIED", "findings": f}
+        why = ("state_class %r is not in relation_classes.json; not coerced "
+               "to the nearest member" % (cid,))
+        if cid in CONTACT_PATTERNS:
+            why += ("; %s is a contact_pattern in schema 2, not a state"
+                    % (cid,))
+        f.append(("UNRATIFIED", why))
+        return done("UNRATIFIED")
 
     spec = classes[cid]
+    move = spec.get("axis_move")
+    if move and move.get("status") == "PROPOSED":
+        flags.append(move["flag"])
 
     if "observed" in a:
         why = reference_gate(a)
         if why:
             f.append(("UNRATED", why))
-            return {"class": cid, "verdict": "UNRATED", "findings": f}
+            return done("UNRATED")
 
     evidence = None
     if "class_source" in a:
@@ -161,13 +255,14 @@ def validate(assignment, classes=None):
             f.append(("UNRATIFIED", "class_source %r is not one of %s"
                       % (a["class_source"], sorted(CLASS_SOURCES))))
 
+    f.extend(check_contact(a.get("contact_pattern")))
+
     if cid == "CONSTITUTIVE":
         f.append(("OPEN_CLASS", "CONSTITUTIVE is listed, not ratified"))
         if "decay" in a:
             f.append(("CATEGORY_ERROR",
                       "a decay value on CONSTITUTIVE is malformed (not 0)"))
-        return {"class": cid, "verdict": _worst([s for s, _ in f]),
-                "findings": f}
+        return done()
 
     if _absent(a, "frame"):
         f.append(("INCOMPLETE", "frame undeclared; rates are frame-indexed"))
@@ -193,19 +288,6 @@ def validate(assignment, classes=None):
             f.append(("CONTRADICTS_CLASS", "status re-checked, never inherited"))
         if _absent(a, "last_checked"):
             f.append(("INCOMPLETE", "last_checked absent"))
-
-    elif cid == "CYCLICAL":
-        for key in ("period", "phase", "env_index"):
-            if _absent(a, key):
-                f.append(("INCOMPLETE", "%s required for CYCLICAL" % key))
-        cq = a.get("cycling_quantity")
-        if cq == "coupling":
-            f.append(("CONTRADICTS_CLASS",
-                      "CYCLICAL is a held state; a cycling coupling is "
-                      "environment-indexed c(E(t)), not CYCLICAL"))
-        elif not _absent(a, "cycling_quantity") and cq not in CYCLING_QUANTITIES:
-            f.append(("UNRATIFIED", "cycling_quantity %r is not one of %s"
-                      % (cq, CYCLING_QUANTITIES)))
 
     elif cid == "RESONANT":
         method = a.get("method")
@@ -261,10 +343,39 @@ def validate(assignment, classes=None):
     if "switch" in a:
         f.extend(_check_switch_rule(a["switch"], classes))
 
-    out = {"class": cid, "verdict": _worst([s for s, _ in f]), "findings": f}
+    out = done()
     if evidence is not None:
         out["evidence"] = evidence
     return out
+
+
+def migrate(record):
+    """Schema-1 record -> schema 2. Returns {"record", "moved", "note"}.
+
+    class CYCLICAL -> contact_pattern [CYCLICAL {period, phase, env_index,
+    cycling_quantity}], and NO state_class: it reads UNCLASSED until the
+    state is declared (never inferred, never defaulted). Any other class ->
+    state_class of the same id; contact_pattern is left for the declarer.
+    A record already in schema 2 is returned unchanged.
+    """
+    rec = dict(record)
+    if SCHEMA1_KEY not in rec:
+        return {"record": rec, "moved": [], "note": "already schema 2"}
+    old = rec.pop(SCHEMA1_KEY)
+    moved = []
+    if old == "CYCLICAL":
+        pat = {"pattern": "CYCLICAL"}
+        for key in ("period", "phase", "env_index", "cycling_quantity"):
+            if key in rec:
+                pat[key] = rec.pop(key)
+                moved.append(key)
+        rec["contact_pattern"] = [pat]
+        note = ("CYCLICAL moved to contact_pattern; state_class UNCLASSED: "
+                "it must be declared")
+    else:
+        rec["state_class"] = old
+        note = "class renamed state_class; contact_pattern must be declared"
+    return {"record": rec, "moved": moved, "note": note}
 
 
 def parse_threshold(threshold):
@@ -451,7 +562,9 @@ def compare_frames(class_by_frame, outcome=None):
 
 # Translation (L3), partial. The default frame is a PROJECTION of this one:
 # every row becomes REVISABLE with one constant lambda, driven by elapsed
-# time, and the reference is dropped. The map is well-defined and lossy.
+# time, and the reference is dropped. It also MERGES the two axes: contact
+# frequency stands in for the state, so a contact gap reads as decay
+# (translation_map.default_merges_axes). The map is well-defined and lossy.
 # The reverse is not recoverable from default data: it needs the class and
 # the reference supplied (cf. 1.618 -> phi needs the relation phi^2 = phi+1).
 PROJECTION_KEEPS = ("gap", "observed", "relation_type")
@@ -462,25 +575,29 @@ def project_to_default(record, lam):
     decay rate, a parameter of the projection, not read from the record."""
     out = {k: record[k] for k in PROJECTION_KEEPS if k in record}
     out.update({"frame": "default", "class": "REVISABLE", "decay": lam,
-                "driver": "t"})
+                "driver": "t", "state_proxy": "contact_frequency"})
     lost = sorted(k for k in record
                   if k not in PROJECTION_KEEPS and k != "frame")
     return {"record": out, "lost": lost}
 
 
-def lift_to_frame(default_record, cls=None, reference=None, frame=None):
+def lift_to_frame(default_record, state_class=None, contact_pattern=None,
+                  reference=None, frame=None):
     """default frame -> this frame. Not an inverse: the default record does
-    not carry what this frame needs, so the class, the reference and the
-    frame must be SUPPLIED (new information), and the result is validated
-    like any record."""
-    missing = [n for n, v in (("class", cls), ("reference", reference),
-                              ("frame", frame)) if v in (None, "")]
+    not carry what this frame needs, so both axes (state_class and
+    contact_pattern), the reference and the frame must be SUPPLIED (new
+    information), and the result is validated like any record."""
+    missing = [n for n, v in (("state_class", state_class),
+                              ("contact_pattern", contact_pattern),
+                              ("reference", reference),
+                              ("frame", frame)) if v in (None, "", [])]
     if missing:
         return {"status": "NOT_RECOVERABLE", "missing": missing,
                 "why": "the default record does not carry these; supply them"}
     rec = {k: default_record[k] for k in PROJECTION_KEEPS
            if k in default_record}
-    rec.update({"class": cls, "reference": reference, "frame": frame})
+    rec.update({"state_class": state_class, "contact_pattern": contact_pattern,
+                "reference": reference, "frame": frame})
     return {"status": "LIFTED", "record": rec, "validation": validate(rec)}
 
 
@@ -502,16 +619,52 @@ def fit_lambda(rows):
 ZERO_DECAY = ("COUPLED", "CONTINUOUS", "IMMORTAL")
 
 
-def interpret_fitted_lambda(cls, lam, tol, e_range=None, query_e=None):
-    """Read a default-frame fitted lambda per class (translation map).
+FIT_SOURCES = ("contact", "state")
+CONTACT_CHANNEL = ("CYCLICAL", "IRREGULAR")
+
+
+def interpret_fitted_lambda(cls, lam, tol, fitted_on=None,
+                            contact_patterns=None, e_range=None, query_e=None):
+    """Read a default-frame fitted lambda per state class and contact
+    pattern (translation map).
 
     The fitted constant approximates -<(1/c)(dc/dE)(dE/dt)> over the
     sample's environment trajectory: a property of the SAMPLE CONDITIONS,
-    not of the relation. tol is declared, never defaulted.
+    not of the relation. tol is declared, never defaulted. fitted_on is
+    declared: "contact" (contact counts / recency) or "state"
+    (reference-indexed readings); it is never inferred.
+
+    Contact reading first: a fit on contact data from a relation whose
+    contact is CYCLICAL or IRREGULAR is CONTACT_CHANNEL_ARTIFACT, whatever
+    the state (the default frame's merge of the two axes). Contact NONE has
+    no channel to fit (CATEGORY_ERROR). Then the state reading.
     """
     if isinstance(tol, bool) or not isinstance(tol, (int, float)) or tol < 0:
         raise ValueError("tol must be a non-negative number, got %r" % (tol,))
     nonzero = abs(lam) > tol
+    if not cls:
+        return {"flag": "UNCLASSED", "why": "no state_class; a fitted lambda "
+                "is not read against an undeclared state"}
+    if cls not in CLASSES:
+        return {"flag": "UNRATIFIED", "why": "state_class %r not in the set"
+                % (cls,)}
+    if fitted_on not in FIT_SOURCES:
+        return {"flag": "INCOMPLETE", "why": "declare fitted_on: %s"
+                % " | ".join(FIT_SOURCES)}
+    if fitted_on == "contact":
+        ids = contact_ids(contact_patterns)
+        if not ids:
+            return {"flag": "INCOMPLETE", "why": "fitted on contact data; "
+                    "declare the relation's contact_pattern"}
+        if "NONE" in ids:
+            return {"flag": "CATEGORY_ERROR", "why": "contact NONE: there is "
+                    "no contact channel to fit"}
+        hit = sorted(set(ids) & set(CONTACT_CHANNEL))
+        if hit and nonzero:
+            return {"flag": "CONTACT_CHANNEL_ARTIFACT", "why": "lambda fitted "
+                    "on contact data from a %s contact pattern: the fit reads "
+                    "contact gaps, not the state (the default frame merges "
+                    "the two axes)" % "+".join(hit)}
     if cls == "CONSTITUTIVE":
         return {"flag": "CATEGORY_ERROR", "why": "lambda undefined for "
                 "CONSTITUTIVE"}
@@ -522,11 +675,6 @@ def interpret_fitted_lambda(cls, lam, tol, e_range=None, query_e=None):
                     "environment drift (confound detector), not decay" % cls}
         return {"flag": "CONSISTENT", "why": "fitted lambda ~ 0, as the class "
                 "predicts"}
-    if cls == "CYCLICAL":
-        if nonzero:
-            return {"flag": "CONTACT_CHANNEL_ARTIFACT", "why": "the fit "
-                    "includes off-phase contact gaps; the state is held"}
-        return {"flag": "CONSISTENT", "why": "fitted lambda ~ 0"}
     if cls == "REVISABLE":
         if not e_range:
             return {"flag": "INCOMPLETE", "why": "lambda is lambda(E); declare "
@@ -536,7 +684,8 @@ def interpret_fitted_lambda(cls, lam, tol, e_range=None, query_e=None):
             return {"flag": "UNRATED", "why": "E = %r is outside the sample's "
                     "range %r; lambda does not extrapolate" % (query_e, e_range)}
         return {"flag": "VALID_IN_RANGE", "e_range": [lo, hi]}
-    return {"flag": "UNRATIFIED", "why": "class %r not in the set" % (cls,)}
+    return {"flag": "UNREAD", "why": "no fitted-lambda reading is defined "
+            "for %s (translation_map.per_class_lambda)" % (cls,)}
 
 
 PHI = (1 + 5 ** 0.5) / 2
@@ -570,8 +719,10 @@ def _check_switch_rule(sw, classes):
     src, dst, cond = sw.get("from"), sw.get("to"), sw.get("condition")
     for name, val in (("from", src), ("to", dst)):
         if val not in classes:
-            out.append(("UNRATIFIED", "switch %s %r is not a ratified class"
-                        % (name, val)))
+            extra = (" (%s is a contact pattern; a switch is between "
+                     "states)" % val) if val in CONTACT_PATTERNS else ""
+            out.append(("UNRATIFIED", "switch %s %r is not a ratified "
+                        "state class%s" % (name, val, extra)))
     if src is not None and src == dst:
         out.append(("MALFORMED_RULE",
                     "switch from and to are the same class (%r)" % (src,)))
@@ -586,26 +737,29 @@ def _check_switch_rule(sw, classes):
     return out
 
 
-# Readings that carry no information about a switch, by declared class.
-# A CYCLICAL relation observed off-phase, or an IMMORTAL relation observed
-# through a change of form, would otherwise read as a decayed tie and
-# produce a false switch.
-def _drop_reason(reading, declared_class):
-    if declared_class == "CYCLICAL" and reading.get("phase_state") == "off":
+# Readings that carry no information about a switch. The off-phase drop
+# keys on the relation's CONTACT pattern (CYCLICAL); the form-change drop
+# keys on its STATE (IMMORTAL). Either would otherwise read as a decayed tie
+# and produce a false switch.
+def _drop_reason(reading, declared_state, contact_patterns):
+    ids = contact_ids(contact_patterns) or []
+    if "CYCLICAL" in ids and reading.get("phase_state") == "off":
         return "CYCLICAL off-phase"
-    if declared_class == "IMMORTAL" and reading.get("form_change") is True:
+    if declared_state == "IMMORTAL" and reading.get("form_change") is True:
         return "IMMORTAL form change"
     return None
 
 
-def check_switch(history, declared_class=None, min_n=None):
+def check_switch(history, declared_state=None, contact_patterns=None,
+                 min_n=None):
     """Switch verdict for ONE relation in ONE frame.
 
-    history: readings, each {class, gap (ISO 8601 duration), relation_type,
-    frame, optional switch, phase_state, form_change}.
-    declared_class: the class the relation's declarer gives it; drives the
-    pre-filter (CYCLICAL off-phase and IMMORTAL form-change readings are
-    dropped before detection, and reported).
+    history: readings, each {state_class, gap (ISO 8601 duration),
+    relation_type, frame, optional switch, phase_state, form_change}.
+    declared_state: the state_class the relation's declarer gives it;
+    contact_patterns: its declared contact pattern(s). Together they drive
+    the pre-filter: readings in a CYCLICAL contact off-phase, and IMMORTAL
+    form-change readings, are dropped before detection, and reported.
     min_n: DECLARED by the caller, never defaulted. The number of
     mismatching readings needed before the relation as a whole is called
     DECLARED_NOT_FOLLOWED. Undeclared with mismatches present ->
@@ -639,7 +793,7 @@ def check_switch(history, declared_class=None, min_n=None):
                               "within one frame" % sorted(map(str, frames)))]}
     findings, dropped, kept, unrated = [], [], [], []
     for h in history:
-        why = _drop_reason(h, declared_class)
+        why = _drop_reason(h, declared_state, contact_patterns)
         if why:
             dropped.append((h.get("gap"), why))
             continue
@@ -677,7 +831,7 @@ def check_switch(history, declared_class=None, min_n=None):
     kept.sort(key=lambda p: p[0])
     transitions = []
     for (_, prev), (_, cur) in zip(kept, kept[1:]):
-        a, b = prev.get("class"), cur.get("class")
+        a, b = prev.get("state_class"), cur.get("state_class")
         changed = reference_change(prev.get("reference"),
                                    cur.get("reference"))
         if a != b:
@@ -700,7 +854,7 @@ def check_switch(history, declared_class=None, min_n=None):
     per_reading = []
     for (src, dst), thr in rules.items():
         for sec, h in kept:
-            if h.get("class") not in (src, dst):
+            if h.get("state_class") not in (src, dst):
                 continue
             rt = h.get("relation_type")
             if rt is None:
@@ -717,9 +871,11 @@ def check_switch(history, declared_class=None, min_n=None):
                 status, expected = "BOUNDARY_AMBIGUOUS", None
             else:
                 expected = src if sec < lo else dst
-                status = "MATCH" if h.get("class") == expected else "MISMATCH"
+                status = ("MATCH" if h.get("state_class") == expected
+                          else "MISMATCH")
             per_reading.append({"gap": h.get("gap"), "relation_type": rt,
-                                "class": h.get("class"), "rule": (src, dst),
+                                "state_class": h.get("state_class"),
+                                "rule": (src, dst),
                                 "expected": expected, "status": status})
 
     ambiguous = sum(1 for p in per_reading if p["status"] == "BOUNDARY_AMBIGUOUS")
@@ -766,25 +922,39 @@ def read_cyclical_absence(phase_state):
     return "INCOMPLETE"
 
 
-def infer_from_null(cls, phase_state=None):
-    """What an observed null licenses.
+def infer_from_null(state_class, contact_patterns, phase_state=None):
+    """What an observed null (no contact) licenses. Both axes are read.
 
-    CYCLICAL off-phase: nothing (scheduled loss of observation).
-    CYCLICAL on-phase: a SIGNAL to investigate, not a verdict.
-    IMMORTAL: nothing about the quantity; form may have changed.
-    COUPLED / CONTINUOUS: nothing from elapsed time or missing contact.
-    REVISABLE: a null is admissible evidence of decay.
+    state absent -> UNCLASSED; not a state -> UNRATIFIED; CONSTITUTIVE ->
+    CATEGORY_ERROR. contact_patterns absent -> INCOMPLETE (required).
+    contact CYCLICAL: off-phase -> NOTHING (scheduled loss of observation);
+        on-phase -> SIGNAL (investigate the contact channel; not a verdict
+        on the state); phase unknown -> INCOMPLETE.
+    contact NONE: NOTHING (contact is not possible).
+    Otherwise the state decides: IMMORTAL / COUPLED / CONTINUOUS -> NOTHING
+    (no state change from missing contact); REVISABLE -> EVIDENCE_OF_DECAY.
     """
-    if cls == "CYCLICAL":
+    if not state_class:
+        return "UNCLASSED"
+    if state_class not in CLASSES:
+        return "UNRATIFIED"
+    if state_class == "CONSTITUTIVE":
+        return "CATEGORY_ERROR"
+    ids = contact_ids(contact_patterns)
+    if not ids:
+        return "INCOMPLETE"
+    if "CYCLICAL" in ids and phase_state is not None:
         r = read_cyclical_absence(phase_state)
         return {"EXPECTED": "NOTHING", "SIGNAL": "SIGNAL"}.get(r, "INCOMPLETE")
-    if cls in ("IMMORTAL", "COUPLED", "CONTINUOUS"):
+    if ids == ["CYCLICAL"]:
+        return "INCOMPLETE"          # only a rhythm, and no phase given
+    if "NONE" in ids:
         return "NOTHING"
-    if cls == "REVISABLE":
+    if state_class in ("IMMORTAL", "COUPLED", "CONTINUOUS"):
+        return "NOTHING"
+    if state_class == "REVISABLE":
         return "EVIDENCE_OF_DECAY"
-    if cls == "CONSTITUTIVE":
-        return "CATEGORY_ERROR"
-    return "UNCLASSED" if not cls else "UNRATIFIED"
+    return "INCOMPLETE"
 
 
 def _ranks(xs):
@@ -816,17 +986,25 @@ def spearman(xs, ys):
     return sxy / (sxx * syy) ** 0.5
 
 
-def inversion_test(rows, min_n=3):
+def inversion_test(rows, min_n=3, by_axis="state_class"):
     """MEASURAND_INVERSION (PROPOSED).
 
-    rows: dicts with class, declared_strength, contact_proxy.
-    Returns rank correlation PER CLASS, never pooled. None where a class has
-    fewer than min_n rows or a constant column. Unclassed rows are counted
-    and excluded, never assigned.
+    rows: dicts with state_class, contact_pattern, declared_strength,
+    contact_proxy. by_axis: "state_class" or "contact_pattern" (a row with
+    several patterns groups under their sorted ids joined by '+').
+    Returns rank correlation PER GROUP, never pooled. None where a group has
+    fewer than min_n rows or a constant column. Rows with no value on the
+    axis are counted and excluded, never assigned.
     """
+    if by_axis not in ("state_class", "contact_pattern"):
+        raise ValueError("by_axis must be state_class or contact_pattern")
     by, unclassed = {}, 0
     for row in rows:
-        c = row.get("class")
+        if by_axis == "state_class":
+            c = row.get("state_class")
+        else:
+            ids = contact_ids(row.get("contact_pattern"))
+            c = "+".join(sorted(map(str, ids))) if ids else None
         if not c:
             unclassed += 1
             continue
@@ -838,7 +1016,8 @@ def inversion_test(rows, min_n=3):
             rho = spearman([r["declared_strength"] for r in rs],
                            [r["contact_proxy"] for r in rs])
         out[c] = {"n": len(rs), "rho": rho}
-    return {"per_class": out, "unclassed_excluded": unclassed, "pooled": None}
+    return {"by_axis": by_axis, "per_class": out,
+            "unclassed_excluded": unclassed, "pooled": None}
 
 
 def render_limits(data=None):
@@ -869,9 +1048,10 @@ def main(argv=None):
         print("library module; run tests/test_relation_class.py",
               file=sys.stderr)
         return 2
-    for cid, spec in CLASSES.items():
-        print("%-13s %-7s %s" % (cid, spec["status"],
-                                 spec["definition"]["text"][:60]))
+    for axis, table in (("state", CLASSES), ("contact", CONTACT_PATTERNS)):
+        for cid, spec in table.items():
+            print("%-7s %-13s %-7s %s" % (axis, cid, spec["status"],
+                                          spec["definition"]["text"][:52]))
     return 0
 
 

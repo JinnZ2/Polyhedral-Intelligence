@@ -387,8 +387,9 @@ alignment re-checked 13/13 against upstream commit `6b51e20`):
 
 **Decay is not carried in this table.** The decay / relation-class enum
 has ONE source of truth: [`ontology/relation_classes.json`](ontology/relation_classes.json)
-(COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE [open], CYCLICAL, RESONANT,
-IMMORTAL), validated by `ontology/relation_class.py`. Do not hand-copy
+(schema 2, two axes: state_class COUPLED, CONTINUOUS, REVISABLE,
+CONSTITUTIVE [open], RESONANT [axis move proposed], IMMORTAL; contact_pattern
+CYCLICAL, IRREGULAR, CONSTANT, NONE), validated by `ontology/relation_class.py`. Do not hand-copy
 class values here. A class assignment declares its frame; a value outside
 the set is UNRATIFIED, never coerced. The previous Decay column here
 disagreed with upstream on 9 of 13 rows and used values (`linear`,

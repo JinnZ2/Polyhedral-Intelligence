@@ -1,13 +1,52 @@
 {
-  "schema": "relation_class/1",
+  "schema": "relation_class/2",
   "license": "CC0-1.0",
-  "role": "SINGLE SOURCE OF TRUTH for the decay / relation-class enum. Every other copy (CLAUDE.md, glyph docs, sensor files) points here; none is hand-maintained.",
+  "role": "SINGLE SOURCE OF TRUTH for the relation ontology's two axes: the STATE class (what the relation is; persistence/decay) and the CONTACT pattern (how contact recurs; the observation channel). Every other copy (CLAUDE.md, glyph docs, sensor files) points here; none is hand-maintained.",
   "frame_statement": {
     "tag": "STATED",
     "text": "This is a distinct relational ontology. Its classes exist and are relevant to the degree they are useful. It is declared as a frame, not asserted as the only frame. Every record declares its frame; class values are frame-indexed."
   },
+  "axis_split": {
+    "source": {
+      "tag": "STATED",
+      "date": "2026-10-07",
+      "text": "Her long ties (best friend 17 yrs, father, mother) are CONTINUOUS: irregular contact, no decay. Her grown children are CONTINUOUS when not cyclical; birthdays and holidays are a CYCLICAL pattern of remembrance on top."
+    },
+    "finding": {
+      "tag": "STATED",
+      "text": "One relation carries a STATE class and a CONTACT pattern at once. Schema 1 merged them into one class field. Split."
+    },
+    "axes": {
+      "state_class": {
+        "tag": "STATED",
+        "text": "What the relation IS: the persistence / decay axis. One value per relation per frame.",
+        "values": "state_classes"
+      },
+      "contact_pattern": {
+        "tag": "STATED",
+        "text": "How contact RECURS: the observation channel. A relation may list more than one (e.g. CYCLICAL ritual + IRREGULAR).",
+        "values": "contact_patterns"
+      }
+    },
+    "required": {
+      "tag": "STATED",
+      "text": "Both fields are required; neither has a default."
+    },
+    "derived": {
+      "tag": "DERIVED",
+      "text": "state_class absent -> UNCLASSED (never defaulted, never inferred from contact). contact_pattern absent or an empty list -> INCOMPLETE (field: contact_pattern). A contact value outside contact_patterns -> UNRATIFIED."
+    },
+    "held_state_rule": {
+      "tag": "STATED",
+      "text": "Kept from schema 1: contact P(t) may be periodic; the state follows state_class, not contact."
+    },
+    "decay_keys_on_state": {
+      "tag": "DERIVED",
+      "text": "Decay, CONTRADICTS_CLASS and switch checks read state_class. The off-phase pre-filter reads contact_pattern CYCLICAL. Contact gaps never move the state."
+    }
+  },
   "provenance": {
-    "definitions": "STATED by the operator in chat: COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE on 2026-09-22; CYCLICAL, RESONANT, IMMORTAL on 2026-10-06. IMMORTAL as information and the environment-indexed coupling rule on 2026-10-07.",
+    "definitions": "STATED by the operator in chat: COUPLED, CONTINUOUS, REVISABLE, CONSTITUTIVE on 2026-09-22; CYCLICAL, RESONANT, IMMORTAL on 2026-10-06. IMMORTAL as information and the environment-indexed coupling rule on 2026-10-07. Axis split (state_class / contact_pattern), CYCLICAL moved to the contact axis, IRREGULAR / CONSTANT / NONE added, RESONANT's axis move PROPOSED: 2026-10-07.",
     "formalizations": "DERIVED (measurand, fields, validator rules). Co-authored.",
     "tags": "Each text field carries its own tag: STATED / DERIVED / OPEN."
   },
@@ -24,13 +63,13 @@
     "text": "In the operator's frame a relation is defined BY its class; there is no assumed decay rate. The class is the decay spec.",
     "derived": {
       "tag": "DERIVED",
-      "text": "The class field is REQUIRED. An absent or null class is UNCLASSED (not UNRATIFIED: nothing was asserted). No class is ever defaulted, REVISABLE included."
+      "text": "The state_class field is REQUIRED. An absent or null state_class is UNCLASSED (not UNRATIFIED: nothing was asserted). No state is ever defaulted (REVISABLE included) and none is inferred from the contact pattern."
     }
   },
   "class_switch_rule": {
     "finding": {
       "tag": "DERIVED",
-      "text": "Other frames already apply a HELD state (CYCLICAL-like) to close kin over short gaps (a workday). The switch to REVISABLE decay happens at a threshold that is never stated: some function of gap length and relation type."
+      "text": "Other frames already apply a HELD state to close kin over short gaps (a workday): a CONTINUOUS state read through a CYCLICAL contact pattern. The switch to REVISABLE decay happens at a threshold that is never stated: some function of gap length and relation type."
     },
     "spec": {
       "tag": "STATED",
@@ -38,7 +77,7 @@
     },
     "shape": {
       "tag": "DERIVED",
-      "text": "switch = {from, to, condition}. from and to are ratified classes and must differ (from == to is MALFORMED_RULE). condition = {reads: [...], threshold: {relation_type: {value, unit}}}, with value an ISO 8601 duration (PT8H, P3M) and unit 'iso8601_duration'. A bare number or untyped string is MALFORMED_RULE."
+      "text": "switch = {from, to, condition}. from and to are ratified STATE classes and must differ (from == to is MALFORMED_RULE). A contact pattern in from or to is UNRATIFIED (contact is not a state). condition = {reads: [...], threshold: {relation_type: {value, unit}}}, with value an ISO 8601 duration (PT8H, P3M) and unit 'iso8601_duration'. A bare number or untyped string is MALFORMED_RULE."
     },
     "semantics": {
       "tag": "DERIVED",
@@ -54,7 +93,7 @@
     },
     "pre_filter": {
       "tag": "DERIVED",
-      "text": "Before detection, drop readings taken during a declared CYCLICAL off-phase, and readings taken through a declared IMMORTAL change of form. Without this, a seasonal gap reads as a decay switch. Dropped readings are reported, not hidden."
+      "text": "Before detection, drop readings taken during a declared CYCLICAL off-phase (keyed on the relation's contact_pattern, not its state), and readings taken through a declared IMMORTAL change of form (keyed on state_class). Without this, a seasonal or ritual contact gap reads as a decay switch. Dropped readings are reported, not hidden."
     },
     "detection": {
       "tag": "DERIVED",
@@ -63,7 +102,7 @@
   },
   "ungraded_term_note": {
     "tag": "DERIVED",
-    "text": "English 'friend' is an ungraded term over the whole class set. Its usual fill-in is REVISABLE (c0*exp(-lambda*t)). Reading 'friend' as REVISABLE without a declared class is the default this file forbids."
+    "text": "English 'friend' is an ungraded term over the whole state set and says nothing about contact. Its usual fill-in is REVISABLE (c0*exp(-lambda*t)) read off contact frequency. Reading 'friend' as REVISABLE without a declared state_class is the default this file forbids."
   },
   "notation": {
     "tag": "DERIVED",
@@ -144,9 +183,10 @@
       "next_action": "take the measurement, with a method that can see the quantity"
     }
   },
-  "classes": [
+  "state_classes": [
     {
       "id": "COUPLED",
+      "axis": "state",
       "status": "STATED",
       "definition": {
         "tag": "STATED",
@@ -192,6 +232,7 @@
     },
     {
       "id": "CONTINUOUS",
+      "axis": "state",
       "status": "STATED",
       "definition": {
         "tag": "STATED",
@@ -250,10 +291,16 @@
       "prediction": {
         "tag": "STATED",
         "text": "No repair needed after a gap. Falsified by a gap after which the relation needed repair with the reference unchanged."
+      },
+      "contact": {
+        "tag": "STATED",
+        "by": "operator, 2026-10-07",
+        "text": "CONTINUOUS takes any contact pattern: IRREGULAR for long ties, and CYCLICAL ritual (birthdays, holidays) on top of it for grown children. The contact pattern does not move the state."
       }
     },
     {
       "id": "REVISABLE",
+      "axis": "state",
       "status": "STATED",
       "definition": {
         "tag": "STATED",
@@ -314,6 +361,7 @@
     },
     {
       "id": "CONSTITUTIVE",
+      "axis": "state",
       "status": "OPEN",
       "definition": {
         "tag": "OPEN",
@@ -358,91 +406,8 @@
       }
     },
     {
-      "id": "CYCLICAL",
-      "status": "STATED",
-      "definition": {
-        "tag": "STATED",
-        "text": "Environmentally coupled; present or absent on intervals the ENVIRONMENT sets (seasons, migration, runs, blooms).",
-        "held_state": {
-          "tag": "STATED",
-          "text": "Held state: contact cycles; the state does not."
-        }
-      },
-      "decay": {
-        "tag": "DERIVED",
-        "value": "none; absence in off-phase is expected, not decay"
-      },
-      "model": {
-        "tag": "DERIVED",
-        "by": "operator, 2026-10-07",
-        "equations": [
-          "contact: P(t + T_env) = P(t)",
-          "state: c(t_return) = c(t_leave)",
-          "gap cost: M_gap = 0",
-          "signal = observed - expected, read at ON-phase only",
-          "drift: dT_env/dt != 0 is recorded as a reading"
-        ],
-        "principle": {
-          "tag": "STATED",
-          "text": "Moon in Earth's shadow: the orbit (state) is continuous; visibility (contact) is geometric. A scheduled loss of observation is not evidence of a state change."
-        },
-        "note": {
-          "tag": "DERIVED",
-          "text": "with drift, the return time is set by integral(dt/T_env(t)), not t/T_env; the written form holds for constant T_env only"
-        },
-        "superseded": {
-          "tag": "DERIVED",
-          "text": "Replaces c(t) = c_bar + a*cos(2*pi*t/T_env + phi), which put the cycle on the coupling and contradicted the moon principle. A coupling that really cycles is environment-indexed (coupling_rule.absorbs), not CYCLICAL."
-        }
-      },
-      "valid_referents": {
-        "tag": "DERIVED",
-        "values": [
-          "ANY"
-        ]
-      },
-      "measurand": {
-        "tag": "DERIVED",
-        "text": "presence against phase: off-phase absence -> EXPECTED; on-phase absence -> SIGNAL; the state is read at return, not during the gap"
-      },
-      "required_fields": [
-        "frame",
-        "period",
-        "phase",
-        "env_index"
-      ],
-      "validator": [
-        {
-          "tag": "STATED",
-          "rule": "period and phase required -> else INCOMPLETE"
-        },
-        {
-          "tag": "DERIVED",
-          "rule": "env_index required -> else INCOMPLETE (what environmental quantity sets the interval)"
-        },
-        {
-          "tag": "STATED",
-          "rule": "an off-phase null is never scored as decay"
-        },
-        {
-          "tag": "STATED",
-          "rule": "scheduled loss of observation is not evidence of state change; infer nothing from off-phase nulls"
-        },
-        {
-          "tag": "DERIVED",
-          "rule": "cycling_quantity is optional. 'observability' -> OK. 'coupling' -> CONTRADICTS_CLASS (a cycling coupling is environment-indexed, not a held state). Any other value -> UNRATIFIED."
-        }
-      ],
-      "links": [
-        "seasonal / movement glyphs"
-      ],
-      "prediction": {
-        "tag": "STATED",
-        "text": "Return at the same state: c(t_return) = c(t_leave). Falsified by a changed state at return with the reference unchanged."
-      }
-    },
-    {
       "id": "RESONANT",
+      "axis": "state",
       "status": "STATED",
       "definition": {
         "tag": "STATED",
@@ -548,10 +513,19 @@
       "prediction": {
         "tag": "STATED",
         "text": "Cut cost > sum of parts. Falsified by a cut whose cost is at or below the summed separate costs (interaction_test outside RESONANT)."
+      },
+      "axis_move": {
+        "status": "PROPOSED",
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "proposal": "Move RESONANT to the interaction axis: it is measured by the interaction test and says nothing about decay.",
+        "confirmation": "PENDING: flagged for her confirmation; not finalized. RESONANT stays a state_class member until she confirms; removing it then is one entry here.",
+        "flag": "RESONANT_AXIS_PROPOSED"
       }
     },
     {
       "id": "IMMORTAL",
+      "axis": "state",
       "status": "STATED",
       "definition": {
         "tag": "STATED",
@@ -650,7 +624,160 @@
       "prediction": {
         "tag": "DERIVED",
         "text": "After a change of form, the record still shapes state and behaviour. Falsified by no detectable effect of the relation-period state on current state, with a reader able to recognise it."
+      },
+      "contact": {
+        "tag": "DERIVED",
+        "text": "Across death or another change of form, contact_pattern NONE: contact is not possible and the state is unaffected."
       }
+    }
+  ],
+  "contact_patterns": [
+    {
+      "id": "CYCLICAL",
+      "axis": "contact",
+      "status": "STATED",
+      "moved": {
+        "tag": "STATED",
+        "by": "operator, 2026-10-07",
+        "text": "Was a state class in schema 1. CYCLICAL is a contact pattern, not a state: it says when contact recurs, not what the relation is."
+      },
+      "definition": {
+        "tag": "STATED",
+        "text": "Environmentally coupled; present or absent on intervals the ENVIRONMENT sets (seasons, migration, runs, blooms).",
+        "held_state": {
+          "tag": "STATED",
+          "text": "Held state: contact cycles; the state does not."
+        }
+      },
+      "model": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "equations": [
+          "contact: P(t + T_env) = P(t)",
+          "state: c(t_return) = c(t_leave)",
+          "gap cost: M_gap = 0",
+          "signal = observed - expected, read at ON-phase only",
+          "drift: dT_env/dt != 0 is recorded as a reading"
+        ],
+        "principle": {
+          "tag": "STATED",
+          "text": "Moon in Earth's shadow: the orbit (state) is continuous; visibility (contact) is geometric. A scheduled loss of observation is not evidence of a state change."
+        },
+        "note": {
+          "tag": "DERIVED",
+          "text": "with drift, the return time is set by integral(dt/T_env(t)), not t/T_env; the written form holds for constant T_env only"
+        },
+        "superseded": {
+          "tag": "DERIVED",
+          "text": "Replaces c(t) = c_bar + a*cos(2*pi*t/T_env + phi), which put the cycle on the coupling and contradicted the moon principle. A coupling that really cycles is environment-indexed (coupling_rule.absorbs), not CYCLICAL."
+        }
+      },
+      "required_fields": [
+        "period",
+        "phase",
+        "env_index"
+      ],
+      "measurand": {
+        "tag": "DERIVED",
+        "text": "presence against phase: off-phase absence -> EXPECTED; on-phase absence -> SIGNAL; the state is read at return, not during the gap"
+      },
+      "validator": [
+        {
+          "tag": "STATED",
+          "rule": "period and phase required -> else INCOMPLETE"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "env_index required -> else INCOMPLETE (what environmental quantity sets the interval)"
+        },
+        {
+          "tag": "STATED",
+          "rule": "an off-phase null is never scored as decay"
+        },
+        {
+          "tag": "STATED",
+          "rule": "scheduled loss of observation is not evidence of state change; infer nothing from off-phase nulls"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "cycling_quantity is optional. 'observability' -> OK. 'coupling' -> CONTRADICTS_CLASS (a cycling coupling is environment-indexed, not a contact rhythm over a held state). Any other value -> UNRATIFIED."
+        }
+      ],
+      "links": [
+        "seasonal / movement glyphs"
+      ],
+      "prediction": {
+        "tag": "STATED",
+        "text": "Return at the same state: c(t_return) = c(t_leave). Falsified by a changed state at return with the reference unchanged."
+      }
+    },
+    {
+      "id": "IRREGULAR",
+      "axis": "contact",
+      "status": "STATED",
+      "definition": {
+        "tag": "STATED",
+        "text": "Contact recurs at intervals no environment schedule sets. interval_set_by: self | other | mutual | environment."
+      },
+      "required_fields": [
+        "interval_set_by"
+      ],
+      "interval_set_by": [
+        "self",
+        "other",
+        "mutual",
+        "environment"
+      ],
+      "validator": [
+        {
+          "tag": "DERIVED",
+          "rule": "interval_set_by absent -> INCOMPLETE; outside the set -> UNRATIFIED"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "an irregular gap is not a reading of the state; nothing about decay is inferred from it"
+        }
+      ],
+      "prediction": {
+        "tag": "DERIVED",
+        "text": "Under a zero-decay state, resumption after an irregular gap needs no repair, whatever the gap length."
+      }
+    },
+    {
+      "id": "CONSTANT",
+      "axis": "contact",
+      "status": "STATED",
+      "definition": {
+        "tag": "STATED",
+        "text": "Near-continuous contact."
+      },
+      "required_fields": [],
+      "validator": [
+        {
+          "tag": "DERIVED",
+          "rule": "no fields required"
+        }
+      ]
+    },
+    {
+      "id": "NONE",
+      "axis": "contact",
+      "status": "STATED",
+      "definition": {
+        "tag": "STATED",
+        "text": "Contact is not possible (e.g. IMMORTAL across death)."
+      },
+      "required_fields": [],
+      "validator": [
+        {
+          "tag": "DERIVED",
+          "rule": "NONE listed beside any pattern that has contact -> CONTRADICTS_CLASS"
+        },
+        {
+          "tag": "DERIVED",
+          "rule": "a lambda fitted on contact data with contact NONE -> CATEGORY_ERROR (there is no contact channel to fit)"
+        }
+      ]
     }
   ],
   "proposed_tests": [
@@ -663,20 +790,21 @@
       },
       "claim": {
         "tag": "DERIVED",
-        "text": "Contact-frequency and recency proxies for tie strength score CYCLICAL ties off-phase, and IMMORTAL ties after a change of form, as weak or ended. That produces an INVERTED ranking, not mere noise."
+        "text": "Contact-frequency and recency proxies for tie strength score ties with CYCLICAL contact off-phase, IRREGULAR contact in a long gap, and IMMORTAL ties after a change of form, as weak or ended. That produces an INVERTED ranking, not mere noise."
       },
       "design": {
         "tag": "DERIVED",
-        "text": "Rank ties by declared class-aware strength and by a contact-frequency proxy. Compute the rank correlation separately within each class. Never pool across classes: pooling lets the REVISABLE rows mask the inversion."
+        "text": "Rank ties by declared state-aware strength and by a contact-frequency proxy. Compute the rank correlation separately within each state_class and within each contact_pattern group. Never pool: pooling lets the REVISABLE rows mask the inversion."
       },
       "prediction": {
-        "CYCLICAL": "negative or ~0",
-        "IMMORTAL": "negative or ~0",
-        "REVISABLE": "positive"
+        "state CONTINUOUS": "negative or ~0",
+        "state IMMORTAL": "negative or ~0",
+        "contact CYCLICAL": "negative or ~0",
+        "state REVISABLE": "positive"
       },
       "falsifier": {
         "tag": "DERIVED",
-        "text": "CYCLICAL and IMMORTAL rows correlate positively, at a size comparable to the REVISABLE rows. The proxy would then track declared strength regardless of class, and the inversion claim fails."
+        "text": "CONTINUOUS / IMMORTAL rows, or CYCLICAL-contact rows, correlate positively at a size comparable to the REVISABLE rows. The proxy would then track declared strength regardless of axis, and the inversion claim fails."
       },
       "gap": {
         "tag": "OPEN",
@@ -686,6 +814,33 @@
       "runnable_on": {
         "tag": "DERIVED",
         "text": "Existing social-network data with contact logs, once ties carry a declared class. Not run."
+      },
+      "restated": {
+        "tag": "DERIVED",
+        "date": "2026-10-07",
+        "text": "Under the two axes the stated sentence reads: those relations are state CONTINUOUS or IMMORTAL, with contact CYCLICAL, IRREGULAR or NONE. The inversion is a contact-channel effect, so rows are grouped by state_class and, separately, by contact_pattern."
+      }
+    },
+    {
+      "id": "E1_CONTACT_TYPE",
+      "status": "PROPOSED",
+      "kind": "log field (doc note)",
+      "by": "operator, 2026-10-07",
+      "field": {
+        "tag": "STATED",
+        "text": "E1 log: add contact_type per contact, 'ritual' (birthday, holiday) | 'irregular'."
+      },
+      "prediction": {
+        "tag": "STATED",
+        "text": "Resumption latency is flat for both contact types, and flat against gap length."
+      },
+      "falsifier": {
+        "tag": "DERIVED",
+        "text": "Resumption latency rises with gap length, or differs between ritual and irregular contacts, on CONTINUOUS ties. Either would put state change on the contact channel."
+      },
+      "gap": {
+        "tag": "OPEN",
+        "text": "No E1 log exists in this repository or in Simulators (searched 2026-10-07). The field is specified here so the log carries it from its first row."
       }
     }
   ],
@@ -712,7 +867,7 @@
     },
     "absorbs": {
       "tag": "DERIVED",
-      "text": "A coupling that cycles with a periodic environment (a salmon run's real presence) is c(E(t)) with E periodic. It belongs here, not under CYCLICAL, which is a held state."
+      "text": "A coupling that cycles with a periodic environment (a salmon run's real presence) is c(E(t)) with E periodic. It belongs here, not under the CYCLICAL contact pattern, which describes when contact recurs over a held state."
     },
     "open": {
       "tag": "OPEN",
@@ -725,7 +880,7 @@
   },
   "verdict_audit": {
     "tag": "DERIVED",
-    "text": "Each verdict maps to a distinct next action. FRAME_UNDECLARED and INCOMPLETE shared one (supply the missing field), so FRAME_UNDECLARED is merged into INCOMPLETE; the finding names the field. BOUNDARY_AMBIGUOUS covers both uncertainty bands because both have the same next action."
+    "text": "Each verdict maps to a distinct next action. FRAME_UNDECLARED and INCOMPLETE shared one (supply the missing field), so FRAME_UNDECLARED is merged into INCOMPLETE; the finding names the field. BOUNDARY_AMBIGUOUS covers both uncertainty bands because both have the same next action. Schema 2 adds no verdict: contact_pattern absent is INCOMPLETE, a contact value outside the set is UNRATIFIED."
   },
   "reference_parts": [
     "env_terms",
@@ -813,6 +968,8 @@
       "lambda": "lambda(E) -> constant lambda",
       "driver": "t (not E, not the reference)",
       "dropped": [
+        "state_class",
+        "contact_pattern",
         "env_terms",
         "reference"
       ]
@@ -842,14 +999,34 @@
         "COUPLED": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
         "CONTINUOUS": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
         "IMMORTAL": "true decay 0; fitted lambda != 0 -> ENV_DRIFT_IN_SAMPLE (confound detector), not decay",
-        "CYCLICAL": "fitted lambda includes off-phase contact gaps -> CONTACT_CHANNEL_ARTIFACT",
         "REVISABLE": "lambda meaningful only as lambda(E); valid within the sample's E range; extrapolation outside -> UNRATED",
+        "RESONANT": "as schema 1: no per-class lambda reading (axis move PROPOSED)",
         "CONSTITUTIVE": "lambda undefined (CATEGORY_ERROR, unchanged)"
       },
       "test": "Synthetic CONTINUOUS rows with E stepped mid-series: the fitted lambda != 0 reproduces 'decay'. The same rows with E held constant: lambda ~ 0. The fitted lambda tracks E, not time.",
       "instruments": [
         "fit_lambda",
         "interpret_fitted_lambda"
+      ],
+      "by_contact": {
+        "tag": "DERIVED",
+        "by": "operator, 2026-10-07",
+        "fitted_on": "declared: 'contact' (contact counts / recency) or 'state' (reference-indexed readings). Never inferred.",
+        "CYCLICAL": "lambda fitted on contact data -> CONTACT_CHANNEL_ARTIFACT (off-phase gaps in the fit)",
+        "IRREGULAR": "lambda fitted on contact data -> CONTACT_CHANNEL_ARTIFACT (irregular gaps in the fit)",
+        "CONSTANT": "no contact-channel rule; the state_class reading applies",
+        "NONE": "lambda fitted on contact data -> CATEGORY_ERROR (no contact channel)",
+        "precedence": "the contact-channel reading is taken before the state reading: a fit on CYCLICAL / IRREGULAR contact data says nothing about the state"
+      }
+    },
+    "default_merges_axes": {
+      "tag": "DERIVED",
+      "by": "operator, 2026-10-07",
+      "text": "The default frame MERGES the two axes: contact frequency is used as the state proxy, so a contact gap reads as decay. That is the measurand inversion (moon in Earth's shadow: a scheduled loss of observation read as a change of orbit).",
+      "projection": "state_class + contact_pattern -> one 'class' = REVISABLE, driver t, state proxy = contact frequency",
+      "dropped": [
+        "state_class",
+        "contact_pattern"
       ]
     }
   }
