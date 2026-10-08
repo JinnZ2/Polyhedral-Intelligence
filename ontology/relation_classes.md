@@ -10,6 +10,72 @@ formalization, OPEN = not defined, do not invent.
 
 ---
 
+## Two axes  [STATED 2026-10-07; schema relation_class/2]
+
+```
+   state_class      what the relation IS        persistence / decay axis
+                    COUPLED | CONTINUOUS | REVISABLE | IMMORTAL
+                    | CONSTITUTIVE (OPEN) | RESONANT (axis move PROPOSED)
+
+   contact_pattern  how contact RECURS          observation channel
+                    CYCLICAL {period, phase, env_index}
+                    IRREGULAR {interval_set_by: self|other|mutual|environment}
+                    CONSTANT                    near-continuous contact
+                    NONE                        contact not possible
+                                                (e.g. IMMORTAL across death)
+```
+
+Source: her long ties (best friend 17 yrs, father, mother) are CONTINUOUS,
+with irregular contact and no decay. Her grown children are CONTINUOUS
+when not cyclical; birthdays and holidays are a CYCLICAL pattern of
+remembrance on top. One relation carries a state and a contact pattern at
+once, so schema 1's single `class` field merged two things.
+
+```
+   grown child:  state_class CONTINUOUS
+                 contact_pattern [CYCLICAL {P1Y, birthday, calendar},
+                                  IRREGULAR {mutual}]
+
+   contact P(t) may be periodic ──► the state follows state_class, not contact
+```
+
+- Both fields are required and neither has a default. A missing
+  state_class is UNCLASSED and is never inferred from contact. A missing
+  contact_pattern is INCOMPLETE.
+- A relation may list more than one contact pattern. NONE beside a pattern
+  that has contact is CONTRADICTS_CLASS.
+- CYCLICAL moved axes. It is a contact pattern, not a state.
+- RESONANT: a move to the interaction axis is PROPOSED, because it is
+  measured by the interaction test and says nothing about decay. It is
+  flagged for her confirmation and not finalized, so RESONANT stays a state
+  member for now. `validate` adds the flag RESONANT_AXIS_PROPOSED.
+- Migration from schema 1 is `migrate()`. A record with class CYCLICAL
+  gets contact_pattern CYCLICAL and state_class UNCLASSED, which must be
+  declared. Any other class is renamed to state_class.
+
+Which axis each check reads:
+
+```
+   check                              keys on
+   off-phase pre-filter               contact_pattern CYCLICAL
+   decay value / CONTRADICTS_CLASS    state_class
+   class switch, from / to            state_class (a contact pattern is UNRATIFIED there)
+   IMMORTAL form-change drop          state_class
+   fitted lambda, fitted_on=state     state_class: CONTINUOUS|COUPLED|IMMORTAL, lambda != 0
+                                      -> ENV_DRIFT_IN_SAMPLE
+   fitted lambda, fitted_on=contact   contact_pattern CYCLICAL|IRREGULAR, lambda != 0
+                                      -> CONTACT_CHANNEL_ARTIFACT (any state)
+```
+
+E1 log (doc note, PROPOSED): each contact carries a `contact_type`,
+either `ritual` (birthday, holiday) or `irregular`. The prediction is that
+resumption latency is flat for both types, and flat against gap length.
+No E1 log exists yet in this repository or in Simulators. The field is
+specified in `proposed_tests.E1_CONTACT_TYPE` so the log carries it from
+its first row.
+
+---
+
 ## Where the truth lives
 
 ```
@@ -30,8 +96,10 @@ The frame statement above is the one exception: it is mirrored from
 ```
    record
      |
-     +-- class absent ............................ UNCLASSED (never defaulted)
-     +-- class not in set ........................ UNRATIFIED (never coerced)
+     +-- state_class absent ...................... UNCLASSED (never defaulted)
+     +-- state_class not in set .................. UNRATIFIED (never coerced)
+     +-- contact_pattern absent .................. INCOMPLETE (field: contact_pattern)
+     +-- contact value not in set ................ UNRATIFIED
      +-- frame absent ............................ INCOMPLETE (field: frame)
      +-- reference not written before outcome .... UNRATED (L1)
      |
@@ -45,7 +113,8 @@ The frame statement above is the one exception: it is mirrored from
      v
    history of one relation, one frame  (check_switch)
      |
-     +-- pre-filter: drop CYCLICAL off-phase and IMMORTAL form-change readings
+     +-- pre-filter: drop readings in a CYCLICAL contact off-phase, and
+     |   IMMORTAL form-change readings
      +-- gate: readings without a prior reference are UNRATED, not judged
      +-- class change, no declared rule ......... UNDECLARED_THRESHOLD
      +-- class change, reference unchanged ...... CONTRADICTS_CLASS
@@ -89,13 +158,20 @@ type is OPEN.
                     (new information, not an inverse)
 ```
 
+The default frame also MERGES the two axes: contact frequency is used as
+the state proxy, so a contact gap reads as decay. That is the measurand
+inversion: the moon in Earth's shadow, a scheduled loss of observation
+read as a change of orbit (`translation_map.default_merges_axes`).
+
 Lorentz maps are invertible; this one is not, so the cost is asymmetric:
 the projection is free to compute and loses the reference, and the
 return direction carries the whole cost. A default-frame fitted λ reads per class:
 a nonzero fit on COUPLED, CONTINUOUS or IMMORTAL rows is
-ENV_DRIFT_IN_SAMPLE (the sample's environment moved), on CYCLICAL rows it
-is CONTACT_CHANNEL_ARTIFACT, on REVISABLE rows it holds only inside the
-sample's environment range (`interpret_fitted_lambda`). Detail: `translation_map` in the
+ENV_DRIFT_IN_SAMPLE (the sample's environment moved). A fit on contact
+data from a CYCLICAL or IRREGULAR contact pattern is CONTACT_CHANNEL_ARTIFACT,
+whatever the state. On REVISABLE rows a state fit holds only inside the
+sample's environment range (`interpret_fitted_lambda`, which requires
+`fitted_on` to be declared). Detail: `translation_map` in the
 JSON. The per-class λ correspondence is in; the rest of the map is OPEN.
 
 ---
@@ -133,5 +209,7 @@ JSON. The per-class λ correspondence is in; the rest of the map is OPEN.
 - ANTAGONISTIC (joint below the strongest single party): the boundary is
   proposed; the class is not defined.
 - CONSTITUTIVE: listed, not ratified.
+- RESONANT's move to the interaction axis: proposed, awaiting her
+  confirmation.
 - Which reference terms index coupling for a given relation type.
 - The rest of the translation map, beyond lambda (L3; the partial map is above).
