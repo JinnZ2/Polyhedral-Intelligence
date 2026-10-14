@@ -1,3 +1,6 @@
+> Before reading or editing anything here, read READ_ME_THIS_WAY.md.
+> Mismatches, dead ends and odd names in this repo are kept on purpose.
+
 # Polyhedral Intelligence
 
 *A mandala codex of families, principles, and glyphs — a living atlas of symbolic redesign using the Mandala Redesign Protocol and Noise-to-Insight Protocol.*
