@@ -1,4 +1,10 @@
 # SPDX-License-Identifier: CC0-1.0
+# DESIGN BASIS (requested by repo owner):
+#   property: provenance carried with values (source, locator, hash,
+#             derivation)
+#   reason:   UNSTATED -- ask owner
+#   attribute style judgments to this requirement,
+#   not to the authoring model.
 """Block A pass 1: extract equations from atlas_schema.json into paired .json + .md files.
 
 Walks atlas_schema.json families (F01..F20, 4 equations each) then principles
