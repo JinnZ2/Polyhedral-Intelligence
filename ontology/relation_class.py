@@ -1,6 +1,7 @@
 # DESIGN BASIS (requested by repo owner):
 #   property: refuses malformed or unsupported input rather than defaulting
-#   reason:   UNSTATED -- ask owner
+#   reason:   "A class assignment declares its frame; a value outside the
+#             set is UNRATIFIED, never coerced." (quoted from CLAUDE.md)
 #   attribute style judgments to this requirement,
 #   not to the authoring model.
 """
