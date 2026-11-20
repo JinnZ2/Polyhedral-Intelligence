@@ -1,6 +1,6 @@
 # Polyhedral-Intelligence — ID Proposal (Block 0)
 
-**Status:** CONFIRMED by Kavik (JinnZ2) on 2026-05-04.
+**Status:** CONFIRMED by JinnZ2 on 2026-05-04.
 **Generated:** 2026-05-04
 **Branch:** `claude/physics-ontology-framework-n1x4H`
 
@@ -63,7 +63,7 @@ These IDs are the canonical form used in equation bindings (`equation.families[]
 5. **Meta-field assignments** for families taken verbatim from `five_field_schema_map.json`.
 6. **Axis assignments** for principles taken from the BioGrid2.0 Principles Lattice mapping documented in `CLAUDE.md` (Invariance: P01–P03, Transformation: P04–P06, Connectivity: P07–P09, Evolution: P10–P12).
 
-## Questions for Kavik — RESOLVED
+## Questions for JinnZ2 — RESOLVED
 
 - [x] Confirm ID namespace prefixes `FAM:` / `PRIN:`.
 - [x] Confirm `ENERGY_THERMO` and `EARTH_COSMOS` snake-case forms.
